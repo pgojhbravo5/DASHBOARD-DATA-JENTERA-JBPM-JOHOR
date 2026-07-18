@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes" />
+    <title>DASHBOARD JENTERA BOMBA NEGERI JOHOR</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2">
+    </script>
+    <style>
+        :root {
+            --bg: #0f0f0f;
+            --card-bg: #1a1a1a;
+            --text: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --accent: #d32f2f;
+            --accent-hover: #b71c1c;
+            --border: #2a2a2a;
+            --cfrt-color: #d32f2f;
+            --emrs-color: #1565c0;
+            --water-color: #00838f;
+            --status-baik: #2e7d32;
+            --status-rosak-minor: #f57f17;
+            --status-rosak: #c62828;
+            --status-dipulangkan: #1565c0;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-transform: uppercase;
+            font-size: 8px;
+            touch-action: pan-x pan-y pinch-zoom;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        .header {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a0000 100%);
+            border-bottom: 1.5px solid var(--accent);
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+            z-index: 100;
+            cursor: default;
+            user-select: none;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-logo {
+            width: 25px;
+            height: 25px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .header h1 {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .header-subtitle {
+            font-size: 0.42rem;
+            color: var(--text-secondary);
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .last-update,
+        .countdown {
+            font-size: 0.4rem;
+            color: var(--text-secondary);
+        }
+        .refresh-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(211,47,47,0.3);
+        }
+        .refresh-btn:hover {
+            background: #f44336;
+            box-shadow: 0 4px 15px rgba(211,47,47,0.5);
+            transform: scale(1.1);
+        }
+        .refresh-btn:active {
+            transform: scale(0.95);
+        }
+        .refresh-btn.loading {
+            pointer-events: none;
+            background: #666;
+        }
+        .refresh-btn.loading .refresh-icon {
+            animation: spin 0.8s linear infinite;
+        }
+        .refresh-btn .refresh-icon {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .refresh-btn::after {
+            content: 'REFRESH DATA';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.3rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            z-index: 101;
+        }
+        .refresh-btn:hover::after {
+            opacity: 1;
+        }
+
+        .fullscreen-btn {
+            background: #333;
+            color: #fff;
+            border: 0.5px solid var(--border);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            line-height: 1;
+        }
+        .fullscreen-btn:hover {
+            background: #555;
+            box-shadow: 0 2px 10px rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+        .fullscreen-btn:active {
+            transform: scale(0.95);
+        }
+        .fullscreen-btn.active-fullscreen {
+            background: #c62828;
+            border-color: #ff5252;
+        }
+
+        #statusSambungan {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3px;
+            text-align: center;
+            font-weight: 700;
+            z-index: 9999;
+            display: none;
+            font-size: 0.4rem;
+        }
+
+        .tab-nav {
+            flex-shrink: 0;
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: #111;
+            padding: 0 10px;
+            overflow-x: auto;
+            z-index: 99;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #777;
+            padding: 8px 12px;
+            font-size: 0.45rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 1.5px solid transparent;
+            margin-bottom: -1px;
+            white-space: nowrap;
+        }
+        .tab-btn.active {
+            color: #fff;
+        }
+        .tab-btn.tab-cfrt.active {
+            border-bottom-color: #d32f2f;
+            color: #ff5252;
+        }
+        .tab-btn.tab-emrs.active {
+            border-bottom-color: #1565c0;
+            color: #64b5f6;
+        }
+        .tab-btn.tab-water.active {
+            border-bottom-color: #00838f;
+            color: #4dd0e1;
+        }
+        .tab-btn.tab-dashboard.active {
+            border-bottom-color: #ffd600;
+            color: #ffd600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            display: block;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1.5px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+            gap: 1.5px;
+            margin-bottom: 1.5px;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 2px;
+            padding: 1.5px;
+            text-align: center;
+        }
+        .stat-card .stat-number {
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .stat-card .stat-label {
+            font-size: 0.16rem;
+            color: var(--text-secondary);
+        }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-bottom: 2px;
+        }
+        .chart-card {
+            background: var(--card-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 3px;
+            padding: 3px;
+        }
+        .chart-card h3 {
+            font-size: 0.22rem;
+            color: #fff;
+            margin-bottom: 1.5px;
+        }
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 60px;
+        }
+
+        .table-card {
+            background: var(--card-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 2px;
+            padding: 3px;
+            overflow: hidden;
+        }
+        .table-card h3 {
+            font-size: 0.22rem;
+            color: #fff;
+            margin-bottom: 1.5px;
+        }
+        .table-toolbar {
+            display: flex;
+            gap: 1.5px;
+            margin-bottom: 1.5px;
+        }
+        .table-toolbar input,
+        .table-toolbar select {
+            background: #111;
+            border: 0.5px solid var(--border);
+            color: #fff;
+            padding: 1.5px 2px;
+            font-size: 0.18rem;
+            outline: none;
+            text-transform: uppercase;
+        }
+        .table-toolbar input {
+            flex: 1;
+            min-width: 35px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.16rem;
+            min-width: 250px;
+        }
+        table thead th {
+            background: var(--table-header, #1f1f1f);
+            color: #fff;
+            padding: 1px 1.5px;
+            font-weight: 600;
+            border-bottom: 0.8px solid var(--accent);
+            white-space: nowrap;
+        }
+        table tbody td {
+            padding: 0.8px 1.5px;
+            border-bottom: 0.2px solid var(--border);
+        }
+        table tbody tr {
+            cursor: pointer;
+        }
+        table tbody tr:hover {
+            background: #2a0000;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.3px 1.5px;
+            border-radius: 2px;
+            font-size: 0.12rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .badge-baik {
+            background: var(--status-baik);
+            color: #fff;
+        }
+        .badge-rosak-minor {
+            background: var(--status-rosak-minor);
+            color: #000;
+        }
+        .badge-rosak {
+            background: var(--status-rosak);
+            color: #fff;
+        }
+        .badge-dipulangkan {
+            background: var(--status-dipulangkan);
+            color: #fff;
+        }
+        .row-count {
+            font-size: 0.16rem;
+            color: var(--text-secondary);
+            margin-top: 1.5px;
+        }
+        .export-btn {
+            background: #1565c0;
+            color: #fff;
+            border: none;
+            padding: 1px 2px;
+            border-radius: 1px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.14rem;
+        }
+
+        #tab-cfrt .container,
+        #tab-emrs .container,
+        #tab-water .container {
+            padding: 12px;
+        }
+        #tab-cfrt .stats-row,
+        #tab-emrs .stats-row,
+        #tab-water .stats-row {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        #tab-cfrt .stat-card,
+        #tab-emrs .stat-card,
+        #tab-water .stat-card {
+            padding: 12px;
+            border-radius: 6px;
+        }
+        #tab-cfrt .stat-card .stat-number,
+        #tab-emrs .stat-card .stat-number,
+        #tab-water .stat-card .stat-number {
+            font-size: 1.5rem;
+        }
+        #tab-cfrt .stat-card .stat-label,
+        #tab-emrs .stat-card .stat-label,
+        #tab-water .stat-card .stat-label {
+            font-size: 0.5rem;
+        }
+        #tab-cfrt .charts-row,
+        #tab-emrs .charts-row,
+        #tab-water .charts-row {
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        #tab-cfrt .chart-card,
+        #tab-emrs .chart-card,
+        #tab-water .chart-card {
+            padding: 12px;
+            border-radius: 8px;
+        }
+        #tab-cfrt .chart-card h3,
+        #tab-emrs .chart-card h3,
+        #tab-water .chart-card h3 {
+            font-size: 0.65rem;
+            margin-bottom: 8px;
+        }
+        #tab-cfrt .chart-wrapper,
+        #tab-emrs .chart-wrapper,
+        #tab-water .chart-wrapper {
+            height: 200px;
+        }
+        #tab-cfrt .table-card,
+        #tab-emrs .table-card,
+        #tab-water .table-card {
+            padding: 12px;
+            border-radius: 6px;
+        }
+        #tab-cfrt .table-card h3,
+        #tab-emrs .table-card h3,
+        #tab-water .table-card h3 {
+            font-size: 0.65rem;
+            margin-bottom: 8px;
+        }
+        #tab-cfrt .table-toolbar,
+        #tab-emrs .table-toolbar,
+        #tab-water .table-toolbar {
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        #tab-cfrt .table-toolbar input,
+        #tab-cfrt .table-toolbar select,
+        #tab-emrs .table-toolbar input,
+        #tab-emrs .table-toolbar select,
+        #tab-water .table-toolbar input,
+        #tab-water .table-toolbar select {
+            padding: 6px 8px;
+            font-size: 0.5rem;
+            border-radius: 4px;
+        }
+        #tab-cfrt .table-toolbar input,
+        #tab-emrs .table-toolbar input,
+        #tab-water .table-toolbar input {
+            min-width: 150px;
+        }
+        #tab-cfrt .table-toolbar select,
+        #tab-emrs .table-toolbar select,
+        #tab-water .table-toolbar select {
+            min-width: 120px;
+        }
+        #tab-cfrt .table-wrapper,
+        #tab-emrs .table-wrapper,
+        #tab-water .table-wrapper {
+            max-height: 350px;
+        }
+        #tab-cfrt table,
+        #tab-emrs table,
+        #tab-water table {
+            font-size: 0.5rem;
+            min-width: 600px;
+        }
+        #tab-cfrt table thead th,
+        #tab-emrs table thead th,
+        #tab-water table thead th {
+            padding: 8px 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+        #tab-cfrt table tbody td,
+        #tab-emrs table tbody td,
+        #tab-water table tbody td {
+            padding: 6px 6px;
+        }
+        #tab-cfrt .badge,
+        #tab-emrs .badge,
+        #tab-water .badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.42rem;
+        }
+        #tab-cfrt .row-count,
+        #tab-emrs .row-count,
+        #tab-water .row-count {
+            font-size: 0.45rem;
+            margin-top: 8px;
+        }
+        #tab-cfrt .export-btn,
+        #tab-emrs .export-btn,
+        #tab-water .export-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.45rem;
+        }
+
+        .dashboard-filters {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 1.5px;
+            background: var(--card-bg);
+            padding: 3px 6px;
+            border-radius: 2px;
+            border: 0.5px solid var(--border);
+            align-items: center;
+        }
+
+        .jenis-filter-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .jenis-filter-select {
+            background: #111;
+            border: 0.5px solid var(--accent);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 0.16rem;
+            cursor: pointer;
+            min-width: 100px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: space-between;
+        }
+        .jenis-filter-select .arrow {
+            font-size: 0.12rem;
+        }
+        .jenis-filter-select .selected-count {
+            background: var(--accent);
+            color: #fff;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-size: 0.12rem;
+        }
+        .jenis-filter-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a1a1a;
+            border: 0.5px solid var(--border);
+            border-radius: 2px;
+            z-index: 200;
+            min-width: 140px;
+            padding: 2px;
+            margin-top: 1px;
+        }
+        .jenis-filter-options.show {
+            display: block;
+        }
+        .jenis-filter-option {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 4px;
+            cursor: pointer;
+            font-size: 0.15rem;
+            color: #ccc;
+            border-radius: 1px;
+            white-space: nowrap;
+        }
+        .jenis-filter-option:hover {
+            background: #333;
+        }
+        .jenis-filter-option input {
+            width: 8px;
+            height: 8px;
+            accent-color: var(--accent);
+        }
+        .jenis-filter-option .count-badge {
+            background: #333;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-size: 0.12rem;
+            margin-left: auto;
+        }
+
+        .status-filter-container {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: var(--card-bg);
+            padding: 1.5px 3px;
+            border-radius: 2px;
+            border: 0.5px solid var(--border);
+            flex-wrap: wrap;
+        }
+        .status-filter-label {
+            font-size: 0.16rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .status-filter-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .status-filter-select {
+            background: #111;
+            border: 0.5px solid var(--border);
+            color: #fff;
+            padding: 1.5px 4px;
+            border-radius: 2px;
+            font-size: 0.16rem;
+            cursor: pointer;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            justify-content: space-between;
+        }
+        .status-filter-select .arrow {
+            font-size: 0.12rem;
+        }
+        .status-filter-select .selected-count {
+            background: var(--accent);
+            color: #fff;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-size: 0.12rem;
+        }
+        .status-filter-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #1a1a1a;
+            border: 0.5px solid var(--border);
+            border-radius: 2px;
+            z-index: 200;
+            min-width: 120px;
+            padding: 2px;
+            margin-top: 1px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        .status-filter-options.show {
+            display: block;
+        }
+        .status-filter-option {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 1.5px 3px;
+            cursor: pointer;
+            font-size: 0.15rem;
+            color: #ccc;
+            border-radius: 1px;
+            white-space: nowrap;
+        }
+        .status-filter-option:hover {
+            background: #333;
+        }
+        .status-filter-option input {
+            width: 8px;
+            height: 8px;
+            accent-color: var(--accent);
+        }
+        .status-filter-option .color-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .color-dot.baik { background: #2e7d32; }
+        .color-dot.rosak-minor { background: #f57f17; }
+        .color-dot.rosak { background: #d32f2f; }
+        .color-dot.dipulangkan { background: #1565c0; }
+        .color-dot.lain { background: #757575; }
+
+        .stats-filter-row {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1.5px;
+            align-items: stretch;
+        }
+        .stats-filter-row .dashboard-stats {
+            flex: 1;
+            display: flex;
+            gap: 1.5px;
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+        .stats-filter-row .status-filter-container {
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .dash-stat {
+            background: var(--card-bg);
+            border: 0.5px solid var(--border);
+            border-radius: 1px;
+            padding: 1px 1.5px;
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            flex: 1;
+            min-width: 16px;
+        }
+        .dash-stat .num {
+            font-size: 0.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .dash-stat .label {
+            font-size: 0.11rem;
+            color: var(--text-secondary);
+        }
+        .dash-stat .num.green { color: var(--status-baik); }
+        .dash-stat .num.orange { color: var(--status-rosak-minor); }
+        .dash-stat .num.red { color: var(--status-rosak); }
+        .dash-stat .num.blue { color: var(--status-dipulangkan); }
+        .dash-stat .num.accent { color: var(--accent); }
+
+        #zoneContainer {
+            display: flex;
+            gap: 2px;
+            overflow-x: auto;
+            overflow-y: auto;
+            height: auto !important;
+            min-height: 100%;
+            padding-bottom: 4px;
+            align-items: stretch;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .zone-column {
+            flex: 1 1 0;
+            min-width: 150px;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 0.5px solid var(--border);
+            border-radius: 3px;
+            padding: 2px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .zone-column.z1 { border-top: 2px solid #ff6b6b; }
+        .zone-column.z2 { border-top: 2px solid #ffd93d; }
+        .zone-column.z3 { border-top: 2px solid #6bcb77; }
+        .zone-column.z4 { border-top: 2px solid #4d96ff; }
+        .zone-column.bengkel { border-top: 2px solid #ff9800; }
+        .zone-column.unknown { border-top: 2px solid #757575; }
+
+        .zone-column-header {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            margin-bottom: 1px;
+            padding-bottom: 1px;
+            border-bottom: 0.5px solid var(--border);
+            flex-shrink: 0;
+        }
+        .zone-column-header .zone-color {
+            width: 2px;
+            height: 8px;
+            border-radius: 1px;
+            flex-shrink: 0;
+        }
+        .zone-color.z1 { background: #ff6b6b; }
+        .zone-color.z2 { background: #ffd93d; }
+        .zone-color.z3 { background: #6bcb77; }
+        .zone-color.z4 { background: #4d96ff; }
+        .zone-color.bengkel { background: #ff9800; }
+        .zone-column-header h3 {
+            font-size: 0.24rem;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .zone-column-header .count-badge {
+            background: var(--accent);
+            color: #fff;
+            padding: 0 2px;
+            border-radius: 2px;
+            font-size: 0.13rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .zone-balai-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(7, 1fr);
+            gap: 2px;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            min-height: 0;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .zone-column.z1 .zone-balai-container,
+        .zone-column.z2 .zone-balai-container,
+        .zone-column.z3 .zone-balai-container,
+        .zone-column.z4 .zone-balai-container,
+        .zone-column.bengkel .zone-balai-container {
+            grid-template-rows: repeat(7, 1fr);
+            overflow-y: auto;
+        }
+
+        .balai-column {
+            background: rgba(255, 255, 255, 0.015);
+            border: 0.3px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            padding: 1.5px 1px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .balai-column-header {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            margin-bottom: 0.5px;
+            padding-bottom: 0.5px;
+            border-bottom: 0.3px solid rgba(255, 255, 255, 0.06);
+            flex-shrink: 0;
+            min-height: 10px;
+        }
+        .balai-column-header .balai-dot {
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #888;
+            flex-shrink: 0;
+        }
+        .balai-column-header .balai-name {
+            font-size: 0.13rem;
+            font-weight: 700;
+            color: #ddd;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+            line-height: 1;
+        }
+        .balai-column-header .balai-count {
+            font-size: 0.1rem;
+            color: #888;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .balai-column .card-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1px;
+            flex: 1;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .balai-column .jentera-card {
+            min-height: 0;
+            padding: 2px 0.5px;
+            border-width: 0.5px;
+            border-radius: 1.5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0;
+        }
+        .balai-column .card-icon { font-size: 6px; line-height: 1; margin-bottom: 0; }
+        .balai-column .card-callsign { font-size: 0.18rem; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 0; white-space: nowrap; }
+        .balai-column .card-plate { font-size: 0.14rem; color: var(--text-secondary); font-weight: 600; line-height: 1; margin-bottom: 0; white-space: nowrap; }
+        .balai-column .card-model { display: none; }
+        .balai-column .card-status { font-size: 0.11rem; padding: 0.5px 2px; border-radius: 1.5px; margin-top: 0.5px; line-height: 1; font-weight: 700; white-space: nowrap; }
+        .balai-column .card-lokasi { display: none; }
+
+        .jentera-card {
+            background: var(--card-bg);
+            border: 0.6px solid #333;
+            border-radius: 2px;
+            padding: 1px 1px;
+            cursor: pointer;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        .jentera-card:hover { box-shadow: 0 0.5px 3px rgba(0, 0, 0, 0.5); }
+        .jentera-card.type-cfrt { border-color: var(--cfrt-color); }
+        .jentera-card.type-emrs { border-color: var(--emrs-color); }
+        .jentera-card.type-water { border-color: var(--water-color); }
+
+        .card-icon { font-size: 5px; line-height: 1; }
+        .card-callsign { font-size: 0.2rem; font-weight: 700; color: #fff; line-height: 1.1; white-space: nowrap; }
+        .card-plate { font-size: 0.15rem; color: var(--text-secondary); font-weight: 600; line-height: 1.1; white-space: nowrap; }
+        .card-status { margin-top: 0.3px; padding: 0.2px 1.5px; border-radius: 2px; font-size: 0.12rem; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+        .card-status.status-baik { background: var(--status-baik); color: #fff; }
+        .card-status.status-rosak-minor { background: var(--status-rosak-minor); color: #000; }
+        .card-status.status-rosak { background: var(--status-rosak); color: #fff; }
+        .card-status.status-dipulangkan { background: var(--status-dipulangkan); color: #fff; }
+
+        .jentera-card.empty-card {
+            opacity: 0.35; border-style: dashed; border-color: #444;
+            cursor: default; background: rgba(255, 255, 255, 0.01);
+        }
+        .jentera-card.empty-card:hover { box-shadow: none; background: rgba(255, 255, 255, 0.02); }
+
+        .zoom-btn {
+            background: #1565c0; color: #fff; border: none;
+            padding: 1.5px 3px; border-radius: 2px; cursor: pointer;
+            font-weight: 700; font-size: 0.18rem;
+            display: flex; align-items: center; gap: 1px;
+            touch-action: manipulation;
+        }
+        .zoom-btn.zoom-out { background: #c62828; }
+
+        .slideshow-btn { background: #6a1b9a !important; }
+        .slideshow-btn.active-slideshow { background: #e91e63 !important; animation: pulse-slideshow 1.5s infinite; }
+        @keyframes pulse-slideshow {
+            0%, 100% { box-shadow: 0 0 5px rgba(233,30,99,0.5); }
+            50% { box-shadow: 0 0 20px rgba(233,30,99,0.8); }
+        }
+
+        .slideshow-nav {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; padding: 4px 8px; background: var(--card-bg);
+            border: 0.5px solid var(--border); border-radius: 3px;
+            margin-bottom: 2px; flex-wrap: wrap;
+        }
+        .slideshow-nav-btn {
+            background: #333; color: #fff; border: 0.5px solid var(--border);
+            padding: 3px 8px; border-radius: 3px; cursor: pointer;
+            font-size: 0.5rem; font-weight: 700; transition: all 0.2s ease;
+            min-width: 30px; text-align: center; touch-action: manipulation;
+        }
+        .slideshow-nav-btn:hover { background: #555; transform: scale(1.05); }
+        .slideshow-nav-btn:active { transform: scale(0.95); }
+        .slideshow-nav-btn.slideshow-stop { background: #c62828; }
+        .slideshow-nav-btn.slideshow-stop:hover { background: #f44336; }
+        .slideshow-counter { font-size: 0.5rem; font-weight: 700; color: #fff; min-width: 80px; text-align: center; }
+
+        #zoneContainer.slideshow-mode { flex-wrap: nowrap !important; overflow-x: hidden !important; scroll-behavior: smooth; }
+        #zoneContainer.slideshow-mode .zone-column {
+            flex: 0 0 100% !important; min-width: 100% !important;
+            max-width: 100% !important; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .slideshow-dots { display: flex; justify-content: center; gap: 4px; padding: 3px 0; }
+        .slideshow-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: #444;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .slideshow-dot.active { background: var(--accent); transform: scale(1.3); box-shadow: 0 0 8px var(--accent); }
+        .slideshow-dot:hover { background: #888; }
+
+        /* === ZOOM DASHBOARD === */
+        body.fullscreen-mode .tab-nav,
+        body.fullscreen-mode #statusSambungan { display: none !important; }
+        body.fullscreen-mode #dashboardFilters,
+        body.fullscreen-mode #zoomBtnContainer,
+        body.fullscreen-mode #slideshowNav { display: none !important; }
+        body.fullscreen-mode .tab-content#tab-dashboard {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow: hidden;
+        }
+        body.fullscreen-mode #tab-dashboard .container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1px !important;
+        }
+        body.fullscreen-mode #zoneContainer {
+            height: auto !important;
+            min-height: 100%;
+            overflow-y: auto !important;
+        }
+        body.fullscreen-mode .zone-column { min-width: 150px !important; max-width: 380px !important; }
+        body.fullscreen-mode .zone-balai-container { overflow-y: auto !important; }
+        body.fullscreen-mode .balai-column .card-callsign { font-size: 0.22rem !important; }
+        body.fullscreen-mode .balai-column .card-plate { font-size: 0.17rem !important; }
+        body.fullscreen-mode .balai-column .card-status { font-size: 0.14rem !important; }
+        body.fullscreen-mode .balai-column-header .balai-name { font-size: 0.16rem !important; }
+
+        /* === FULL SCREEN DASHBOARD === */
+        body.fullscreen-dashboard {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        body.fullscreen-dashboard .header { flex-shrink: 0; }
+        body.fullscreen-dashboard .tab-nav { flex-shrink: 0; }
+        body.fullscreen-dashboard .footer { flex-shrink: 0; }
+        body.fullscreen-dashboard .tab-content.active {
+            flex: 1;
+            overflow-y: auto;
+        }
+        body.fullscreen-dashboard #zoneContainer {
+            height: auto !important;
+            min-height: 100%;
+        }
+        body.fullscreen-dashboard .header { padding: 4px 8px; }
+        body.fullscreen-dashboard .tab-nav { padding: 0 5px; }
+        body.fullscreen-dashboard .tab-btn { padding: 5px 8px; font-size: 0.4rem; }
+        body.fullscreen-dashboard #tab-dashboard .container { padding: 1px !important; }
+
+        /* === FOOTER SENTIASA NAMPAK === */
+        body.fullscreen-mode .footer,
+        body.fullscreen-dashboard .footer {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            flex-shrink: 0;
+            padding: 3px;
+            font-size: 0.3rem;
+            border-top: 0.5px solid var(--border);
+            background: #0a0a0a;
+            z-index: 10;
+        }
+
+        .footer {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 5px;
+            color: var(--text-secondary);
+            font-size: 0.35rem;
+            border-top: 0.5px solid var(--border);
+            background: #0a0a0a;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .zone-column { min-width: 120px !important; max-width: 220px !important; }
+            .header h1 { font-size: 0.65rem; }
+            .tab-btn { font-size: 0.4rem; padding: 6px 8px; }
+        }
+        @media (max-width: 768px) {
+            #zoneContainer { flex-wrap: wrap; overflow-y: auto; }
+            .zone-column { min-width: 45% !important; max-width: 48% !important; flex: 0 0 48% !important; margin-bottom: 4px; }
+            .header h1 { font-size: 0.55rem; }
+            .header-subtitle { font-size: 0.35rem; }
+            .tab-btn { font-size: 0.35rem; padding: 4px 6px; }
+            .last-update, .countdown { font-size: 0.32rem; }
+            .dashboard-filters { gap: 3px; padding: 2px 4px; }
+            .dash-stat .num { font-size: 0.25rem; }
+        }
+        @media (max-width: 480px) {
+            #zoneContainer { flex-direction: column; overflow-y: auto; height: auto !important; }
+            .zone-column { min-width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; }
+            .header { padding: 4px 6px; gap: 3px; }
+            .header h1 { font-size: 0.5rem; }
+            .header-subtitle { font-size: 0.3rem; display: none; }
+            .tab-btn { font-size: 0.3rem; padding: 3px 5px; }
+            .tab-nav { overflow-x: auto; padding: 0 3px; }
+            .dashboard-filters { flex-direction: column; align-items: flex-start; gap: 2px; }
+            .last-update, .countdown { font-size: 0.28rem; }
+            .refresh-btn, .fullscreen-btn { width: 24px; height: 24px; font-size: 0.5rem; }
+            .slideshow-nav-btn { padding: 2px 5px; font-size: 0.4rem; min-width: 24px; }
+            .slideshow-counter { font-size: 0.4rem; min-width: 60px; }
+        }
+
+        .tab-content.active { touch-action: pan-x pan-y pinch-zoom; }
+        .tab-btn, button, select, input, .filter-btn,
+        .jenis-filter-select, .status-filter-select { touch-action: manipulation; }
+
+        .exit-fullscreen-btn {
+            position: fixed; top: 2px; right: 3px; z-index: 10001;
+            background: #c62828; color: #fff; border: none;
+            padding: 1.5px 3px; border-radius: 2px; cursor: pointer;
+            font-weight: 700; font-size: 0.18rem; display: none;
+        }
+        .exit-fullscreen-btn.show { display: block !important; }
+
+        .loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); display: flex; align-items: center;
+            justify-content: center; z-index: 9999; flex-direction: column; gap: 4px;
+        }
+        .loading-overlay.hidden { display: none; }
+        .spinner {
+            width: 20px; height: 20px; border: 2px solid #333;
+            border-top: 2px solid var(--accent); border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { color: #fff; font-size: 0.5rem; }
+
+        .notifikasi {
+            position: fixed; bottom: 20px; right: 20px;
+            padding: 8px 14px; border-radius: 6px; color: #fff;
+            font-weight: 600; z-index: 10002; font-size: 0.45rem;
+            max-width: 280px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; gap: 8px;
+            border-left: 4px solid rgba(255,255,255,0.5);
+        }
+        .notifikasi.show { transform: translateX(0); }
+        .notifikasi-berjaya { background: linear-gradient(135deg, #1b5e20, #2e7d32); border-left-color: #4caf50; }
+        .notifikasi-gagal { background: linear-gradient(135deg, #b71c1c, #c62828); border-left-color: #ff5252; }
+        .notifikasi-amaran { background: linear-gradient(135deg, #e65100, #f57f17); border-left-color: #ffb74d; color: #fff; }
+        .notifikasi-maklumat { background: linear-gradient(135deg, #0d47a1, #1565c0); border-left-color: #64b5f6; }
+        .notifikasi .notif-icon { font-size: 0.6rem; flex-shrink: 0; }
+        .notifikasi .notif-text { flex: 1; line-height: 1.3; }
+
+        /* === MODAL POPUP === */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: all; }
+        .modal-card {
+            background: #1a1a1a; border: 1px solid var(--accent);
+            border-radius: 8px; padding: 15px; max-width: 400px;
+            width: 90%; max-height: 80vh; overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .modal-overlay.show .modal-card { transform: scale(1); }
+        .modal-close {
+            position: absolute; top: 8px; right: 8px;
+            background: #c62828; color: #fff; border: none;
+            width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; font-size: 0.7rem;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease; z-index: 1;
+        }
+        .modal-close:hover { background: #f44336; transform: scale(1.1); }
+        .modal-header { text-align: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+        .modal-icon { font-size: 2rem; display: block; margin-bottom: 5px; }
+        .modal-callsign { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 3px; }
+        .modal-plate { font-size: 0.6rem; color: var(--text-secondary); font-weight: 600; }
+        .modal-body { display: grid; gap: 6px; }
+        .modal-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 6px 8px; background: rgba(255,255,255,0.03);
+            border-radius: 4px; border: 0.3px solid rgba(255,255,255,0.05);
+        }
+        .modal-label { font-size: 0.45rem; color: #888; font-weight: 600; text-transform: uppercase; flex: 1; }
+        .modal-value { font-size: 0.5rem; color: #fff; font-weight: 700; text-align: right; flex: 2; word-break: break-word; }
+        .modal-status-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.5rem; font-weight: 700; }
+        .modal-status-badge.status-baik { background: #2e7d32; color: #fff; }
+        .modal-status-badge.status-rosak-minor { background: #f57f17; color: #000; }
+        .modal-status-badge.status-rosak { background: #c62828; color: #fff; }
+        .modal-status-badge.status-dipulangkan { background: #1565c0; color: #fff; }
+        .modal-status-badge.status-unknown { background: #616161; color: #fff; }
+        .modal-footer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; gap: 5px; justify-content: center; flex-wrap: wrap; }
+        .modal-btn {
+            background: #333; color: #fff; border: 0.5px solid var(--border);
+            padding: 5px 10px; border-radius: 4px; cursor: pointer;
+            font-size: 0.4rem; font-weight: 600; transition: all 0.2s ease;
+            touch-action: manipulation;
+        }
+        .modal-btn:hover { background: #555; }
+        .modal-btn.btn-copy { background: #1565c0; }
+        .modal-btn.btn-copy:hover { background: #1976d2; }
+        .modal-btn.btn-close { background: #c62828; }
+        .modal-btn.btn-close:hover { background: #f44336; }
+
+        @media (max-width: 480px) {
+            .modal-card { padding: 10px; width: 95%; max-height: 85vh; }
+            .modal-callsign { font-size: 0.8rem; }
+            .modal-row { padding: 4px 6px; gap: 4px; }
+            .modal-label { font-size: 0.38rem; }
+            .modal-value { font-size: 0.42rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div class="loading-text">MEMUATKAN DATA...</div></div>
+    <div class="header">
+        <div class="header-left"><div class="header-logo">🚒</div><div><h1>DASHBOARD JENTERA BOMBA</h1><div class="header-subtitle">NEGERI JOHOR • PEMANTAUAN ASET</div></div></div>
+        <div class="header-right">
+            <span class="last-update" id="lastUpdate">-</span>
+            <span class="countdown" id="countdown">-</span>
+            <button class="fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreenDashboard()" title="FULL SCREEN (F)">⛶</button>
+            <button class="refresh-btn" id="refreshBtn" onclick="loadAllData()" title="REFRESH DATA (Ctrl+R)"><span class="refresh-icon">🔄</span></button>
+        </div>
+    </div>
+    <div class="tab-nav">
+        <button class="tab-btn tab-cfrt active" onclick="switchTab('cfrt')">🚒 RESCUE TENDER</button>
+        <button class="tab-btn tab-emrs" onclick="switchTab('emrs')">🚑 EMRS</button>
+        <button class="tab-btn tab-water" onclick="switchTab('water')">💧 WATER TANKER</button>
+        <button class="tab-btn tab-dashboard" onclick="switchTab('dashboard')">📊 DASHBOARD JENTERA</button>
+    </div>
+    <div class="tab-content active" id="tab-cfrt"><div class="container"><div id="dataContent-cfrt" style="display:none"><div class="stats-row" id="statsRow-cfrt"></div><div class="charts-row"><div class="chart-card"><h3>📊 STATUS JENTERA</h3><div class="chart-wrapper"><canvas id="chartStatus-cfrt"></canvas></div></div><div class="chart-card"><h3>📍 JENTERA MENGIKUT ZON</h3><div class="chart-wrapper"><canvas id="chartZon-cfrt"></canvas></div></div></div><div class="table-card"><h3>📋 SENARAI JENTERA <button class="export-btn" onclick="eksportKeExcel('cfrt')">📥 EKSPORT CSV</button></h3><div class="table-toolbar"><input type="text" id="searchInput-cfrt" placeholder="🔍 CARI (CALLSIGN / PLATE / LOKASI)..."><select id="filterStatus-cfrt"><option value="">📌 SEMUA STATUS</option></select><select id="filterZon-cfrt"><option value="">📍 SEMUA ZON</option></select></div><div class="table-wrapper"><table><thead><tr><th>BIL</th><th>CALLSIGN</th><th>PLATE</th><th>MODEL</th><th>JENIS</th><th>ASAL</th><th>LOKASI</th><th>ZON</th><th>STATUS</th><th>KEROSAKAN</th><th>LAIN</th></tr></thead><tbody id="tableBody-cfrt"></tbody></table></div><div class="row-count" id="rowCount-cfrt">-</div></div></div></div></div>
+    <div class="tab-content" id="tab-emrs"><div class="container"><div id="dataContent-emrs" style="display:none"><div class="stats-row" id="statsRow-emrs"></div><div class="charts-row"><div class="chart-card"><h3>📊 STATUS JENTERA</h3><div class="chart-wrapper"><canvas id="chartStatus-emrs"></canvas></div></div><div class="chart-card"><h3>📍 JENTERA MENGIKUT ZON</h3><div class="chart-wrapper"><canvas id="chartZon-emrs"></canvas></div></div></div><div class="table-card"><h3>📋 SENARAI JENTERA <button class="export-btn" onclick="eksportKeExcel('emrs')">📥 EKSPORT CSV</button></h3><div class="table-toolbar"><input type="text" id="searchInput-emrs" placeholder="🔍 CARI (CALLSIGN / PLATE / LOKASI)..."><select id="filterStatus-emrs"><option value="">📌 SEMUA STATUS</option></select><select id="filterZon-emrs"><option value="">📍 SEMUA ZON</option></select></div><div class="table-wrapper"><table><thead><tr><th>BIL</th><th>CALLSIGN</th><th>PLATE</th><th>MODEL</th><th>JENIS</th><th>ASAL</th><th>LOKASI</th><th>ZON</th><th>STATUS</th><th>KEROSAKAN</th><th>LAIN</th></tr></thead><tbody id="tableBody-emrs"></tbody></table></div><div class="row-count" id="rowCount-emrs">-</div></div></div></div></div>
+    <div class="tab-content" id="tab-water"><div class="container"><div id="dataContent-water" style="display:none"><div class="stats-row" id="statsRow-water"></div><div class="charts-row"><div class="chart-card"><h3>📊 STATUS JENTERA</h3><div class="chart-wrapper"><canvas id="chartStatus-water"></canvas></div></div><div class="chart-card"><h3>📍 JENTERA MENGIKUT ZON</h3><div class="chart-wrapper"><canvas id="chartZon-water"></canvas></div></div></div><div class="table-card"><h3>📋 SENARAI JENTERA <button class="export-btn" onclick="eksportKeExcel('water')">📥 EKSPORT CSV</button></h3><div class="table-toolbar"><input type="text" id="searchInput-water" placeholder="🔍 CARI (CALLSIGN / PLATE / LOKASI)..."><select id="filterStatus-water"><option value="">📌 SEMUA STATUS</option></select><select id="filterZon-water"><option value="">📍 SEMUA ZON</option></select></div><div class="table-wrapper"><table><thead><tr><th>BIL</th><th>CALLSIGN</th><th>PLATE</th><th>MODEL</th><th>JENIS</th><th>ASAL</th><th>LOKASI</th><th>ZON</th><th>STATUS</th><th>KEROSAKAN</th><th>LAIN</th></tr></thead><tbody id="tableBody-water"></tbody></table></div><div class="row-count" id="rowCount-water">-</div></div></div></div></div>
+    <div class="tab-content" id="tab-dashboard"><div class="container"><div id="dataContent-dashboard" style="display:none"><div class="dashboard-filters" id="dashboardFilters">
+        <span style="font-size:0.14rem;color:var(--text-secondary)">TAPIS:</span>
+        <div class="jenis-filter-dropdown" id="jenisFilterDropdown">
+            <div class="jenis-filter-select" onclick="toggleJenisFilter()">
+                <span id="jenisFilterText">🚒 RT</span>
+                <span class="selected-count" id="jenisFilterCount">1</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="jenis-filter-options" id="jenisFilterOptions">
+                <label class="jenis-filter-option"><input type="checkbox" value="cfrt" checked onchange="applyJenisFilter()"><span>🚒 RT</span><span class="count-badge" id="countCfrt">0</span></label>
+                <label class="jenis-filter-option"><input type="checkbox" value="emrs" onchange="applyJenisFilter()"><span>🚑 EMRS</span><span class="count-badge" id="countEmrs">0</span></label>
+                <label class="jenis-filter-option"><input type="checkbox" value="water" onchange="applyJenisFilter()"><span>💧 WTR</span><span class="count-badge" id="countWater">0</span></label>
+            </div>
+        </div>
+        <span style="font-size:0.14rem;color:var(--text-secondary);margin-left:4px;">JML: <span id="countAll" style="color:#fff;font-weight:700;">0</span></span>
+    </div><div style="display:flex;justify-content:flex-end;margin-bottom:1px;gap:2px;" id="zoomBtnContainer">
+        <button class="zoom-btn slideshow-btn" id="slideshowBtn" onclick="toggleSlideshow()" title="SLIDE SHOW ZON">▶️ SLIDE</button>
+        <button class="zoom-btn" id="zoomInBtn" onclick="toggleZoomDashboard()">🔍 ZOOM</button>
+    </div>
+    <div class="slideshow-nav" id="slideshowNav" style="display:none;">
+        <button class="slideshow-nav-btn" onclick="prevZone()" title="ZON SEBELUM">◀</button>
+        <span class="slideshow-counter" id="slideshowCounter">ZON 1 / 5</span>
+        <button class="slideshow-nav-btn" onclick="nextZone()" title="ZON SETERUSNYA">▶</button>
+        <button class="slideshow-nav-btn" onclick="toggleAutoSlideshow()" id="slideshowAutoBtn" title="AUTO PLAY">⏯️</button>
+        <button class="slideshow-nav-btn slideshow-stop" onclick="stopSlideshow()" title="BERHENTI">⏹️</button>
+    </div>
+    <div class="stats-filter-row"><div class="dashboard-stats" id="dashStats"></div><div class="status-filter-container" id="statusFilterContainer"><span class="status-filter-label">🔽 STATUS:</span><div class="status-filter-dropdown" id="statusFilterDropdown"><div class="status-filter-select" onclick="toggleStatusFilter()"><span id="statusFilterText">SEMUA</span><span class="selected-count" id="statusFilterCount">0</span><span class="arrow">▼</span></div><div class="status-filter-options" id="statusFilterOptions"><label class="status-filter-option"><input type="checkbox" value="BAIK" onchange="applyStatusFilter()"><span class="color-dot baik"></span> BAIK</label><label class="status-filter-option"><input type="checkbox" value="ROSAK MINOR" onchange="applyStatusFilter()"><span class="color-dot rosak-minor"></span> ROSAK MINOR</label><label class="status-filter-option"><input type="checkbox" value="ROSAK" onchange="applyStatusFilter()"><span class="color-dot rosak"></span> ROSAK</label><label class="status-filter-option"><input type="checkbox" value="DIPULANGKAN" onchange="applyStatusFilter()"><span class="color-dot dipulangkan"></span> DIPULANGKAN</label><label class="status-filter-option"><input type="checkbox" value="LAIN" onchange="applyStatusFilter()"><span class="color-dot lain"></span> LAIN-LAIN</label></div></div></div></div><div id="zoneContainer"></div></div></div></div>
+    
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+        <div class="modal-card" id="modalCard" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-header" id="modalHeader"></div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="modalFooter"></div>
+        </div>
+    </div>
+
+    <button class="exit-fullscreen-btn" id="exitFullscreenBtn" onclick="toggleZoomDashboard()">✕</button>
+    <div class="footer">&copy; 2026 PGO JOHOR</div>
+
+    <script>
+        const U={cfrt:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=0&single=true&output=csv',emrs:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=795399708&single=true&output=csv',water:'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=290336578&single=true&output=csv'};
+        const R=60,MX=3;let D={cfrt:[],emrs:[],water:[]},T='cfrt',F=['cfrt'],II=null,SS=R*60,FF=false,SF=[];
+        let CC={cfrt:{s:null,z:null},emrs:{s:null,z:null},water:{s:null,z:null}};
+        let isFullscreenDashboard=false,slideshowActive=false,slideshowAuto=false,slideshowInterval=null,currentSlideZone=0;
+        const zoneOrder=['ZON 1','ZON 2','ZON 3','ZON 4','BENGKEL KJT BOMBA'];
+        const zoneDisplayNames=['ZON 1','ZON 2','ZON 3','ZON 4','🔧 BENGKEL'];
+
+        const BALAI_ZON = {
+            'ZON 1': ['BALAI BOMBA DAN PENYELAMAT LARKIN','BALAI BOMBA DAN PENYELAMAT PASIR GUDANG','BALAI BOMBA DAN PENYELAMAT JOHOR JAYA','BALAI BOMBA DAN PENYELAMAT SKUDAI','BALAI BOMBA DAN PENYELAMAT ISKANDAR PUTERI','BALAI BOMBA DAN PENYELAMAT TEBRAU','BALAI BOMBA DAN PENYELAMAT PEKAN NENAS','BALAI BOMBA DAN PENYELAMAT PONTIAN','BALAI BOMBA DAN PENYELAMAT PONTIAN BARU','BALAI BOMBA DAN PENYELAMAT KULAI','BALAI BOMBA DAN PENYELAMAT BANDAR BARU KULAI','BALAI BOMBA DAN PENYELAMAT KEMPAS','BALAI BOMBA DAN PENYELAMAT FIRE POST BENUT'],
+            'ZON 2': ['BALAI BOMBA DAN PENYELAMAT KOTA TINGGI','BALAI BOMBA DAN PENYELAMAT SUNGAI RENGIT','BALAI BOMBA DAN PENYELAMAT BANDAR PENAWAR','BALAI BOMBA DAN PENYELAMAT MERSING','BALAI BOMBA DAN PENYELAMAT ENDAU','BALAI BOMBA DAN PENYELAMAT SEBANA COVE','BALAI BOMBA DAN PENYELAMAT PUNGGAI','BALAI BOMBA DAN PENYELAMAT BANDAR TENGGARA'],
+            'ZON 3': ['BALAI BOMBA DAN PENYELAMAT PENGGARAM','BALAI BOMBA DAN PENYELAMAT KLUANG','BALAI BOMBA DAN PENYELAMAT BATU PAHAT','BALAI BOMBA DAN PENYELAMAT RENGIT','BALAI BOMBA DAN PENYELAMAT RENGGAM','BALAI BOMBA DAN PENYELAMAT YONG PENG','BALAI BOMBA DAN PENYELAMAT AYER HITAM','BALAI BOMBA DAN PENYELAMAT FIRE POST PARIT SULONG'],
+            'ZON 4': ['BALAI BOMBA DAN PENYELAMAT MUAR','BALAI BOMBA DAN PENYELAMAT BANDAR BARU SEGAMAT','BALAI BOMBA DAN PENYELAMAT SEGAMAT','BALAI BOMBA DAN PENYELAMAT LABIS','BALAI BOMBA DAN PENYELAMAT BUKIT GAMBIR','BALAI BOMBA DAN PENYELAMAT TANGKAK','BALAI BOMBA DAN PENYELAMAT PAGOH']
+        };
+
+        function N(m,j='maklumat'){const old=document.querySelectorAll('.notifikasi');old.forEach((o,i)=>{if(i<old.length-2){o.style.transform='translateX(120%)';setTimeout(()=>o.remove(),400)}});const icons={berjaya:'✅',gagal:'❌',amaran:'⚠️',maklumat:'ℹ️'};const n=document.createElement('div');n.className=`notifikasi notifikasi-${j}`;n.innerHTML=`<span class="notif-icon">${icons[j]||'ℹ️'}</span><span class="notif-text">${m}</span>`;document.body.appendChild(n);setTimeout(()=>n.classList.add('show'),50);setTimeout(()=>{n.style.transform='translateX(120%)';setTimeout(()=>n.remove(),400)},3500)}
+        function db(f,t){let p;return function(...a){clearTimeout(p);p=setTimeout(()=>f.apply(this,a),t)}}
+        function PP(t){const r=[];let w=[],f='',q=false;for(let i=0;i<t.length;i++){const c=t[i];if(q){if(c==='"'){if(i+1<t.length&&t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}else{if(c==='"')q=true;else if(c===','){w.push(f.trim());f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&i+1<t.length&&t[i+1]==='\n')i++;w.push(f.trim());if(w.length>1||w[0]!=='')r.push(w);w=[];f=''}else f+=c}}w.push(f.trim());if(w.length>1||w[0]!=='')r.push(w);return r}
+        function HH(h){return h.replace(/\s+/g,' ').trim()}
+        function OO(h,r){const ch=h.map(HH);return r.map(rw=>{const o={};ch.forEach((h,i)=>{o[h]=rw[i]!==undefined?rw[i]:''});return o})}
+        function G(i,f){if(i[f]!==undefined)return i[f];const n=f.replace(/\s+/g,' ').trim();for(const k in i){if(k.replace(/\s+/g,' ').trim()===n)return i[k]}return''}
+        function KK(t,d){try{localStorage.setItem(`j_${t}`,JSON.stringify({data:d,t:Date.now(),l:5*60*1000}))}catch(e){}}
+        function LL(t){try{const c=localStorage.getItem(`j_${t}`);if(!c)return null;const{data,t:tt,l}=JSON.parse(c);if(Date.now()-tt>l){localStorage.removeItem(`j_${t}`);return null}return data}catch{return null}}
+
+        async function QQ(tab,max=MX){const u=U[tab],dc=document.getElementById(`dataContent-${tab}`);if(!u){if(dc)dc.style.display='none';D[tab]=[];return}const cd=LL(tab);if(cd&&cd.length>0){D[tab]=cd;if(dc)dc.style.display='block';EE(tab);UU(tab);Rc(tab);Rt(tab)}let le=null;for(let c=0;c<max;c++){try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw new Error(`HTTP ${r.status}`);const ct=await r.text(),ar=PP(ct);if(ar.length<2)throw new Error('KOSONG');const fd=OO(ar[0],ar.slice(1));D[tab]=fd;KK(tab,fd);if(dc)dc.style.display='block';EE(tab);UU(tab);Rc(tab);Rt(tab);return}catch(e){le=e;if(c<max-1)await new Promise(r=>setTimeout(r,2000*(c+1)))}}if(!cd||cd.length===0){if(dc)dc.style.display='none';D[tab]=[]}}
+
+        async function loadAllData(){const btn=document.getElementById('refreshBtn');if(btn){btn.classList.add('loading');btn.querySelector('.refresh-icon').textContent='⟳'}document.getElementById('loadingOverlay').classList.remove('hidden');VV();await Promise.all([QQ('cfrt'),QQ('emrs'),QQ('water')]);updateJenisFilterDisplay();WW();document.getElementById('loadingOverlay').classList.add('hidden');XX();if(btn){btn.classList.remove('loading');btn.querySelector('.refresh-icon').textContent='🔄'}N('✅ SEMUA DATA BERJAYA DIMUATKAN','berjaya')}
+        function VV(){document.getElementById('lastUpdate').textContent='📅 '+new Date().toLocaleString('ms-MY',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).toUpperCase()}
+        function XX(){SS=R*60;ZZ();if(II)clearInterval(II);II=setInterval(()=>{SS--;if(SS<=0){clearInterval(II);loadAllData()}ZZ()},1000)}
+        function ZZ(){const m=Math.floor(SS/60),s=SS%60;document.getElementById('countdown').textContent=`⏳ REFRESH DALAM: ${m}:${s.toString().padStart(2,'0')}`}
+
+        function switchTab(tab){T=tab;document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`.tab-btn.tab-${tab}`).classList.add('active');document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.getElementById(`tab-${tab}`).classList.add('active');if(FF)toggleZoomDashboard(false);if(slideshowActive)stopSlideshow();if(tab==='dashboard')WW();else setTimeout(()=>{Rc(tab)},100)}
+        function AA(s){if(!s)return'U';const t=s.toUpperCase();if(t.includes('BAIK')&&t.includes('BEROPERASI'))return'B';if(t.includes('ROSAK MINOR'))return'RM';if(t.includes('ROSAK')&&!t.includes('MINOR'))return'R';if(t.includes('DIPULANGKAN'))return'D';return'U'}
+        function BB(tab){const d=D[tab];if(!d.length)return 0;let t=0;d.forEach(i=>{const c=AA(G(i,'STATUS JENTERA')||'');if(c==='B'||c==='RM')t++});return((t/d.length)*100).toFixed(1)}
+
+        function UU(tab){const d=D[tab];if(!d.length)return;let b=0,m=0,r=0,p=0,u=0;d.forEach(i=>{switch(AA(G(i,'STATUS JENTERA')||'')){case'B':b++;break;case'RM':m++;break;case'R':r++;break;case'D':p++;break;default:u++}});const k=BB(tab),cl=k>=80?'green':k>=50?'orange':'';document.getElementById(`statsRow-${tab}`).innerHTML=`<div class="stat-card accent"><div class="stat-number">${d.length}</div><div class="stat-label">JUMLAH JENTERA</div></div><div class="stat-card green"><div class="stat-number">${b}</div><div class="stat-label">STATUS BAIK</div></div><div class="stat-card orange"><div class="stat-number">${m}</div><div class="stat-label">ROSAK MINOR</div></div><div class="stat-card"><div class="stat-number" style="color:#d32f2f">${r}</div><div class="stat-label">ROSAK</div></div><div class="stat-card blue"><div class="stat-number">${p}</div><div class="stat-label">DIPULANGKAN</div></div><div class="stat-card ${cl}"><div class="stat-number">${k}%</div><div class="stat-label">KADAR KETERSEDIAAN</div></div>${u>0?`<div class="stat-card"><div class="stat-number">${u}</div><div class="stat-label">STATUS LAIN</div></div>`:''}`}
+
+        function Rc(tab){const d=D[tab];if(!d.length)return;const sc={};d.forEach(i=>{const c=AA(G(i,'STATUS JENTERA')||'');const lm={B:'BAIK & BEROPERASI',RM:'ROSAK MINOR',R:'ROSAK',D:'TELAH DIPULANGKAN',U:'LAIN-LAIN'};const l=lm[c]||'LAIN-LAIN';sc[l]=(sc[l]||0)+1});const sl=Object.keys(sc),sv=Object.values(sc),ts=sv.reduce((a,b)=>a+b,0);if(CC[tab].s)CC[tab].s.destroy();const cs=document.getElementById(`chartStatus-${tab}`);if(cs){CC[tab].s=new Chart(cs.getContext('2d'),{type:'doughnut',data:{labels:sl,datasets:[{data:sv,backgroundColor:['#2e7d32','#f9a825','#d32f2f','#1565c0','#616161'],borderColor:'#1a1a1a',borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{color:'#ccc',padding:8,font:{size:6},usePointStyle:true,pointStyleWidth:8}},datalabels:{color:'#fff',font:{weight:'bold',size:6},formatter:(v)=>{const p=((v/ts)*100).toFixed(1);return p>8?p+'%':''}}}},plugins:[ChartDataLabels]})}const zc={};d.forEach(i=>{const z=(G(i,'ZON')||'').trim().toUpperCase();if(z)zc[z]=(zc[z]||0)+1});const zl=Object.keys(zc).sort(),zv=zl.map(z=>zc[z]);if(CC[tab].z)CC[tab].z.destroy();const cz=document.getElementById(`chartZon-${tab}`);if(cz){CC[tab].z=new Chart(cz.getContext('2d'),{type:'bar',data:{labels:zl,datasets:[{data:zv,backgroundColor:'rgba(211,47,47,0.9)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},datalabels:{anchor:'end',align:'top',color:'#fff',font:{weight:'bold',size:6},formatter:(v)=>v>0?v:''}},scales:{y:{ticks:{color:'#aaa',font:{size:5}},grid:{color:'rgba(255,255,255,0.05)'}},x:{ticks:{color:'#aaa',font:{size:5}}}}},plugins:[ChartDataLabels]})}}
+
+        function EE(tab){const d=D[tab];if(!d.length)return;const ss=new Set(),zs=new Set();d.forEach(i=>{const s=(G(i,'STATUS JENTERA')||'').trim();if(s)ss.add(s.toUpperCase());const z=(G(i,'ZON')||'').trim();if(z)zs.add(z.toUpperCase())});const fs=document.getElementById(`filterStatus-${tab}`);if(fs)fs.innerHTML='<option value="">📌 SEMUA STATUS</option>'+[...ss].sort().map(s=>`<option value="${s.replace(/"/g,'&quot;')}">${s}</option>`).join('');const fz=document.getElementById(`filterZon-${tab}`);if(fz)fz.innerHTML='<option value="">📍 SEMUA ZON</option>'+[...zs].sort().map(z=>`<option value="${z.replace(/"/g,'&quot;')}">${z}</option>`).join('')}
+
+        function JJ(tab){const d=D[tab],s=(document.getElementById(`searchInput-${tab}`)?.value||'').toLowerCase().trim(),fs=document.getElementById(`filterStatus-${tab}`)?.value||'',fz=document.getElementById(`filterZon-${tab}`)?.value||'';return d.filter(i=>{if(s&&!['CALLSIGN','PLATE','LOKASI SEMASA','PENEMPATAN ASAL','MODEL JENTERA','JENIS JENTERA'].some(f=>(G(i,f)||'').toUpperCase().includes(s.toUpperCase())))return false;if(fs&&(G(i,'STATUS JENTERA')||'').trim().toUpperCase()!==fs.toUpperCase())return false;if(fz&&(G(i,'ZON')||'').trim().toUpperCase()!==fz.toUpperCase())return false;return true})}
+
+        function $B(s){switch(AA(s)){case'B':return'<span class="badge badge-baik">BAIK</span>';case'RM':return'<span class="badge badge-rosak-minor">ROSAK MINOR</span>';case'R':return'<span class="badge badge-rosak">ROSAK</span>';case'D':return'<span class="badge badge-dipulangkan">DIPULANGKAN</span>';default:return(s||'-').toUpperCase()}}
+
+        function CP(t){navigator.clipboard.writeText(t).then(()=>N('📋 CALLSIGN DISALIN: '+t,'berjaya')).catch(()=>{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);N('📋 '+t,'maklumat')})}
+
+        function Rt(tab){const d=D[tab];if(!d.length)return;const f=JJ(tab),tb=document.getElementById(`tableBody-${tab}`);if(!tb)return;tb.innerHTML=f.length===0?'<tr><td colspan="11" style="text-align:center;padding:15px;color:#888;">TIADA DATA SEPADAN.</td></tr>':f.map((i,idx)=>{const c=(G(i,'CALLSIGN')||'-').toUpperCase();const itemData=encodeURIComponent(JSON.stringify({callsign:c,plate:(G(i,'PLATE')||'-').toUpperCase(),model:(G(i,'MODEL JENTERA')||'-').toUpperCase(),jenis:(G(i,'JENIS JENTERA')||'-').toUpperCase(),asal:(G(i,'PENEMPATAN ASAL')||'-').toUpperCase(),lokasi:(G(i,'LOKASI SEMASA')||'-').toUpperCase(),zon:(G(i,'ZON')||'-').toUpperCase(),status:G(i,'STATUS JENTERA')||'TIADA',kerosakan:(G(i,'STATUS KEROSAKKAN')||'-').toUpperCase(),lain:(G(i,'LAIN-LAIN MAKLUMAT')||'-').toUpperCase(),_j:tab,_icon:tab==='cfrt'?'🚒':tab==='emrs'?'🚑':'💧',_tc:tab==='cfrt'?'type-cfrt':tab==='emrs'?'type-emrs':'type-water'}));return`<tr onclick="showJenteraModalFromTable('${itemData}')" title="KLIK UNTUK LIHAT MAKLUMAT PENUH"><td>${idx+1}</td><td><strong>${c}</strong></td><td>${(G(i,'PLATE')||'-').toUpperCase()}</td><td>${(G(i,'MODEL JENTERA')||'-').toUpperCase()}</td><td>${(G(i,'JENIS JENTERA')||'-').toUpperCase()}</td><td>${(G(i,'PENEMPATAN ASAL')||'-').toUpperCase()}</td><td>${(G(i,'LOKASI SEMASA')||'-').toUpperCase()}</td><td>${(G(i,'ZON')||'-').toUpperCase()}</td><td>${$B(G(i,'STATUS JENTERA')||'')}</td><td style="max-width:150px">${(G(i,'STATUS KEROSAKKAN')||'-').toUpperCase()}</td><td style="max-width:150px">${(G(i,'LAIN-LAIN MAKLUMAT')||'-').toUpperCase()}</td></tr>`}).join('');const rc=document.getElementById(`rowCount-${tab}`);if(rc)rc.textContent=`MENUNJUKKAN ${f.length} DARIPADA ${d.length} REKOD • KLIK BARIS UNTUK LIHAT MAKLUMAT PENUH`}
+
+        function eksportKeExcel(tab){const d=JJ(tab);if(!d.length){N('⚠️ TIADA DATA UNTUK DIEKSPORT','amaran');return}let csv='\uFEFFBIL,CALLSIGN,PLATE,MODEL,JENIS,ASAL,LOKASI,ZON,STATUS,KEROSAKAN,LAIN\n';d.forEach((i,idx)=>{csv+=`${idx+1},"${G(i,'CALLSIGN')||''}","${G(i,'PLATE')||''}","${G(i,'MODEL JENTERA')||''}","${G(i,'JENIS JENTERA')||''}","${G(i,'PENEMPATAN ASAL')||''}","${G(i,'LOKASI SEMASA')||''}","${G(i,'ZON')||''}","${G(i,'STATUS JENTERA')||''}","${G(i,'STATUS KEROSAKKAN')||''}","${G(i,'LAIN-LAIN MAKLUMAT')||''}"\n`});const b=new Blob([csv],{type:'text/csv;charset=utf-8;'}),l=document.createElement('a');l.href=URL.createObjectURL(b);l.download=`jentera_${tab}_${new Date().toISOString().split('T')[0]}.csv`;l.click();N('📥 DATA BERJAYA DIEKSPORT! ('+d.length+' rekod)','berjaya')}
+
+        function getAll(){const a=[];D.cfrt.forEach(i=>a.push({...i,_j:'cfrt',_icon:'🚒',_tc:'type-cfrt'}));D.emrs.forEach(i=>a.push({...i,_j:'emrs',_icon:'🚑',_tc:'type-emrs'}));D.water.forEach(i=>a.push({...i,_j:'water',_icon:'💧',_tc:'type-water'}));return a}
+
+        function getItemByCallsign(callsign){const all=getAll();return all.find(i=>(G(i,'CALLSIGN')||'').toUpperCase()===callsign.toUpperCase())}
+        function showJenteraModalFromClick(element){const callsign=element.getAttribute('data-callsign');if(!callsign)return;const item=getItemByCallsign(callsign);if(item){showJenteraModal(item)}else{N('⚠️ DATA TIDAK DITEMUI','amaran')}}
+        function showJenteraModalFromTable(encodedData){try{const item=JSON.parse(decodeURIComponent(encodedData));showJenteraModal(item)}catch(e){N('⚠️ DATA TIDAK DAPAT DIPAPARKAN','amaran')}}
+
+        function showJenteraModal(item){
+            const overlay=document.getElementById('modalOverlay'),header=document.getElementById('modalHeader'),body=document.getElementById('modalBody'),footer=document.getElementById('modalFooter');
+            if(!overlay||!item)return;
+            const callsign=(item.callsign||G(item,'CALLSIGN')||'-').toUpperCase(),plate=(item.plate||G(item,'PLATE')||'-').toUpperCase(),model=(item.model||G(item,'MODEL JENTERA')||'-').toUpperCase(),jenis=(item.jenis||G(item,'JENIS JENTERA')||'-').toUpperCase(),asal=(item.asal||G(item,'PENEMPATAN ASAL')||'-').toUpperCase(),lokasi=(item.lokasi||G(item,'LOKASI SEMASA')||'-').toUpperCase(),zon=(item.zon||G(item,'ZON')||'-').toUpperCase(),status=item.status||G(item,'STATUS JENTERA')||'TIADA',kerosakan=(item.kerosakan||G(item,'STATUS KEROSAKKAN')||'-').toUpperCase(),lain=(item.lain||G(item,'LAIN-LAIN MAKLUMAT')||'-').toUpperCase();
+            const icon=item._icon||'🚒',jenisLabel=item._j==='cfrt'?'RESCUE TENDER':item._j==='emrs'?'EMRS':'WATER TANKER';
+            const statusClass=gC(status),statusLabels={'status-baik':'BAIK & BEROPERASI','status-rosak-minor':'ROSAK MINOR','status-rosak':'ROSAK','status-dipulangkan':'TELAH DIPULANGKAN','status-unknown':status||'TIADA MAKLUMAT'},statusDisplay=statusLabels[statusClass]||status;
+            header.innerHTML=`<span class="modal-icon">${icon}</span><div class="modal-callsign">${callsign}</div><div class="modal-plate">${plate}</div>`;
+            body.innerHTML=`<div class="modal-row"><span class="modal-label">JENIS JENTERA</span><span class="modal-value">${jenisLabel} (${jenis})</span></div><div class="modal-row"><span class="modal-label">MODEL</span><span class="modal-value">${model}</span></div><div class="modal-row"><span class="modal-label">NO. PLAT</span><span class="modal-value">${plate}</span></div><div class="modal-row"><span class="modal-label">PENEMPATAN ASAL</span><span class="modal-value">${asal}</span></div><div class="modal-row"><span class="modal-label">LOKASI SEMASA</span><span class="modal-value">${lokasi}</span></div><div class="modal-row"><span class="modal-label">ZON</span><span class="modal-value">${zon}</span></div><div class="modal-row"><span class="modal-label">STATUS</span><span class="modal-value"><span class="modal-status-badge ${statusClass}">${statusDisplay}</span></span></div><div class="modal-row"><span class="modal-label">STATUS KEROSAKAN</span><span class="modal-value">${kerosakan}</span></div><div class="modal-row"><span class="modal-label">LAIN-LAIN MAKLUMAT</span><span class="modal-value">${lain}</span></div>`;
+            footer.innerHTML=`<button class="modal-btn btn-copy" onclick="copyCallsign('${callsign.replace(/'/g,"\\'")}')">📋 SALIN CALLSIGN</button><button class="modal-btn btn-copy" onclick="copyAllInfo()">📋 SALIN SEMUA</button><button class="modal-btn btn-close" onclick="closeModal()">✕ TUTUP</button>`;
+            overlay.setAttribute('data-callsign',callsign);overlay.setAttribute('data-plate',plate);overlay.setAttribute('data-model',model);overlay.setAttribute('data-jenis',jenisLabel);overlay.setAttribute('data-asal',asal);overlay.setAttribute('data-lokasi',lokasi);overlay.setAttribute('data-zon',zon);overlay.setAttribute('data-status',statusDisplay);overlay.setAttribute('data-kerosakan',kerosakan);overlay.setAttribute('data-lain',lain);
+            overlay.classList.add('show');document.body.style.overflow='hidden';
+            setTimeout(()=>{const closeBtn=overlay.querySelector('.modal-close');if(closeBtn)closeBtn.focus()},300)}
+
+        function closeModal(event){if(event&&event.target!==document.getElementById('modalOverlay'))return;const overlay=document.getElementById('modalOverlay');if(overlay){overlay.classList.remove('show');document.body.style.overflow=''}}
+        function copyCallsign(callsign){navigator.clipboard.writeText(callsign).then(()=>N('📋 CALLSIGN DISALIN: '+callsign,'berjaya')).catch(()=>{const ta=document.createElement('textarea');ta.value=callsign;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);N('📋 '+callsign,'maklumat')})}
+        function copyAllInfo(){const overlay=document.getElementById('modalOverlay');const info=`CALLSIGN: ${overlay.getAttribute('data-callsign')||'-'}\nPLATE: ${overlay.getAttribute('data-plate')||'-'}\nMODEL: ${overlay.getAttribute('data-model')||'-'}\nJENIS: ${overlay.getAttribute('data-jenis')||'-'}\nPENEMPATAN ASAL: ${overlay.getAttribute('data-asal')||'-'}\nLOKASI SEMASA: ${overlay.getAttribute('data-lokasi')||'-'}\nZON: ${overlay.getAttribute('data-zon')||'-'}\nSTATUS: ${overlay.getAttribute('data-status')||'-'}\nKEROSAKAN: ${overlay.getAttribute('data-kerosakan')||'-'}\nLAIN-LAIN: ${overlay.getAttribute('data-lain')||'-'}`;navigator.clipboard.writeText(info).then(()=>N('📋 SEMUA MAKLUMAT DISALIN!','berjaya')).catch(()=>{const ta=document.createElement('textarea');ta.value=info;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);N('📋 SEMUA MAKLUMAT DISALIN!','maklumat')})}
+
+        function toggleJenisFilter(){document.getElementById('jenisFilterOptions').classList.toggle('show')}
+        function applyJenisFilter(){const opts=document.getElementById('jenisFilterOptions');const cbs=opts.querySelectorAll('input[type="checkbox"]');F=[];cbs.forEach(cb=>{if(cb.checked)F.push(cb.value)});updateJenisFilterDisplay();WW()}
+        function updateJenisFilterDisplay(){const txt=document.getElementById('jenisFilterText');const cnt=document.getElementById('jenisFilterCount');if(F.length===0){txt.textContent='TIADA PILIHAN';cnt.textContent='0';cnt.style.display='none'}else if(F.length===3){txt.textContent='🚒🚑💧 ALL';cnt.textContent='3';cnt.style.display='inline-block'}else{const labels={cfrt:'🚒 RT',emrs:'🚑 EMRS',water:'💧 WTR'};txt.textContent=F.map(f=>labels[f]||f).join(' ');cnt.textContent=F.length;cnt.style.display='inline-block'}}
+
+        function toggleStatusFilter(){document.getElementById('statusFilterOptions').classList.toggle('show')}
+        function applyStatusFilter(){const opts=document.getElementById('statusFilterOptions');const cbs=opts.querySelectorAll('input[type="checkbox"]');SF=[];cbs.forEach(cb=>{if(cb.checked)SF.push(cb.value)});updateStatusFilterDisplay();WW()}
+        function updateStatusFilterDisplay(){const txt=document.getElementById('statusFilterText');const cnt=document.getElementById('statusFilterCount');if(SF.length===0){txt.textContent='SEMUA';cnt.textContent='0';cnt.style.display='none'}else{txt.textContent=SF.join(', ');cnt.textContent=SF.length;cnt.style.display='inline-block'}}
+
+        document.addEventListener('click',function(e){const jd=document.getElementById('jenisFilterDropdown');if(jd&&!jd.contains(e.target)){document.getElementById('jenisFilterOptions').classList.remove('show')}const sd=document.getElementById('statusFilterDropdown');if(sd&&!sd.contains(e.target)){document.getElementById('statusFilterOptions').classList.remove('show')}});
+
+        function getF(){let a=getAll();if(F.length>0&&F.length<3){a=a.filter(i=>F.includes(i._j))}if(SF.length>0)a=a.filter(i=>{const sc=AA(G(i,'STATUS JENTERA')||'');const lm={B:'BAIK',RM:'ROSAK MINOR',R:'ROSAK',D:'DIPULANGKAN',U:'LAIN'};const l=lm[sc]||'LAIN';return SF.includes(l)});return a}
+        function gC(s){switch(AA(s)){case'B':return'status-baik';case'RM':return'status-rosak-minor';case'R':return'status-rosak';case'D':return'status-dipulangkan';default:return'status-unknown'}}
+
+        function renderBalaiColumn(namaPenuh, namaPendek, itemList){
+            let html=`<div class="balai-column"><div class="balai-column-header"><div class="balai-dot"></div><span class="balai-name" title="${namaPenuh}">${namaPendek}</span><span class="balai-count">${itemList.length}</span></div><div class="card-grid">`;
+            if(itemList.length>0){itemList.forEach(i=>{const c=(G(i,'CALLSIGN')||'-').toUpperCase();const pl=(G(i,'PLATE')||'-').toUpperCase();const st=G(i,'STATUS JENTERA')||'';html+=`<div class="jentera-card ${i._tc}" onclick="showJenteraModalFromClick(this)" data-callsign="${c.replace(/'/g,"\\'")}" title="KLIK UNTUK MAKLUMAT PENUH"><div class="card-icon">${i._icon}</div><div class="card-callsign">${c}</div><div class="card-plate">${pl}</div><div class="card-status ${gC(st)}">${st||'TIADA'}</div></div>`})}else{html+=`<div class="jentera-card empty-card" title="TIADA JENTERA"><div class="card-icon" style="opacity:0.5;">—</div><div class="card-callsign" style="color:#666;">KOSONG</div><div class="card-plate" style="color:#555;">—</div><div class="card-status" style="background:#333;color:#777;">TIADA</div></div>`}
+            html+=`</div></div>`;return html}
+
+        function WW(){
+            const dc=document.getElementById('dataContent-dashboard');const t=getAll().length;if(t===0){if(dc)dc.style.display='none';return}if(dc)dc.style.display='block';const a=getAll();
+            document.getElementById('countAll').textContent=getF().length;document.getElementById('countCfrt').textContent=a.filter(i=>i._j==='cfrt').length;document.getElementById('countEmrs').textContent=a.filter(i=>i._j==='emrs').length;document.getElementById('countWater').textContent=a.filter(i=>i._j==='water').length;
+            const f=getF();let b=0,m=0,r=0,p=0,u=0;f.forEach(i=>{switch(AA(G(i,'STATUS JENTERA')||'')){case'B':b++;break;case'RM':m++;break;case'R':r++;break;case'D':p++;break;default:u++}});
+            document.getElementById('dashStats').innerHTML=`<div class="dash-stat"><span class="num accent">${f.length}</span><span class="label">JML</span></div><div class="dash-stat"><span class="num green">${b}</span><span class="label">BAIK</span></div><div class="dash-stat"><span class="num orange">${m}</span><span class="label">MINOR</span></div><div class="dash-stat"><span class="num red">${r}</span><span class="label">ROSAK</span></div><div class="dash-stat"><span class="num blue">${p}</span><span class="label">PULANG</span></div>${u>0?`<div class="dash-stat"><span class="num">${u}</span><span class="label">LAIN</span></div>`:''}`;
+            const zm={};f.forEach(i=>{const lk=(G(i,'LOKASI SEMASA')||'').trim().toUpperCase();const zn=(G(i,'ZON')||'').trim().toUpperCase();const bl=(G(i,'LOKASI SEMASA')||'').trim().toUpperCase()||'TANPA BALAI';let zk=zn||'LAIN';if(lk.includes('BENGKEL')||lk.includes('KJT')){zk='BENGKEL KJT BOMBA'}if(!zm[zk])zm[zk]={};if(!zm[zk][bl])zm[zk][bl]=[];zm[zk][bl].push(i)});
+            const zcm={'ZON 1':'z1','ZON 2':'z2','ZON 3':'z3','ZON 4':'z4','BENGKEL KJT BOMBA':'bengkel'};const zo=['ZON 1','ZON 2','ZON 3','ZON 4','BENGKEL KJT BOMBA'];let h='';
+            zo.forEach(zk=>{const cc=zcm[zk]||'unknown';const dn=zk==='BENGKEL KJT BOMBA'?'🔧 BENGKEL':zk;const dataZon=zm[zk]||{};let tj=0;Object.values(dataZon).forEach(arr=>tj+=arr.length);
+                h+=`<div class="zone-column ${cc}"><div class="zone-column-header"><div class="zone-color ${cc}"></div><h3>${dn}</h3><span class="count-badge">${tj}</span></div><div class="zone-balai-container">`;
+                if(zk==='BENGKEL KJT BOMBA'){const sb=Object.keys(dataZon).sort();if(sb.length===0){h+=`<div class="balai-column" style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;color:#666;font-size:0.2rem;">TIADA JENTERA DI BENGKEL</div>`}else{sb.forEach(bn=>{const it=dataZon[bn];const sn=bn.replace('BALAI BOMBA DAN PENYELAMAT','BBP').replace('BALAI BOMBA','BB').substring(0,12);h+=renderBalaiColumn(bn,sn,it)})}}
+                else{const senaraiBalai=BALAI_ZON[zk]||[];senaraiBalai.forEach(bn=>{const bnUpper=bn.toUpperCase();let it=[];if(dataZon[bnUpper]){it=dataZon[bnUpper]}else{const keywords=bnUpper.replace('BALAI BOMBA DAN PENYELAMAT ','').replace('BALAI BOMBA ','').replace('BBP ','').replace('FIRE POST ','').trim();Object.keys(dataZon).forEach(key=>{if(key.includes(keywords)||keywords.includes(key)){const existing=new Set(it.map(x=>G(x,'CALLSIGN')));dataZon[key].forEach(j=>{if(!existing.has(G(j,'CALLSIGN'))){it.push(j);existing.add(G(j,'CALLSIGN'))}})}})}const sn=bn.replace('BALAI BOMBA DAN PENYELAMAT','BBP').replace('BALAI BOMBA','BB').replace('FIRE POST','FP').substring(0,12);h+=renderBalaiColumn(bn,sn,it)})}
+                h+=`</div></div>`});
+            document.getElementById('zoneContainer').innerHTML=h}
+
+        function toggleZoomDashboard(sn=true){const body=document.body,zb=document.getElementById('zoomInBtn'),eb=document.getElementById('exitFullscreenBtn'),df=document.getElementById('dashboardFilters'),zc=document.getElementById('zoomBtnContainer');if(!FF){body.classList.add('fullscreen-mode');eb.classList.add('show');zb.textContent='🔍 OUT';zb.classList.add('zoom-out');if(df)df.style.display='none';if(zc)zc.style.display='none';WW();if(sn)N('📺 ZOOM IN DIAKTIFKAN','maklumat')}else{body.classList.remove('fullscreen-mode');eb.classList.remove('show');zb.textContent='🔍 IN';zb.classList.remove('zoom-out');if(df)df.style.display='';if(zc)zc.style.display='';WW();if(sn)N('✅ ZOOM OUT','berjaya')}FF=!FF}
+
+        function toggleFullscreenDashboard(){
+            const body=document.body;const btn=document.getElementById('fullscreenBtn');
+            if(!isFullscreenDashboard){if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen()}else if(document.documentElement.webkitRequestFullscreen){document.documentElement.webkitRequestFullscreen()}else if(document.documentElement.msRequestFullscreen){document.documentElement.msRequestFullscreen()}
+            body.classList.add('fullscreen-dashboard');if(btn){btn.classList.add('active-fullscreen');btn.innerHTML='✕'}isFullscreenDashboard=true;N('📺 FULL SCREEN DIAKTIFKAN','maklumat')}
+            else{if(document.exitFullscreen){document.exitFullscreen()}else if(document.webkitExitFullscreen){document.webkitExitFullscreen()}else if(document.msExitFullscreen){document.msExitFullscreen()}
+            body.classList.remove('fullscreen-dashboard');if(btn){btn.classList.remove('active-fullscreen');btn.innerHTML='⛶'}isFullscreenDashboard=false;N('✅ FULL SCREEN DIMATIKAN','berjaya')}
+            setTimeout(()=>{if(T==='dashboard')WW()},300)}
+
+        document.addEventListener('fullscreenchange',handleFullscreenChange);document.addEventListener('webkitfullscreenchange',handleFullscreenChange);document.addEventListener('msfullscreenchange',handleFullscreenChange);
+        function handleFullscreenChange(){const isFull=document.fullscreenElement||document.webkitFullscreenElement||document.msFullscreenElement;if(!isFull&&isFullscreenDashboard){document.body.classList.remove('fullscreen-dashboard');const btn=document.getElementById('fullscreenBtn');if(btn){btn.classList.remove('active-fullscreen');btn.innerHTML='⛶'}isFullscreenDashboard=false;if(T==='dashboard')WW()}}
+        document.querySelector('.header').addEventListener('dblclick',function(e){if(e.target.tagName!=='BUTTON'){toggleFullscreenDashboard()}});
+        function detectDevice(){const w=window.innerWidth;const body=document.body;body.classList.remove('device-desktop','device-tablet','device-phone');if(w<=480){body.classList.add('device-phone')}else if(w<=1024){body.classList.add('device-tablet')}else{body.classList.add('device-desktop')}}
+        detectDevice();window.addEventListener('resize',()=>{detectDevice();if(T==='dashboard')WW()});
+
+        function toggleSlideshow(){
+            const btn=document.getElementById('slideshowBtn'),nav=document.getElementById('slideshowNav'),container=document.getElementById('zoneContainer'),filters=document.getElementById('dashboardFilters'),statsRow=document.querySelector('.stats-filter-row');
+            if(!slideshowActive){slideshowActive=true;if(btn)btn.classList.add('active-slideshow');if(btn)btn.textContent='⏹️ STOP';if(nav)nav.style.display='flex';if(container)container.classList.add('slideshow-mode');if(filters)filters.style.display='none';if(statsRow)statsRow.style.display='none';addSlideshowDots();currentSlideZone=0;slideToZone(currentSlideZone);N('📺 SLIDE SHOW DIAKTIFKAN - GUNA ◀ ▶ ATAU ARROW KEY','maklumat')}
+            else{stopSlideshow()}}
+        function stopSlideshow(){slideshowActive=false;slideshowAuto=false;if(slideshowInterval)clearInterval(slideshowInterval);const btn=document.getElementById('slideshowBtn'),nav=document.getElementById('slideshowNav'),container=document.getElementById('zoneContainer'),filters=document.getElementById('dashboardFilters'),statsRow=document.querySelector('.stats-filter-row'),dots=document.getElementById('slideshowDots');if(btn)btn.classList.remove('active-slideshow');if(btn)btn.textContent='▶️ SLIDE';if(nav)nav.style.display='none';if(container)container.classList.remove('slideshow-mode');if(filters)filters.style.display='';if(statsRow)statsRow.style.display='';if(dots)dots.remove();WW();N('✅ SLIDE SHOW DIMATIKAN','berjaya')}
+        function nextZone(){if(!slideshowActive)return;currentSlideZone++;if(currentSlideZone>=zoneOrder.length)currentSlideZone=0;slideToZone(currentSlideZone)}
+        function prevZone(){if(!slideshowActive)return;currentSlideZone--;if(currentSlideZone<0)currentSlideZone=zoneOrder.length-1;slideToZone(currentSlideZone)}
+        function slideToZone(index){const container=document.getElementById('zoneContainer');const columns=container.querySelectorAll('.zone-column');if(columns[index]){columns[index].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})}const counter=document.getElementById('slideshowCounter');if(counter){counter.textContent=`${zoneDisplayNames[index]} (${index+1}/${zoneOrder.length})`}updateSlideshowDots(index);currentSlideZone=index}
+        function toggleAutoSlideshow(){const btn=document.getElementById('slideshowAutoBtn');if(!slideshowAuto){slideshowAuto=true;if(btn)btn.textContent='⏸️';if(btn)btn.style.background='#4caf50';slideshowInterval=setInterval(()=>{nextZone()},5000);N('🔄 AUTO PLAY DIAKTIFKAN (5 SAAT/ZON)','maklumat')}else{slideshowAuto=false;if(slideshowInterval)clearInterval(slideshowInterval);if(btn)btn.textContent='⏯️';if(btn)btn.style.background='#333';N('⏸️ AUTO PLAY DIHENTIKAN','maklumat')}}
+        function addSlideshowDots(){const oldDots=document.getElementById('slideshowDots');if(oldDots)oldDots.remove();const dotsContainer=document.createElement('div');dotsContainer.className='slideshow-dots';dotsContainer.id='slideshowDots';zoneOrder.forEach((zone,index)=>{const dot=document.createElement('span');dot.className='slideshow-dot';if(index===0)dot.classList.add('active');dot.title=zoneDisplayNames[index];dot.addEventListener('click',()=>{currentSlideZone=index;slideToZone(index)});dotsContainer.appendChild(dot)});const nav=document.getElementById('slideshowNav');if(nav&&nav.parentNode){nav.parentNode.insertBefore(dotsContainer,nav.nextSibling)}}
+        function updateSlideshowDots(index){const dots=document.querySelectorAll('.slideshow-dot');dots.forEach((dot,i)=>{dot.classList.toggle('active',i===index)})}
+
+        document.addEventListener('keydown',function(e){
+            if(e.key==='Escape'){const overlay=document.getElementById('modalOverlay');if(overlay&&overlay.classList.contains('show')){closeModal();return}if(FF){toggleZoomDashboard();return}if(isFullscreenDashboard){toggleFullscreenDashboard();return}}
+            if(slideshowActive){if(e.key==='ArrowRight'){e.preventDefault();nextZone();return}if(e.key==='ArrowLeft'){e.preventDefault();prevZone();return}if(e.key===' '){e.preventDefault();toggleAutoSlideshow();return}}
+            if(e.ctrlKey||e.metaKey){switch(e.key){case'1':e.preventDefault();switchTab('cfrt');break;case'2':e.preventDefault();switchTab('emrs');break;case'3':e.preventDefault();switchTab('water');break;case'4':e.preventDefault();switchTab('dashboard');break;case'r':case'R':e.preventDefault();loadAllData();break;case'f':case'F':e.preventDefault();const el=document.getElementById(`searchInput-${T}`);if(el)el.focus();break}}
+            else{switch(e.key){case'f':case'F':if(document.activeElement===document.body||document.activeElement===null){e.preventDefault();toggleFullscreenDashboard()}break}}
+        });
+
+        function semak(){let bar=document.getElementById('statusSambungan');if(!bar){bar=document.createElement('div');bar.id='statusSambungan';document.body.appendChild(bar)}window.addEventListener('online',()=>{bar.style.display='block';bar.style.background='#2e7d32';bar.style.color='#fff';bar.textContent='✅ SAMBUNGAN DIPULIHKAN';setTimeout(()=>bar.style.display='none',4000);loadAllData()});window.addEventListener('offline',()=>{bar.style.display='block';bar.style.background='#c62828';bar.style.color='#fff';bar.textContent='⚠️ TIADA SAMBUNGAN INTERNET'})}
+        function setup(){['cfrt','emrs','water'].forEach(tab=>{const si=document.getElementById(`searchInput-${tab}`);if(si)si.addEventListener('input',db(()=>Rt(tab),300));const fs=document.getElementById(`filterStatus-${tab}`);if(fs)fs.addEventListener('change',()=>Rt(tab));const fz=document.getElementById(`filterZon-${tab}`);if(fz)fz.addEventListener('change',()=>Rt(tab))})}
+        function init(){semak();setup();loadAllData();setInterval(()=>{loadAllData()},R*60*1000)}
+        init();
+    </script>
+</body>
+</html>
