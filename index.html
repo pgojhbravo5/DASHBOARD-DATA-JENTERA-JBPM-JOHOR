@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes" />
     <title>DASHBOARD JENTERA BOMBA NEGERI JOHOR</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <!-- Font Awesome CDN for Realistic Vector Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <!-- Chart.js & DataLabels Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
     <style>
         :root {
             --bg-main: #0f172a;
@@ -109,7 +112,7 @@
             background-color: #334155;
             color: #fff;
         }
-        .ms-option input[type="checkbox"] {
+        .ms-option input[type='checkbox'] {
             accent-color: #ef4444;
             width: 1rem;
             height: 1rem;
@@ -125,11 +128,31 @@
             letter-spacing: 0.025em;
             display: inline-block;
         }
-        .badge-baik { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
-        .badge-minor { background-color: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.4); }
-        .badge-rosak { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
-        .badge-pulang { background-color: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
-        .badge-unknown { background-color: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
+        .badge-baik {
+            background-color: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+        }
+        .badge-minor {
+            background-color: rgba(234, 179, 8, 0.2);
+            color: #fde047;
+            border: 1px solid rgba(234, 179, 8, 0.4);
+        }
+        .badge-rosak {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        .badge-pulang {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        .badge-unknown {
+            background-color: rgba(148, 163, 184, 0.2);
+            color: #cbd5e1;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+        }
 
         /* Enhanced Jentera Card Styling */
         .jentera-card {
@@ -150,22 +173,81 @@
             border-color: #64748b;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
-        .jentera-card.status-glow-b { border-left: 3.5px solid #22c55e; }
-        .jentera-card.status-glow-rm { border-left: 3.5px solid #eab308; }
-        .jentera-card.status-glow-r { border-left: 3.5px solid #ef4444; }
-        .jentera-card.status-glow-d { border-left: 3.5px solid #3b82f6; }
-        .jentera-card.status-glow-u { border-left: 3.5px solid #94a3b8; }
-        .jentera-card.type-cfrt { border-top: 2px solid var(--accent-red); }
-        .jentera-card.type-emrs { border-top: 2px solid var(--accent-blue); }
-        .jentera-card.type-water { border-top: 2px solid var(--accent-cyan); }
+        .jentera-card.status-glow-b {
+            border-left: 3.5px solid #22c55e;
+        }
+        .jentera-card.status-glow-rm {
+            border-left: 3.5px solid #eab308;
+        }
+        .jentera-card.status-glow-r {
+            border-left: 3.5px solid #ef4444;
+        }
+        .jentera-card.status-glow-d {
+            border-left: 3.5px solid #3b82f6;
+        }
+        .jentera-card.status-glow-u {
+            border-left: 3.5px solid #94a3b8;
+        }
+        .jentera-card.type-cfrt {
+            border-top: 2px solid var(--accent-red);
+        }
+        .jentera-card.type-emrs {
+            border-top: 2px solid var(--accent-blue);
+        }
+        .jentera-card.type-water {
+            border-top: 2px solid var(--accent-cyan);
+        }
+
+        /* Copy button styling */
+        .copy-btn {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 24px;
+            height: 24px;
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid var(--border-color);
+            border-radius: 0.25rem;
+            color: #94a3b8;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+        .jentera-card:hover .copy-btn,
+        tr:hover .copy-btn {
+            opacity: 1;
+        }
+        .copy-btn:hover {
+            background: #334155;
+            color: #fff;
+            border-color: #64748b;
+        }
+        .copy-btn:active {
+            transform: scale(0.9);
+            background: #22c55e;
+            border-color: #22c55e;
+            color: #fff;
+        }
+        .copy-btn.copied {
+            background: #22c55e !important;
+            border-color: #22c55e !important;
+            color: #fff !important;
+        }
 
         /* Fullscreen Zoom Mode */
         body.fullscreen-mode .tab-nav-header,
-        body.fullscreen-mode .sub-header-controls { display: none !important; }
+        body.fullscreen-mode .sub-header-controls {
+            display: none !important;
+        }
         body.fullscreen-mode #zoneContainer {
             gap: 1rem;
         }
-        
+
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -186,7 +268,6 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/90 z-[110] flex flex-col items-center justify-center gap-3">
         <div class="w-10 h-10 border-4 border-slate-700 border-t-red-600 rounded-full animate-spin"></div>
@@ -200,9 +281,7 @@
                 <i class="fa-solid fa-fire-extinguisher text-white"></i>
             </div>
             <div>
-                <h1 class="text-base sm:text-lg font-bold tracking-wide text-white uppercase leading-tight">
-                    Dashboard Jentera Bomba Johor
-                </h1>
+                <h1 class="text-base sm:text-lg font-bold tracking-wide text-white uppercase leading-tight">Dashboard Jentera Bomba Johor</h1>
                 <p class="text-xs text-slate-400 font-medium">Sistem Pemantauan Aset Logistik Negeri</p>
             </div>
         </div>
@@ -241,7 +320,6 @@
     </nav>
 
     <main class="flex-1 p-3 sm:p-5 space-y-5 max-w-[1600px] w-full mx-auto">
-
         <!-- TAB: CFRT -->
         <section id="tab-cfrt" class="tab-content">
             <div id="statsRow-cfrt" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-5"></div>
@@ -250,13 +328,17 @@
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-red-500"></i> Status Jentera RT
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartStatus-cfrt"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartStatus-cfrt"></canvas>
+                    </div>
                 </div>
                 <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-location-dot text-red-500"></i> Agihan Mengikut Zon
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartZon-cfrt"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartZon-cfrt"></canvas>
+                    </div>
                 </div>
             </div>
             <!-- Table Card -->
@@ -265,21 +347,26 @@
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-red-500"></i> Senarai Jentera RT
                     </h3>
-                    <button onclick="eksportKeExcel('cfrt')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-file-export"></i> Eksport CSV
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="copyAllTableData('cfrt')" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin Semua
+                        </button>
+                        <button onclick="eksportKeExcel('cfrt')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-export"></i> Eksport CSV
+                        </button>
+                    </div>
                 </div>
                 <!-- Filters Toolbar -->
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="searchInput-cfrt" oninput="Rt('cfrt')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500">
+                        <input type="text" id="searchInput-cfrt" oninput="Rt('cfrt')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500" />
                     </div>
-                    
+
                     <div class="ms-dropdown" id="msDropdown-cfrt">
                         <button class="ms-select-btn" onclick="toggleMsDropdown('cfrt')">
                             <span id="msText-cfrt"><i class="fa-solid fa-filter mr-1"></i> Semua Status</span>
-                            <span class="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-cfrt" style="display:none">0</span>
+                            <span class="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-cfrt" style="display: none">0</span>
                             <span class="text-[10px]">▼</span>
                         </button>
                         <div class="ms-options" id="msOptions-cfrt"></div>
@@ -303,6 +390,7 @@
                                 <th class="p-2.5">Zon</th>
                                 <th class="p-2.5">Status</th>
                                 <th class="p-2.5">Kerosakan</th>
+                                <th class="p-2.5 w-10">Salin</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody-cfrt" class="divide-y divide-slate-700/40 text-slate-300"></tbody>
@@ -320,13 +408,17 @@
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-blue-500"></i> Status EMRS
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartStatus-emrs"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartStatus-emrs"></canvas>
+                    </div>
                 </div>
                 <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-location-dot text-blue-500"></i> Agihan Mengikut Zon
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartZon-emrs"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartZon-emrs"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4 space-y-4">
@@ -334,20 +426,25 @@
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-blue-500"></i> Senarai Jentera EMRS
                     </h3>
-                    <button onclick="eksportKeExcel('emrs')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-file-export"></i> Eksport CSV
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="copyAllTableData('emrs')" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin Semua
+                        </button>
+                        <button onclick="eksportKeExcel('emrs')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-export"></i> Eksport CSV
+                        </button>
+                    </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="searchInput-emrs" oninput="Rt('emrs')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500">
+                        <input type="text" id="searchInput-emrs" oninput="Rt('emrs')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500" />
                     </div>
-                    
+
                     <div class="ms-dropdown" id="msDropdown-emrs">
                         <button class="ms-select-btn" onclick="toggleMsDropdown('emrs')">
                             <span id="msText-emrs"><i class="fa-solid fa-filter mr-1"></i> Semua Status</span>
-                            <span class="text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-emrs" style="display:none">0</span>
+                            <span class="text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-emrs" style="display: none">0</span>
                             <span class="text-[10px]">▼</span>
                         </button>
                         <div class="ms-options" id="msOptions-emrs"></div>
@@ -370,6 +467,7 @@
                                 <th class="p-2.5">Zon</th>
                                 <th class="p-2.5">Status</th>
                                 <th class="p-2.5">Kerosakan</th>
+                                <th class="p-2.5 w-10">Salin</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody-emrs" class="divide-y divide-slate-700/40 text-slate-300"></tbody>
@@ -387,13 +485,17 @@
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-chart-pie text-cyan-500"></i> Status Water Tanker
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartStatus-water"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartStatus-water"></canvas>
+                    </div>
                 </div>
                 <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
                         <i class="fa-solid fa-location-dot text-cyan-500"></i> Agihan Mengikut Zon
                     </h3>
-                    <div class="h-56 relative"><canvas id="chartZon-water"></canvas></div>
+                    <div class="h-56 relative">
+                        <canvas id="chartZon-water"></canvas>
+                    </div>
                 </div>
             </div>
             <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4 space-y-4">
@@ -401,20 +503,25 @@
                     <h3 class="text-sm font-bold uppercase tracking-wider text-white flex items-center gap-2">
                         <i class="fa-solid fa-list-check text-cyan-500"></i> Senarai Water Tanker
                     </h3>
-                    <button onclick="eksportKeExcel('water')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
-                        <i class="fa-solid fa-file-export"></i> Eksport CSV
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="copyAllTableData('water')" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin Semua
+                        </button>
+                        <button onclick="eksportKeExcel('water')" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-file-export"></i> Eksport CSV
+                        </button>
+                    </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
                     <div class="relative flex-1 min-w-[200px]">
                         <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                        <input type="text" id="searchInput-water" oninput="Rt('water')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500">
+                        <input type="text" id="searchInput-water" oninput="Rt('water')" placeholder="Cari Callsign, Plat, Lokasi..." class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-2 outline-none focus:border-slate-500" />
                     </div>
-                    
+
                     <div class="ms-dropdown" id="msDropdown-water">
                         <button class="ms-select-btn" onclick="toggleMsDropdown('water')">
                             <span id="msText-water"><i class="fa-solid fa-filter mr-1"></i> Semua Status</span>
-                            <span class="text-xs bg-cyan-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-water" style="display:none">0</span>
+                            <span class="text-xs bg-cyan-600 text-white px-1.5 py-0.5 rounded font-bold" id="msCount-water" style="display: none">0</span>
                             <span class="text-[10px]">▼</span>
                         </button>
                         <div class="ms-options" id="msOptions-water"></div>
@@ -437,6 +544,7 @@
                                 <th class="p-2.5">Zon</th>
                                 <th class="p-2.5">Status</th>
                                 <th class="p-2.5">Kerosakan</th>
+                                <th class="p-2.5 w-10">Salin</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody-water" class="divide-y divide-slate-700/40 text-slate-300"></tbody>
@@ -448,7 +556,6 @@
 
         <!-- TAB: MAIN DASHBOARD GRID -->
         <section id="tab-dashboard" class="tab-content hidden space-y-4">
-            
             <!-- Dashboard Toolbar Filters -->
             <div class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3" id="dashboardFilters">
                 <div class="flex flex-wrap items-center gap-3">
@@ -462,17 +569,17 @@
                         </button>
                         <div class="ms-options" id="jenisFilterOptions">
                             <label class="ms-option">
-                                <input type="checkbox" value="cfrt" checked onchange="applyJenisFilter()">
+                                <input type="checkbox" value="cfrt" checked onchange="applyJenisFilter()" />
                                 <span><i class="fa-solid fa-fire-extinguisher text-red-500 mr-1"></i> Rescue Tender</span>
                                 <span class="ml-auto text-[10px] bg-slate-700 px-1 rounded font-bold" id="countCfrt">0</span>
                             </label>
                             <label class="ms-option">
-                                <input type="checkbox" value="emrs" checked onchange="applyJenisFilter()">
+                                <input type="checkbox" value="emrs" checked onchange="applyJenisFilter()" />
                                 <span><i class="fa-solid fa-truck-medical text-blue-500 mr-1"></i> EMRS</span>
                                 <span class="ml-auto text-[10px] bg-slate-700 px-1 rounded font-bold" id="countEmrs">0</span>
                             </label>
                             <label class="ms-option">
-                                <input type="checkbox" value="water" checked onchange="applyJenisFilter()">
+                                <input type="checkbox" value="water" checked onchange="applyJenisFilter()" />
                                 <span><i class="fa-solid fa-truck-droplet text-cyan-500 mr-1"></i> Water Tanker</span>
                                 <span class="ml-auto text-[10px] bg-slate-700 px-1 rounded font-bold" id="countWater">0</span>
                             </label>
@@ -484,15 +591,15 @@
                     <div class="ms-dropdown" id="statusFilterDropdown">
                         <button class="ms-select-btn bg-slate-900" onclick="toggleStatusFilter()">
                             <span id="statusFilterText">Semua</span>
-                            <span class="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded font-bold" id="statusFilterCount" style="display:none">0</span>
+                            <span class="text-xs bg-red-600 text-white px-1.5 py-0.5 rounded font-bold" id="statusFilterCount" style="display: none">0</span>
                             <span class="text-[10px]">▼</span>
                         </button>
                         <div class="ms-options" id="statusFilterOptions">
-                            <label class="ms-option"><input type="checkbox" value="BAIK" onchange="applyStatusFilter()"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> BAIK</label>
-                            <label class="ms-option"><input type="checkbox" value="ROSAK MINOR" onchange="applyStatusFilter()"><span class="w-2 h-2 rounded-full bg-yellow-500"></span> ROSAK MINOR</label>
-                            <label class="ms-option"><input type="checkbox" value="ROSAK" onchange="applyStatusFilter()"><span class="w-2 h-2 rounded-full bg-red-500"></span> ROSAK</label>
-                            <label class="ms-option"><input type="checkbox" value="DIPULANGKAN" onchange="applyStatusFilter()"><span class="w-2 h-2 rounded-full bg-blue-500"></span> DIPULANGKAN</label>
-                            <label class="ms-option"><input type="checkbox" value="LAIN" onchange="applyStatusFilter()"><span class="w-2 h-2 rounded-full bg-slate-400"></span> LAIN-LAIN</label>
+                            <label class="ms-option"><input type="checkbox" value="BAIK" onchange="applyStatusFilter()" /><span class="w-2 h-2 rounded-full bg-emerald-500"></span> BAIK</label>
+                            <label class="ms-option"><input type="checkbox" value="ROSAK MINOR" onchange="applyStatusFilter()" /><span class="w-2 h-2 rounded-full bg-yellow-500"></span> ROSAK MINOR</label>
+                            <label class="ms-option"><input type="checkbox" value="ROSAK" onchange="applyStatusFilter()" /><span class="w-2 h-2 rounded-full bg-red-500"></span> ROSAK</label>
+                            <label class="ms-option"><input type="checkbox" value="DIPULANGKAN" onchange="applyStatusFilter()" /><span class="w-2 h-2 rounded-full bg-blue-500"></span> DIPULANGKAN</label>
+                            <label class="ms-option"><input type="checkbox" value="LAIN" onchange="applyStatusFilter()" /><span class="w-2 h-2 rounded-full bg-slate-400"></span> LAIN-LAIN</label>
                         </div>
                     </div>
                 </div>
@@ -508,12 +615,20 @@
             </div>
 
             <!-- Slideshow Controls Nav -->
-            <div id="slideshowNav" class="hidden bg-slate-800 border border-slate-700 rounded-xl p-2.5 flex items-center justify-center gap-4">
-                <button onclick="prevZone()" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold"><i class="fa-solid fa-chevron-left"></i></button>
+            <div id="slideshowNav" class="hidden bg-slate-800 border border-slate-700 rounded-xl p-2.5 flex items-center justify-center gap-4 flex-wrap">
+                <button onclick="prevZone()" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
                 <span id="slideshowCounter" class="text-xs font-bold text-slate-200">ZON 1 / 5</span>
-                <button onclick="nextZone()" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold"><i class="fa-solid fa-chevron-right"></i></button>
-                <button onclick="toggleAutoSlideshow()" id="slideshowAutoBtn" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-bold flex items-center gap-1"><i class="fa-solid fa-circle-play"></i> Auto Play</button>
-                <button onclick="stopSlideshow()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-bold flex items-center gap-1"><i class="fa-solid fa-square-stop"></i> Stop</button>
+                <button onclick="nextZone()" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <button onclick="toggleAutoSlideshow()" id="slideshowAutoBtn" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-bold flex items-center gap-1">
+                    <i class="fa-solid fa-circle-play"></i> <span id="autoPlayLabel">Auto Play</span>
+                </button>
+                <button onclick="stopSlideshow()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-bold flex items-center gap-1">
+                    <i class="fa-solid fa-square-stop"></i> Stop
+                </button>
             </div>
 
             <!-- Dashboard Counter Summary Cards -->
@@ -522,7 +637,6 @@
             <!-- Zones Container Grid -->
             <div id="zoneContainer" class="flex overflow-x-auto gap-4 pb-2 items-start"></div>
         </section>
-
     </main>
 
     <!-- Modal Detail Asset Popup -->
@@ -548,7 +662,7 @@
         const U = {
             cfrt: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=0&single=true&output=csv',
             emrs: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=795399708&single=true&output=csv',
-            water: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=290336578&single=true&output=csv'
+            water: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=290336578&single=true&output=csv',
         };
 
         const REFRESH_INTERVAL_SEC = 300;
@@ -559,7 +673,11 @@
         let SF = []; // Dashboard status filter
         let intervalTimer = null;
         let remainingSeconds = REFRESH_INTERVAL_SEC;
-        let CC = { cfrt: { s: null, z: null }, emrs: { s: null, z: null }, water: { s: null, z: null } };
+        let CC = {
+            cfrt: { s: null, z: null },
+            emrs: { s: null, z: null },
+            water: { s: null, z: null },
+        };
         let isFullscreenDashboard = false;
         let slideshowActive = false;
         let slideshowAuto = false;
@@ -570,10 +688,50 @@
         const zoneOrder = ['ZON 1', 'ZON 2', 'ZON 3', 'ZON 4', 'BENGKEL KJT BOMBA'];
 
         const BALAI_ZON = {
-            'ZON 1': ['BALAI BOMBA DAN PENYELAMAT LARKIN','BALAI BOMBA DAN PENYELAMAT PASIR GUDANG','BALAI BOMBA DAN PENYELAMAT JOHOR JAYA','BALAI BOMBA DAN PENYELAMAT SKUDAI','BALAI BOMBA DAN PENYELAMAT ISKANDAR PUTERI','BALAI BOMBA DAN PENYELAMAT TEBRAU','BALAI BOMBA DAN PENYELAMAT PEKAN NENAS','BALAI BOMBA DAN PENYELAMAT PONTIAN','BALAI BOMBA DAN PENYELAMAT PONTIAN BARU','BALAI BOMBA DAN PENYELAMAT KULAI','BALAI BOMBA DAN PENYELAMAT BANDAR BARU KULAI','BALAI BOMBA DAN PENYELAMAT KEMPAS','BALAI BOMBA DAN PENYELAMAT FIRE POST BENUT'],
-            'ZON 2': ['BALAI BOMBA DAN PENYELAMAT KOTA TINGGI','BALAI BOMBA DAN PENYELAMAT SUNGAI RENGIT','BALAI BOMBA DAN PENYELAMAT BANDAR PENAWAR','BALAI BOMBA DAN PENYELAMAT MERSING','BALAI BOMBA DAN PENYELAMAT ENDAU','BALAI BOMBA DAN PENYELAMAT SEBANA COVE','BALAI BOMBA DAN PENYELAMAT PUNGGAI','BALAI BOMBA DAN PENYELAMAT BANDAR TENGGARA'],
-            'ZON 3': ['BALAI BOMBA DAN PENYELAMAT PENGGARAM','BALAI BOMBA DAN PENYELAMAT KLUANG','BALAI BOMBA DAN PENYELAMAT BATU PAHAT','BALAI BOMBA DAN PENYELAMAT RENGIT','BALAI BOMBA DAN PENYELAMAT RENGGAM','BALAI BOMBA DAN PENYELAMAT YONG PENG','BALAI BOMBA DAN PENYELAMAT AYER HITAM','BALAI BOMBA DAN PENYELAMAT FIRE POST PARIT SULONG'],
-            'ZON 4': ['BALAI BOMBA DAN PENYELAMAT MUAR','BALAI BOMBA DAN PENYELAMAT BANDAR BARU SEGAMAT','BALAI BOMBA DAN PENYELAMAT SEGAMAT','BALAI BOMBA DAN PENYELAMAT LABIS','BALAI BOMBA DAN PENYELAMAT BUKIT GAMBIR','BALAI BOMBA DAN PENYELAMAT TANGKAK','BALAI BOMBA DAN PENYELAMAT PAGOH']
+            'ZON 1': [
+                'BALAI BOMBA DAN PENYELAMAT LARKIN',
+                'BALAI BOMBA DAN PENYELAMAT PASIR GUDANG',
+                'BALAI BOMBA DAN PENYELAMAT JOHOR JAYA',
+                'BALAI BOMBA DAN PENYELAMAT SKUDAI',
+                'BALAI BOMBA DAN PENYELAMAT ISKANDAR PUTERI',
+                'BALAI BOMBA DAN PENYELAMAT TEBRAU',
+                'BALAI BOMBA DAN PENYELAMAT PEKAN NENAS',
+                'BALAI BOMBA DAN PENYELAMAT PONTIAN',
+                'BALAI BOMBA DAN PENYELAMAT PONTIAN BARU',
+                'BALAI BOMBA DAN PENYELAMAT KULAI',
+                'BALAI BOMBA DAN PENYELAMAT BANDAR BARU KULAI',
+                'BALAI BOMBA DAN PENYELAMAT KEMPAS',
+                'BALAI BOMBA DAN PENYELAMAT FIRE POST BENUT',
+            ],
+            'ZON 2': [
+                'BALAI BOMBA DAN PENYELAMAT KOTA TINGGI',
+                'BALAI BOMBA DAN PENYELAMAT SUNGAI RENGIT',
+                'BALAI BOMBA DAN PENYELAMAT BANDAR PENAWAR',
+                'BALAI BOMBA DAN PENYELAMAT MERSING',
+                'BALAI BOMBA DAN PENYELAMAT ENDAU',
+                'BALAI BOMBA DAN PENYELAMAT SEBANA COVE',
+                'BALAI BOMBA DAN PENYELAMAT PUNGGAI',
+                'BALAI BOMBA DAN PENYELAMAT BANDAR TENGGARA',
+            ],
+            'ZON 3': [
+                'BALAI BOMBA DAN PENYELAMAT PENGGARAM',
+                'BALAI BOMBA DAN PENYELAMAT KLUANG',
+                'BALAI BOMBA DAN PENYELAMAT BATU PAHAT',
+                'BALAI BOMBA DAN PENYELAMAT RENGIT',
+                'BALAI BOMBA DAN PENYELAMAT RENGGAM',
+                'BALAI BOMBA DAN PENYELAMAT YONG PENG',
+                'BALAI BOMBA DAN PENYELAMAT AYER HITAM',
+                'BALAI BOMBA DAN PENYELAMAT FIRE POST PARIT SULONG',
+            ],
+            'ZON 4': [
+                'BALAI BOMBA DAN PENYELAMAT MUAR',
+                'BALAI BOMBA DAN PENYELAMAT BANDAR BARU SEGAMAT',
+                'BALAI BOMBA DAN PENYELAMAT SEGAMAT',
+                'BALAI BOMBA DAN PENYELAMAT LABIS',
+                'BALAI BOMBA DAN PENYELAMAT BUKIT GAMBIR',
+                'BALAI BOMBA DAN PENYELAMAT TANGKAK',
+                'BALAI BOMBA DAN PENYELAMAT PAGOH',
+            ],
         };
 
         function getStationCoreName(str) {
@@ -605,12 +763,12 @@
             const toast = document.getElementById('toastNotification');
             const icon = document.getElementById('toastIcon');
             const message = document.getElementById('toastMessage');
-            
-            const icons = { 
-                success: '<i class="fa-solid fa-circle-check text-emerald-400"></i>', 
-                error: '<i class="fa-solid fa-circle-xmark text-red-400"></i>', 
-                warning: '<i class="fa-solid fa-triangle-exclamation text-yellow-400"></i>', 
-                info: '<i class="fa-solid fa-circle-info text-blue-400"></i>' 
+
+            const icons = {
+                success: '<i class="fa-solid fa-circle-check text-emerald-400"></i>',
+                error: '<i class="fa-solid fa-circle-xmark text-red-400"></i>',
+                warning: '<i class="fa-solid fa-triangle-exclamation text-yellow-400"></i>',
+                info: '<i class="fa-solid fa-circle-info text-blue-400"></i>',
             };
             icon.innerHTML = icons[type] || icons.info;
             message.textContent = msg;
@@ -623,22 +781,29 @@
 
         function PP(text) {
             const rows = [];
-            let row = [], field = '', inQuotes = false;
+            let row = [],
+                field = '',
+                inQuotes = false;
             for (let i = 0; i < text.length; i++) {
                 const c = text[i];
                 if (inQuotes) {
                     if (c === '"') {
-                        if (i + 1 < text.length && text[i + 1] === '"') { field += '"'; i++; }
-                        else inQuotes = false;
+                        if (i + 1 < text.length && text[i + 1] === '"') {
+                            field += '"';
+                            i++;
+                        } else inQuotes = false;
                     } else field += c;
                 } else {
                     if (c === '"') inQuotes = true;
-                    else if (c === ',') { row.push(field.trim()); field = ''; }
-                    else if (c === '\n' || c === '\r') {
+                    else if (c === ',') {
+                        row.push(field.trim());
+                        field = '';
+                    } else if (c === '\n' || c === '\r') {
                         if (c === '\r' && i + 1 < text.length && text[i + 1] === '\n') i++;
                         row.push(field.trim());
                         if (row.length > 1 || row[0] !== '') rows.push(row);
-                        row = []; field = '';
+                        row = [];
+                        field = '';
                     } else field += c;
                 }
             }
@@ -647,15 +812,21 @@
             return rows;
         }
 
-        function HH(h) { return h.replace(/\s+/g, ' ').trim(); }
+        function HH(h) {
+            return h.replace(/\s+/g, ' ').trim();
+        }
+
         function OO(headers, rows) {
             const ch = headers.map(HH);
-            return rows.map(r => {
+            return rows.map((r) => {
                 const o = {};
-                ch.forEach((h, i) => { o[h] = r[i] !== undefined ? r[i] : ''; });
+                ch.forEach((h, i) => {
+                    o[h] = r[i] !== undefined ? r[i] : '';
+                });
                 return o;
             });
         }
+
         function G(item, field) {
             if (!item) return '';
             if (item[field] !== undefined) return item[field];
@@ -677,7 +848,7 @@
                 if (parsed.length < 2) return;
                 const formatted = OO(parsed[0], parsed.slice(1));
                 D[tab] = formatted;
-                
+
                 populateMultiSelectOptions(tab);
                 populateZonOptions(tab);
                 UU(tab);
@@ -694,19 +865,28 @@
             if (refreshBtn) refreshBtn.classList.add('animate-pulse');
 
             updateTimestamp();
-            await Promise.all([fetchTabData('cfrt'), fetchTabData('emrs'), fetchTabData('water')]);
-            
+            await Promise.all([
+                fetchTabData('cfrt'),
+                fetchTabData('emrs'),
+                fetchTabData('water'),
+            ]);
+
             renderMainDashboard();
             document.getElementById('loadingOverlay').classList.add('hidden');
             if (refreshBtn) refreshBtn.classList.remove('animate-pulse');
-            
+
             showNotification('Data berjaya dikemaskini', 'success');
             resetCountdown();
         }
 
         function updateTimestamp() {
             const now = new Date();
-            document.getElementById('lastUpdate').textContent = 'Dikemaskini: ' + now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('lastUpdate').textContent =
+                'Dikemaskini: ' + now.toLocaleTimeString('ms-MY', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
         }
 
         function resetCountdown() {
@@ -725,7 +905,7 @@
 
         function switchTab(tab) {
             T = tab;
-            document.querySelectorAll('.tab-btn').forEach(b => {
+            document.querySelectorAll('.tab-btn').forEach((b) => {
                 b.classList.remove('border-red-500', 'text-red-400');
                 b.classList.add('border-transparent', 'text-slate-400');
             });
@@ -735,7 +915,7 @@
                 activeBtn.classList.add('border-red-500', 'text-red-400');
             }
 
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach((el) => el.classList.add('hidden'));
             const currentContent = document.getElementById(`tab-${tab}`);
             if (currentContent) currentContent.classList.remove('hidden');
 
@@ -758,8 +938,12 @@
 
         function UU(tab) {
             const list = D[tab] || [];
-            let b = 0, rm = 0, r = 0, d = 0, u = 0;
-            list.forEach(item => {
+            let b = 0,
+                rm = 0,
+                r = 0,
+                d = 0,
+                u = 0;
+            list.forEach((item) => {
                 const cat = getStatusCategory(G(item, 'STATUS JENTERA'));
                 if (cat === 'B') b++;
                 else if (cat === 'RM') rm++;
@@ -807,7 +991,7 @@
             if (!list.length) return;
 
             const sc = {};
-            list.forEach(i => {
+            list.forEach((i) => {
                 const s = (G(i, 'STATUS JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
                 sc[s] = (sc[s] || 0) + 1;
             });
@@ -823,23 +1007,29 @@
                             data: Object.values(sc),
                             backgroundColor: ['#22c55e', '#eab308', '#ef4444', '#3b82f6', '#64748b'],
                             borderWidth: 2,
-                            borderColor: '#1e293b'
-                        }]
+                            borderColor: '#1e293b',
+                        }, ],
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 } } },
-                            datalabels: { color: '#fff', font: { weight: 'bold', size: 10 } }
-                        }
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#94a3b8', font: { size: 10 } },
+                            },
+                            datalabels: {
+                                color: '#fff',
+                                font: { weight: 'bold', size: 10 },
+                            },
+                        },
                     },
-                    plugins: [ChartDataLabels]
+                    plugins: [ChartDataLabels],
                 });
             }
 
             const zc = {};
-            list.forEach(i => {
+            list.forEach((i) => {
                 const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
                 zc[z] = (zc[z] || 0) + 1;
             });
@@ -854,22 +1044,27 @@
                         datasets: [{
                             data: Object.values(zc),
                             backgroundColor: '#ef4444',
-                            borderRadius: 4
-                        }]
+                            borderRadius: 4,
+                        }, ],
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: { display: false },
-                            datalabels: { color: '#fff', anchor: 'end', align: 'top', font: { weight: 'bold', size: 10 } }
+                            datalabels: {
+                                color: '#fff',
+                                anchor: 'end',
+                                align: 'top',
+                                font: { weight: 'bold', size: 10 },
+                            },
                         },
                         scales: {
                             y: { ticks: { color: '#64748b' }, grid: { color: '#334155' } },
-                            x: { ticks: { color: '#94a3b8' } }
-                        }
+                            x: { ticks: { color: '#94a3b8' } },
+                        },
                     },
-                    plugins: [ChartDataLabels]
+                    plugins: [ChartDataLabels],
                 });
             }
         }
@@ -877,7 +1072,7 @@
         function populateMultiSelectOptions(tab) {
             const list = D[tab] || [];
             const statuses = new Set();
-            list.forEach(i => {
+            list.forEach((i) => {
                 const s = (G(i, 'STATUS JENTERA') || '').trim();
                 if (s) statuses.add(s);
             });
@@ -886,7 +1081,7 @@
             if (!container) return;
 
             let html = '';
-            Array.from(statuses).sort().forEach(st => {
+            Array.from(statuses).sort().forEach((st) => {
                 html += `
                     <label class="ms-option">
                         <input type="checkbox" value="${st.replace(/"/g, '&quot;')}" onchange="updateSubTabMultiSelect('${tab}')">
@@ -900,14 +1095,15 @@
         function populateZonOptions(tab) {
             const list = D[tab] || [];
             const zones = new Set();
-            list.forEach(i => {
+            list.forEach((i) => {
                 const z = (G(i, 'ZON') || '').trim();
                 if (z) zones.add(z);
             });
 
             const select = document.getElementById(`filterZon-${tab}`);
             if (!select) return;
-            select.innerHTML = '<option value="">Semua Zon</option>' + Array.from(zones).sort().map(z => `<option value="${z}">${z}</option>`).join('');
+            select.innerHTML = '<option value="">Semua Zon</option>' +
+                Array.from(zones).sort().map((z) => `<option value="${z}">${z}</option>`).join('');
         }
 
         function toggleMsDropdown(tab) {
@@ -919,7 +1115,7 @@
             const opts = document.getElementById(`msOptions-${tab}`);
             const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
             const selected = [];
-            checkboxes.forEach(cb => {
+            checkboxes.forEach((cb) => {
                 if (cb.checked) selected.push(cb.value);
             });
             subTabSelectedStatus[tab] = selected;
@@ -945,14 +1141,15 @@
             const selectedZone = document.getElementById(`filterZon-${tab}`)?.value || '';
             const selectedStatuses = subTabSelectedStatus[tab] || [];
 
-            const filtered = list.filter(item => {
+            const filtered = list.filter((item) => {
                 // Search filter
                 if (searchVal) {
                     const callsign = (G(item, 'CALLSIGN') || '').toLowerCase();
                     const plate = (G(item, 'PLATE') || '').toLowerCase();
                     const lokasi = (G(item, 'LOKASI SEMASA') || '').toLowerCase();
                     const model = (G(item, 'MODEL JENTERA') || '').toLowerCase();
-                    if (!callsign.includes(searchVal) && !plate.includes(searchVal) && !lokasi.includes(searchVal) && !model.includes(searchVal)) {
+                    if (!callsign.includes(searchVal) && !plate.includes(searchVal) &&
+                        !lokasi.includes(searchVal) && !model.includes(searchVal)) {
                         return false;
                     }
                 }
@@ -972,23 +1169,24 @@
             if (!tbody) return;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-500">Tiada jentera dijumpai.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="p-4 text-center text-slate-500">Tiada jentera dijumpai.</td></tr>`;
             } else {
-                tbody.innerHTML = filtered.map((item, idx) => {
-                    const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase();
-                    const statusRaw = G(item, 'STATUS JENTERA') || 'TIADA';
-                    const cat = getStatusCategory(statusRaw);
+                tbody.innerHTML = filtered
+                    .map((item, idx) => {
+                        const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase();
+                        const statusRaw = G(item, 'STATUS JENTERA') || 'TIADA';
+                        const cat = getStatusCategory(statusRaw);
 
-                    let badgeClass = 'badge-unknown';
-                    if (cat === 'B') badgeClass = 'badge-baik';
-                    else if (cat === 'RM') badgeClass = 'badge-minor';
-                    else if (cat === 'R') badgeClass = 'badge-rosak';
-                    else if (cat === 'D') badgeClass = 'badge-pulang';
+                        let badgeClass = 'badge-unknown';
+                        if (cat === 'B') badgeClass = 'badge-baik';
+                        else if (cat === 'RM') badgeClass = 'badge-minor';
+                        else if (cat === 'R') badgeClass = 'badge-rosak';
+                        else if (cat === 'D') badgeClass = 'badge-pulang';
 
-                    const itemJson = encodeURIComponent(JSON.stringify(item));
+                        const itemJson = encodeURIComponent(JSON.stringify(item));
 
-                    return `
-                        <tr class="hover:bg-slate-700/30 cursor-pointer transition" onclick="showJenteraModal('${itemJson}')">
+                        return `
+                        <tr class="hover:bg-slate-700/30 cursor-pointer transition relative" onclick="showJenteraModal('${itemJson}')">
                             <td class="p-2.5">${idx + 1}</td>
                             <td class="p-2.5 font-bold text-white">${callsign}</td>
                             <td class="p-2.5 font-mono">${(G(item, 'PLATE') || '-').toUpperCase()}</td>
@@ -998,13 +1196,101 @@
                             <td class="p-2.5">${G(item, 'ZON') || '-'}</td>
                             <td class="p-2.5"><span class="badge-status ${badgeClass}">${statusRaw}</span></td>
                             <td class="p-2.5 text-slate-400 max-w-[150px] truncate">${G(item, 'STATUS KEROSAKKAN') || '-'}</td>
+                            <td class="p-2.5 text-center" onclick="event.stopPropagation()">
+                                <button onclick="copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </td>
                         </tr>
                     `;
-                }).join('');
+                    })
+                    .join('');
             }
 
             const rowCount = document.getElementById(`rowCount-${tab}`);
-            if (rowCount) rowCount.textContent = `Menunjukkan ${filtered.length} daripada ${list.length} jentera`;
+            if (rowCount)
+                rowCount.textContent = `Menunjukkan ${filtered.length} daripada ${list.length} jentera`;
+        }
+
+        // Fungsi salin maklumat SATU aset (untuk butang pada kad dan baris jadual)
+        function copySingleAssetInfo(itemJson, btnElement) {
+            try {
+                const item = JSON.parse(decodeURIComponent(itemJson));
+                const text = formatAssetInfo(item);
+
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('Maklumat jentera berjaya disalin!', 'success');
+
+                    // Visual feedback pada butang
+                    if (btnElement) {
+                        btnElement.classList.add('copied');
+                        const icon = btnElement.querySelector('i');
+                        if (icon) {
+                            icon.className = 'fa-solid fa-check';
+                        }
+                        setTimeout(() => {
+                            btnElement.classList.remove('copied');
+                            if (icon) {
+                                icon.className = 'fa-regular fa-copy';
+                            }
+                        }, 1500);
+                    }
+                }).catch(() => {
+                    showNotification('Gagal menyalin maklumat', 'error');
+                });
+            } catch (err) {
+                console.error('Error copying asset info:', err);
+                showNotification('Ralat menyalin data', 'error');
+            }
+        }
+
+        // Fungsi salin SEMUA data dalam jadual
+        function copyAllTableData(tab) {
+            const list = D[tab] || [];
+            if (!list.length) {
+                showNotification('Tiada data untuk disalin', 'warning');
+                return;
+            }
+
+            let text = `=== SENARAI JENTERA ${tab.toUpperCase()} ===\n`;
+            text += `Jumlah: ${list.length} jentera\n`;
+            text += `${'='.repeat(50)}\n\n`;
+
+            list.forEach((item, idx) => {
+                text += `[${idx + 1}] ${formatAssetInfo(item)}\n`;
+                text += `${'-'.repeat(40)}\n`;
+            });
+
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Berjaya menyalin ${list.length} maklumat jentera!`, 'success');
+            }).catch(() => {
+                showNotification('Gagal menyalin data', 'error');
+            });
+        }
+
+        // Format maklumat aset untuk disalin
+        function formatAssetInfo(item) {
+            const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase();
+            const plate = (G(item, 'PLATE') || '-').toUpperCase();
+            const model = G(item, 'MODEL JENTERA') || '-';
+            const asal = G(item, 'PENEMPATAN ASAL') || '-';
+            const lokasi = G(item, 'LOKASI SEMASA') || '-';
+            const zon = G(item, 'ZON') || '-';
+            const status = G(item, 'STATUS JENTERA') || '-';
+            const kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
+
+            let typeLabel = '';
+            if (item._j === 'cfrt') typeLabel = 'RESCUE TENDER';
+            else if (item._j === 'emrs') typeLabel = 'EMRS';
+            else if (item._j === 'water') typeLabel = 'WATER TANKER';
+            else typeLabel = 'JENTERA';
+
+            return `[${typeLabel}] ${callsign} | ${plate} | ${model}\n` +
+                `Penempatan: ${asal}\n` +
+                `Lokasi: ${lokasi}\n` +
+                `Zon: ${zon}\n` +
+                `Status: ${status}\n` +
+                `Kerosakan: ${kerosakan}`;
         }
 
         // Export to CSV
@@ -1029,9 +1315,24 @@
 
         function getAllAssets() {
             const all = [];
-            D.cfrt.forEach(i => all.push({ ...i, _j: 'cfrt', _icon: '<i class="fa-solid fa-fire-extinguisher text-red-500"></i>', _tc: 'type-cfrt' }));
-            D.emrs.forEach(i => all.push({ ...i, _j: 'emrs', _icon: '<i class="fa-solid fa-truck-medical text-blue-500"></i>', _tc: 'type-emrs' }));
-            D.water.forEach(i => all.push({ ...i, _j: 'water', _icon: '<i class="fa-solid fa-truck-droplet text-cyan-500"></i>', _tc: 'type-water' }));
+            D.cfrt.forEach((i) => all.push({
+                ...i,
+                _j: 'cfrt',
+                _icon: '<i class="fa-solid fa-fire-extinguisher text-red-500"></i>',
+                _tc: 'type-cfrt'
+            }));
+            D.emrs.forEach((i) => all.push({
+                ...i,
+                _j: 'emrs',
+                _icon: '<i class="fa-solid fa-truck-medical text-blue-500"></i>',
+                _tc: 'type-emrs'
+            }));
+            D.water.forEach((i) => all.push({
+                ...i,
+                _j: 'water',
+                _icon: '<i class="fa-solid fa-truck-droplet text-cyan-500"></i>',
+                _tc: 'type-water'
+            }));
             return all;
         }
 
@@ -1042,13 +1343,15 @@
         function applyJenisFilter() {
             const cbs = document.querySelectorAll('#jenisFilterOptions input[type="checkbox"]');
             F = [];
-            cbs.forEach(cb => { if (cb.checked) F.push(cb.value); });
-            
+            cbs.forEach((cb) => {
+                if (cb.checked) F.push(cb.value);
+            });
+
             const countText = document.getElementById('jenisFilterCount');
             countText.textContent = F.length;
             const textSpan = document.getElementById('jenisFilterText');
             if (F.length === 3) textSpan.innerHTML = '<i class="fa-solid fa-layer-group mr-1"></i> Semua Jenis';
-            else textSpan.textContent = F.map(f => f.toUpperCase()).join(', ');
+            else textSpan.textContent = F.map((f) => f.toUpperCase()).join(', ');
 
             renderMainDashboard();
         }
@@ -1060,7 +1363,9 @@
         function applyStatusFilter() {
             const cbs = document.querySelectorAll('#statusFilterOptions input[type="checkbox"]');
             SF = [];
-            cbs.forEach(cb => { if (cb.checked) SF.push(cb.value); });
+            cbs.forEach((cb) => {
+                if (cb.checked) SF.push(cb.value);
+            });
 
             const countText = document.getElementById('statusFilterCount');
             if (SF.length > 0) {
@@ -1080,18 +1385,21 @@
             document.getElementById('countWater').textContent = D.water.length;
 
             // Apply filters
-            let filtered = all.filter(item => F.includes(item._j));
+            let filtered = all.filter((item) => F.includes(item._j));
             if (SF.length > 0) {
-                filtered = filtered.filter(item => {
+                filtered = filtered.filter((item) => {
                     const cat = getStatusCategory(G(item, 'STATUS JENTERA'));
-                    const map = { 'B': 'BAIK', 'RM': 'ROSAK MINOR', 'R': 'ROSAK', 'D': 'DIPULANGKAN', 'U': 'LAIN' };
+                    const map = { B: 'BAIK', RM: 'ROSAK MINOR', R: 'ROSAK', D: 'DIPULANGKAN', U: 'LAIN' };
                     return SF.includes(map[cat] || 'LAIN');
                 });
             }
 
             // Render top counters
-            let b = 0, rm = 0, r = 0, d = 0;
-            filtered.forEach(i => {
+            let b = 0,
+                rm = 0,
+                r = 0,
+                d = 0;
+            filtered.forEach((i) => {
                 const c = getStatusCategory(G(i, 'STATUS JENTERA'));
                 if (c === 'B') b++;
                 else if (c === 'RM') rm++;
@@ -1109,7 +1417,7 @@
 
             // Grouping by Zone & Balai with Smart Name Normalization
             const zoneMap = {};
-            filtered.forEach(item => {
+            filtered.forEach((item) => {
                 const lokasi = (G(item, 'LOKASI SEMASA') || '').trim();
                 let zoneKey = (G(item, 'ZON') || 'LAIN').trim().toUpperCase();
                 if (lokasi.toUpperCase().includes('BENGKEL') || lokasi.toUpperCase().includes('KJT')) {
@@ -1120,16 +1428,16 @@
                 const listBalaiInZone = BALAI_ZON[zoneKey] || [];
                 const matchedBalai = findMatchingBalai(lokasi, listBalaiInZone);
 
-                const balaiKey = matchedBalai ? matchedBalai.toUpperCase() : (lokasi.toUpperCase() || 'TANPA BALAI');
+                const balaiKey = matchedBalai ? matchedBalai.toUpperCase() : lokasi.toUpperCase() || 'TANPA BALAI';
                 if (!zoneMap[zoneKey][balaiKey]) zoneMap[zoneKey][balaiKey] = [];
                 zoneMap[zoneKey][balaiKey].push(item);
             });
 
             let html = '';
-            zoneOrder.forEach(zoneName => {
+            zoneOrder.forEach((zoneName) => {
                 const dataZon = zoneMap[zoneName] || {};
                 let totalItemsInZone = 0;
-                Object.values(dataZon).forEach(arr => totalItemsInZone += arr.length);
+                Object.values(dataZon).forEach((arr) => (totalItemsInZone += arr.length));
 
                 html += `
                     <div class="flex-1 min-w-[280px] bg-slate-800/60 border border-slate-700 rounded-xl p-3 flex flex-col space-y-3">
@@ -1148,7 +1456,7 @@
                     if (sortedBalai.length === 0) {
                         html += renderBalaiCardGroup('BENGKEL KJT BOMBA', []);
                     } else {
-                        sortedBalai.forEach(balai => {
+                        sortedBalai.forEach((balai) => {
                             html += renderBalaiCardGroup(balai, dataZon[balai]);
                         });
                     }
@@ -1156,16 +1464,18 @@
                     const listBalai = BALAI_ZON[zoneName] || [];
                     const renderedBalaiKeys = new Set();
 
-                    listBalai.forEach(balaiFullName => {
+                    listBalai.forEach((balaiFullName) => {
                         const balaiUpper = balaiFullName.toUpperCase();
                         renderedBalaiKeys.add(balaiUpper);
                         let items = dataZon[balaiUpper] || [];
-                        const shortName = balaiFullName.replace('BALAI BOMBA DAN PENYELAMAT', 'BBP').replace('FIRE POST', 'FP');
+                        const shortName = balaiFullName
+                            .replace('BALAI BOMBA DAN PENYELAMAT', 'BBP')
+                            .replace('FIRE POST', 'FP');
                         html += renderBalaiCardGroup(shortName, items);
                     });
 
                     // Render any additional station keys that were not matched in standard BALAI_ZON list
-                    Object.keys(dataZon).forEach(extraBalaiKey => {
+                    Object.keys(dataZon).forEach((extraBalaiKey) => {
                         if (!renderedBalaiKeys.has(extraBalaiKey) && extraBalaiKey !== 'TANPA BALAI') {
                             html += renderBalaiCardGroup(extraBalaiKey, dataZon[extraBalaiKey]);
                         }
@@ -1182,19 +1492,52 @@
         }
 
         function renderEmptyStatusCards(selectedStatuses) {
-            const statusesToDisplay = selectedStatuses.length > 0 
-                ? selectedStatuses 
-                : ['BAIK', 'ROSAK MINOR', 'ROSAK', 'DIPULANGKAN'];
+            const statusesToDisplay = selectedStatuses.length > 0 ? selectedStatuses : ['BAIK', 'ROSAK MINOR', 'ROSAK', 'DIPULANGKAN'];
 
             const statusConfigs = {
-                'BAIK': { label: 'BAIK & BEROPERASI', border: 'border-emerald-500/40', bg: 'bg-emerald-950/30', text: 'text-emerald-400', badge: 'bg-emerald-900/50 text-emerald-300 border-emerald-500/30', dot: 'bg-emerald-500' },
-                'ROSAK MINOR': { label: 'ROSAK MINOR', border: 'border-yellow-500/40', bg: 'bg-yellow-950/30', text: 'text-yellow-400', badge: 'bg-yellow-900/50 text-yellow-300 border-yellow-500/30', dot: 'bg-yellow-500' },
-                'ROSAK': { label: 'ROSAK', border: 'border-red-500/40', bg: 'bg-red-950/30', text: 'text-red-400', badge: 'bg-red-900/50 text-red-300 border-red-500/30', dot: 'bg-red-500' },
-                'DIPULANGKAN': { label: 'DIPULANGKAN', border: 'border-blue-500/40', bg: 'bg-blue-950/30', text: 'text-blue-400', badge: 'bg-blue-900/50 text-blue-300 border-blue-500/30', dot: 'bg-blue-500' },
-                'LAIN': { label: 'LAIN-LAIN', border: 'border-slate-500/40', bg: 'bg-slate-900/40', text: 'text-slate-400', badge: 'bg-slate-800 text-slate-300 border-slate-700', dot: 'bg-slate-400' }
+                'BAIK': {
+                    label: 'BAIK & BEROPERASI',
+                    border: 'border-emerald-500/40',
+                    bg: 'bg-emerald-950/30',
+                    text: 'text-emerald-400',
+                    badge: 'bg-emerald-900/50 text-emerald-300 border-emerald-500/30',
+                    dot: 'bg-emerald-500'
+                },
+                'ROSAK MINOR': {
+                    label: 'ROSAK MINOR',
+                    border: 'border-yellow-500/40',
+                    bg: 'bg-yellow-950/30',
+                    text: 'text-yellow-400',
+                    badge: 'bg-yellow-900/50 text-yellow-300 border-yellow-500/30',
+                    dot: 'bg-yellow-500'
+                },
+                'ROSAK': {
+                    label: 'ROSAK',
+                    border: 'border-red-500/40',
+                    bg: 'bg-red-950/30',
+                    text: 'text-red-400',
+                    badge: 'bg-red-900/50 text-red-300 border-red-500/30',
+                    dot: 'bg-red-500'
+                },
+                'DIPULANGKAN': {
+                    label: 'DIPULANGKAN',
+                    border: 'border-blue-500/40',
+                    bg: 'bg-blue-950/30',
+                    text: 'text-blue-400',
+                    badge: 'bg-blue-900/50 text-blue-300 border-blue-500/30',
+                    dot: 'bg-blue-500'
+                },
+                'LAIN': {
+                    label: 'LAIN-LAIN',
+                    border: 'border-slate-500/40',
+                    bg: 'bg-slate-900/40',
+                    text: 'text-slate-400',
+                    badge: 'bg-slate-800 text-slate-300 border-slate-700',
+                    dot: 'bg-slate-400'
+                },
             };
 
-            let cardsHtml = statusesToDisplay.map(stKey => {
+            let cardsHtml = statusesToDisplay.map((stKey) => {
                 const cfg = statusConfigs[stKey] || statusConfigs['LAIN'];
                 return `
                     <div class="border border-dashed ${cfg.border} ${cfg.bg} rounded-lg p-2 flex items-center justify-between transition hover:border-slate-500">
@@ -1223,7 +1566,7 @@
         function renderBalaiCardGroup(balaiName, items) {
             let cardsHtml = '';
             if (items.length > 0) {
-                cardsHtml = items.map(item => {
+                cardsHtml = items.map((item) => {
                     const callsign = G(item, 'CALLSIGN') || '-';
                     const plate = G(item, 'PLATE') || '-';
                     const model = G(item, 'MODEL JENTERA') || '';
@@ -1232,19 +1575,28 @@
 
                     let badgeClass = 'badge-unknown';
                     let glowClass = 'status-glow-u';
-                    if (cat === 'B') { badgeClass = 'badge-baik'; glowClass = 'status-glow-b'; }
-                    else if (cat === 'RM') { badgeClass = 'badge-minor'; glowClass = 'status-glow-rm'; }
-                    else if (cat === 'R') { badgeClass = 'badge-rosak'; glowClass = 'status-glow-r'; }
-                    else if (cat === 'D') { badgeClass = 'badge-pulang'; glowClass = 'status-glow-d'; }
+                    if (cat === 'B') { badgeClass = 'badge-baik';
+                        glowClass = 'status-glow-b'; } else if (cat === 'RM') { badgeClass = 'badge-minor';
+                        glowClass = 'status-glow-rm'; } else if (cat === 'R') { badgeClass = 'badge-rosak';
+                        glowClass = 'status-glow-r'; } else if (cat === 'D') { badgeClass = 'badge-pulang';
+                        glowClass = 'status-glow-d'; }
 
-                    const typeTag = item._j === 'cfrt' ? 'RT' : (item._j === 'emrs' ? 'EMRS' : 'TANK');
-                    const typeColor = item._j === 'cfrt' ? 'bg-red-500/20 text-red-400 border-red-500/30' : (item._j === 'emrs' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' : 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30');
+                    const typeTag = item._j === 'cfrt' ? 'RT' : item._j === 'emrs' ? 'EMRS' : 'TANK';
+                    const typeColor = item._j === 'cfrt' ?
+                        'bg-red-500/20 text-red-400 border-red-500/30' :
+                        item._j === 'emrs' ?
+                        'bg-blue-500/20 text-blue-400 border-blue-500/30' :
+                        'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
 
                     const itemJson = encodeURIComponent(JSON.stringify(item));
 
                     return `
-                        <div class="jentera-card ${glowClass} ${item._tc}" onclick="showJenteraModal('${itemJson}')">
-                            <div class="flex items-center justify-between gap-1">
+                        <div class="jentera-card ${glowClass} ${item._tc} relative" onclick="showJenteraModal('${itemJson}')">
+                            <!-- Butang Salin -->
+                            <button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat">
+                                <i class="fa-regular fa-copy"></i>
+                            </button>
+                            <div class="flex items-center justify-between gap-1 pr-6">
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-xs">${item._icon}</span>
                                     <span class="text-xs font-extrabold text-white tracking-tight leading-none">${callsign}</span>
@@ -1315,7 +1667,8 @@
                 `;
 
                 footer.innerHTML = `
-                    <button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition flex items-center gap-1.5"><i class="fa-regular fa-copy"></i> Salin Callsign</button>
+                    <button onclick="copySingleAssetInfo('${encodeURIComponent(JSON.stringify(item))}', null)" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 text-xs font-semibold rounded-lg transition flex items-center gap-1.5"><i class="fa-regular fa-copy"></i> Salin Maklumat</button>
+                    <button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition flex items-center gap-1.5"><i class="fa-regular fa-clipboard"></i> Salin Callsign</button>
                     <button onclick="closeModal()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">Tutup</button>
                 `;
 
@@ -1331,22 +1684,20 @@
         }
 
         function copyToClipboard(text) {
-            const tempInput = document.createElement('input');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            showNotification(`Callsign ${text} disalin!`, 'success');
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(`Callsign ${text} disalin!`, 'success');
+            }).catch(() => {
+                showNotification('Gagal menyalin', 'error');
+            });
         }
 
         function toggleZoomDashboard() {
             document.body.classList.toggle('fullscreen-mode');
             isZoomedOut = !isZoomedOut;
             const btn = document.getElementById('zoomInBtn');
-            btn.innerHTML = isZoomedOut 
-                ? '<i class="fa-solid fa-magnifying-glass-plus"></i> Zoom In' 
-                : '<i class="fa-solid fa-magnifying-glass-minus"></i> Zoom Out';
+            btn.innerHTML = isZoomedOut ?
+                '<i class="fa-solid fa-magnifying-glass-plus"></i> Zoom In' :
+                '<i class="fa-solid fa-magnifying-glass-minus"></i> Zoom Out';
         }
 
         function toggleFullscreenDashboard() {
@@ -1362,7 +1713,9 @@
             const nav = document.getElementById('slideshowNav');
             if (slideshowActive) {
                 nav.classList.remove('hidden');
-                showNotification('Mod Slideshow diaktifkan', 'info');
+                currentSlideZone = 0;
+                updateSlideshowView();
+                showNotification('Mod Slideshow diaktifkan. Gunakan butang navigasi.', 'info');
             } else {
                 nav.classList.add('hidden');
                 stopSlideshow();
@@ -1372,8 +1725,12 @@
         function stopSlideshow() {
             slideshowActive = false;
             slideshowAuto = false;
-            if (slideshowInterval) clearInterval(slideshowInterval);
+            if (slideshowInterval) {
+                clearInterval(slideshowInterval);
+                slideshowInterval = null;
+            }
             document.getElementById('slideshowNav').classList.add('hidden');
+            updateAutoPlayButtonState();
         }
 
         function nextZone() {
@@ -1388,13 +1745,41 @@
 
         function toggleAutoSlideshow() {
             slideshowAuto = !slideshowAuto;
-            const btn = document.getElementById('slideshowAutoBtn');
+
             if (slideshowAuto) {
-                btn.classList.add('bg-emerald-600');
-                slideshowInterval = setInterval(nextZone, 4000);
-            } else {
-                btn.classList.remove('bg-emerald-600');
+                // Hentikan interval lama jika ada
                 if (slideshowInterval) clearInterval(slideshowInterval);
+                // Mulakan auto play
+                slideshowInterval = setInterval(() => {
+                    currentSlideZone = (currentSlideZone + 1) % zoneOrder.length;
+                    updateSlideshowView();
+                }, 4000);
+                showNotification('Auto Play diaktifkan - bertukar setiap 4 saat', 'success');
+            } else {
+                // Hentikan auto play
+                if (slideshowInterval) {
+                    clearInterval(slideshowInterval);
+                    slideshowInterval = null;
+                }
+                showNotification('Auto Play dihentikan', 'info');
+            }
+
+            updateAutoPlayButtonState();
+        }
+
+        function updateAutoPlayButtonState() {
+            const btn = document.getElementById('slideshowAutoBtn');
+            const label = document.getElementById('autoPlayLabel');
+            if (!btn || !label) return;
+
+            if (slideshowAuto) {
+                btn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+                btn.innerHTML = '<i class="fa-solid fa-circle-pause"></i> <span id="autoPlayLabel">Henti Auto</span>';
+            } else {
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+                btn.classList.add('bg-purple-600', 'hover:bg-purple-700');
+                btn.innerHTML = '<i class="fa-solid fa-circle-play"></i> <span id="autoPlayLabel">Auto Play</span>';
             }
         }
 
@@ -1403,13 +1788,16 @@
             const container = document.getElementById('zoneContainer');
             const columns = container.children;
             if (columns[currentSlideZone]) {
-                columns[currentSlideZone].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+                columns[currentSlideZone].scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                });
             }
         }
 
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
-            ['cfrt', 'emrs', 'water'].forEach(tab => {
+            ['cfrt', 'emrs', 'water'].forEach((tab) => {
                 const dropdown = document.getElementById(`msDropdown-${tab}`);
                 if (dropdown && !dropdown.contains(e.target)) {
                     const opts = document.getElementById(`msOptions-${tab}`);
