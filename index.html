@@ -2603,6 +2603,70 @@
         showNotification('Data berjaya dikemaskini', 'success');
         resetCountdown();
       }
+      function startSirenSound() {
+        try {
+          if (!sirenAudioCtx) {
+            // Menyokong semua pelayar telefon (Safari iOS & Chrome Android)
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            sirenAudioCtx = new AudioCtx();
+          }
+
+          // Mengaktifkan semula audio jika dipause oleh pelayar telefon
+          if (sirenAudioCtx.state === 'suspended') {
+            sirenAudioCtx.resume();
+          }
+
+          if (sirenOscillator) stopSirenSound();
+
+          sirenOscillator = sirenAudioCtx.createOscillator();
+          sirenGainNode = sirenAudioCtx.createGain();
+
+          sirenOscillator.type = 'sawtooth';
+          sirenGainNode.gain.setValueAtTime(0.06, sirenAudioCtx.currentTime);
+
+          sirenOscillator.connect(sirenGainNode);
+          sirenGainNode.connect(sirenAudioCtx.destination);
+
+          let highPitch = false;
+          sirenOscillator.frequency.setValueAtTime(
+            650,
+            sirenAudioCtx.currentTime
+          );
+          sirenOscillator.start();
+
+          sirenTimer = setInterval(() => {
+            if (!sirenOscillator || !sirenAudioCtx) return;
+            const targetFreq = highPitch ? 650 : 1250;
+            sirenOscillator.frequency.exponentialRampToValueAtTime(
+              targetFreq,
+              sirenAudioCtx.currentTime + 0.35
+            );
+            highPitch = !highPitch;
+          }, 450);
+        } catch (e) {
+          console.warn('Siren audio dimatikan atau tidak disokong:', e);
+        }
+      }
+      // Mengaktifkan kebenaran audio pada telefon sebaik sahaja pengguna menyentuh skrin
+      const unlockAudioOnMobile = () => {
+        if (!sirenAudioCtx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          sirenAudioCtx = new AudioCtx();
+        }
+        if (sirenAudioCtx && sirenAudioCtx.state === 'suspended') {
+          sirenAudioCtx.resume();
+        }
+
+        // Buang listener selepas diaktifkan sekali
+        document.removeEventListener('touchstart', unlockAudioOnMobile);
+        document.removeEventListener('click', unlockAudioOnMobile);
+      };
+
+      // Dengar sentuhan atau klik pertama dari pengguna
+      document.addEventListener('touchstart', unlockAudioOnMobile, {
+        once: true,
+      });
+      document.addEventListener('click', unlockAudioOnMobile, { once: true });
     </script>
   </body>
 </html>
