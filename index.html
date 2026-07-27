@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@600;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -44,11 +44,169 @@
         background-color: var(--bg-main);
         color: var(--text-primary);
         overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
       }
 
+      /* 🚨 ANIMASI SIREN */
+      @keyframes sirenRed {
+        0%,
+        100% {
+          box-shadow: 0 0 4px #ef4444, 0 0 12px #ef4444;
+          opacity: 1;
+        }
+        50% {
+          box-shadow: 0 0 1px #ef4444;
+          opacity: 0.3;
+        }
+      }
+      @keyframes sirenBlue {
+        0%,
+        100% {
+          box-shadow: 0 0 1px #3b82f6;
+          opacity: 0.3;
+        }
+        50% {
+          box-shadow: 0 0 4px #3b82f6, 0 0 12px #3b82f6;
+          opacity: 1;
+        }
+      }
+      @keyframes sirenAmber {
+        0%,
+        100% {
+          box-shadow: 0 0 4px #f59e0b, 0 0 12px #f59e0b;
+          opacity: 1;
+        }
+        50% {
+          box-shadow: 0 0 2px #f59e0b;
+          opacity: 0.4;
+        }
+      }
+
+      .siren-red {
+        animation: sirenRed 0.8s infinite alternate;
+      }
+      .siren-blue {
+        animation: sirenBlue 0.8s infinite alternate;
+      }
+      .siren-amber {
+        animation: sirenAmber 0.9s infinite alternate;
+      }
+
+      /* 🚛 ANIMASI WHEEL SPIN */
+      @keyframes wheelSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .jentera-card:hover .wheel-spin {
+        animation: wheelSpin 1.5s linear infinite;
+      }
+
+      /* 🎯 ANIMASI PULSE GLOW */
+      @keyframes pulseGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 2px currentColor;
+        }
+        50% {
+          box-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+        }
+      }
+      .pulse-glow-b {
+        animation: pulseGlow 2s infinite;
+        color: #22c55e;
+      }
+      .pulse-glow-rm {
+        animation: pulseGlow 2s infinite;
+        color: #eab308;
+      }
+      .pulse-glow-r {
+        animation: pulseGlow 1s infinite;
+        color: #ef4444;
+      }
+      .pulse-glow-d {
+        animation: pulseGlow 2.5s infinite;
+        color: #3b82f6;
+      }
+
+      /* 🎴 ANIMASI CARD HOVER */
+      @keyframes cardLift {
+        0% {
+          transform: translateY(0) scale(1);
+        }
+        100% {
+          transform: translateY(-4px) scale(1.03);
+        }
+      }
+      .jentera-card:hover {
+        animation: cardLift 0.3s ease forwards;
+        border-color: #64748b;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6),
+          0 0 15px rgba(239, 68, 68, 0.2);
+        z-index: 10;
+      }
+
+      /* 🔔 ANIMASI BELL */
+      @keyframes bellShake {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: rotate(-5deg);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: rotate(5deg);
+        }
+      }
+      .bell-animate {
+        animation: bellShake 2s ease-in-out infinite;
+      }
+
+      /* 🎯 ANIMASI FLOATING */
+      @keyframes floatBadge {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-3px);
+        }
+      }
+      .float-badge {
+        animation: floatBadge 3s ease-in-out infinite;
+      }
+
+      /* 🌟 ANIMASI SHIMMER */
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+      .shimmer-effect {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite;
+      }
+
+      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -62,6 +220,23 @@
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #475569;
+      }
+
+      /* 🏷️ PLATE NUMBER */
+      .plate-number {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1.5px solid #d1d5db;
+        border-radius: 0.25rem;
+        padding: 0.1rem 0.4rem;
+        font-family: 'Orbitron', monospace;
+        font-weight: 800;
+        letter-spacing: 1px;
+        box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.2),
+          0 2px 4px rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        font-size: 0.7rem;
+        text-shadow: 0 0 1px #fff;
       }
 
       .ms-dropdown {
@@ -162,63 +337,56 @@
         border: 1px solid rgba(148, 163, 184, 0.4);
       }
 
-      /* LEBARKAN KAD DAN PADDING */
+      /* Compact Fit Jentera Cards */
       .jentera-card {
         background-color: #0f172a;
         border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        /* padding diperbesarkan */
-        padding: 0.65rem 0.75rem;
+        border-radius: 0.375rem;
+        padding: 0.35rem 0.45rem;
         cursor: pointer;
         transition: all 0.2s ease;
         display: flex;
         flex-direction: column;
-        gap: 0.35rem;
+        gap: 0.15rem;
         position: relative;
         overflow: hidden;
       }
-      .jentera-card:hover {
-        transform: translateY(-2px) scale(1.02);
-        border-color: #64748b;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        z-index: 10;
-      }
       .jentera-card.status-glow-b {
-        border-left: 4px solid #22c55e;
+        border-left: 3px solid #22c55e;
       }
       .jentera-card.status-glow-rm {
-        border-left: 4px solid #eab308;
+        border-left: 3px solid #eab308;
       }
       .jentera-card.status-glow-r {
-        border-left: 4px solid #ef4444;
+        border-left: 3px solid #ef4444;
       }
       .jentera-card.status-glow-d {
-        border-left: 4px solid #3b82f6;
+        border-left: 3px solid #3b82f6;
       }
       .jentera-card.status-glow-u {
-        border-left: 4px solid #94a3b8;
+        border-left: 3px solid #94a3b8;
       }
       .jentera-card.type-cfrt {
-        border-top: 2px solid var(--accent-red);
+        border-top: 1.5px solid var(--accent-red);
       }
       .jentera-card.type-emrs {
-        border-top: 2px solid var(--accent-blue);
+        border-top: 1.5px solid var(--accent-blue);
       }
       .jentera-card.type-water {
-        border-top: 2px solid var(--accent-cyan);
+        border-top: 1.5px solid var(--accent-cyan);
       }
 
       .copy-btn {
         position: absolute;
-        top: 0.35rem;
-        right: 0.35rem;
-        width: 20px;
-        height: 20px;
+        top: 0.2rem;
+        right: 0.2rem;
+        width: 18px;
+        height: 18px;
         background: rgba(30, 41, 59, 0.9);
         border: 1px solid var(--border-color);
         border-radius: 0.25rem;
         color: #94a3b8;
-        font-size: 10px;
+        font-size: 9px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -253,9 +421,10 @@
         display: none !important;
       }
       body.fullscreen-mode #zoneContainer {
-        gap: 0.75rem;
+        gap: 0.5rem;
       }
 
+      /* 🚒 VEHICLE SHAPE MODAL STYLES */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -273,20 +442,18 @@
         opacity: 1;
         pointer-events: auto;
       }
-      footer {
-        margin-top: auto;
-        background-color: #0f172a;
-        border-top: 1px solid #1e293b;
-        padding: 0.75rem 1.5rem;
-        text-align: center;
-        font-size: 0.7rem;
-        color: #64748b;
-        letter-spacing: 0.05em;
-        font-weight: 500;
+
+      /* Vehicle shape card in modal */
+      .vehicle-shape-modal {
+        position: relative;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        user-select: none;
+        overflow: hidden;
       }
     </style>
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Loading Overlay -->
     <div
       id="loadingOverlay"
       class="fixed inset-0 bg-slate-950/90 z-[110] flex flex-col items-center justify-center gap-3"
@@ -301,83 +468,89 @@
       </div>
     </div>
 
-    <div class="sticky top-0 z-40">
-      <header
-        class="bg-slate-900 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3"
-      >
-        <div class="flex items-center gap-3">
-          <div
-            class="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-red-600/30"
-          >
-            <i class="fa-solid fa-fire-extinguisher text-white"></i>
-          </div>
-          <div>
-            <h1
-              class="text-sm sm:text-base font-extrabold tracking-wide text-white uppercase leading-tight"
-            >
-              Dashboard Jentera Bomba Johor
-            </h1>
-            <p class="text-[11px] text-slate-400 font-medium">
-              Sistem Pemantauan Logistik & Fit View Balai
-            </p>
-          </div>
-        </div>
+    <!-- Header -->
+    <header
+      class="bg-slate-900 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40"
+    >
+      <div class="flex items-center gap-3">
         <div
-          class="flex items-center gap-3 text-xs font-medium text-slate-400 sub-header-controls"
+          class="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-red-600/30"
         >
-          <div class="hidden sm:flex flex-col items-end text-[11px]">
-            <span id="lastUpdate">Dikemaskini: -</span
-            ><span id="countdown" class="text-slate-500">Auto Refresh: -</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <button
-              onclick="toggleFullscreenDashboard()"
-              id="fullscreenBtn"
-              class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition text-xs"
-              title="Skrin Penuh"
-            >
-              <i class="fa-solid fa-expand"></i>
-            </button>
-            <button
-              onclick="loadAllData()"
-              id="refreshBtn"
-              class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md shadow-red-600/20 transition flex items-center gap-1.5 text-xs"
-            >
-              <i class="fa-solid fa-arrows-rotate refresh-icon"></i
-              ><span class="hidden sm:inline">Kemaskini</span>
-            </button>
-          </div>
+          <i class="fa-solid fa-fire-extinguisher text-white bell-animate"></i>
         </div>
-      </header>
-      <nav
-        class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 flex gap-1 overflow-x-auto tab-nav-header"
+        <div>
+          <h1
+            class="text-sm sm:text-base font-extrabold tracking-wide text-white uppercase leading-tight"
+          >
+            Dashboard Jentera Bomba Johor
+          </h1>
+          <p
+            class="text-[11px] text-slate-400 font-medium flex items-center gap-2"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"
+            ></span>
+            Sistem Pemantauan Logistik & Fit View Balai
+          </p>
+        </div>
+      </div>
+      <div
+        class="flex items-center gap-3 text-xs font-medium text-slate-400 sub-header-controls"
       >
-        <button
-          onclick="switchTab('cfrt')"
-          class="tab-btn tab-cfrt active py-2.5 px-3 text-xs font-bold border-b-2 border-red-500 text-red-400 whitespace-nowrap transition flex items-center gap-1.5"
-        >
-          <i class="fa-solid fa-fire-extinguisher"></i> RESCUE TENDER
-        </button>
-        <button
-          onclick="switchTab('emrs')"
-          class="tab-btn tab-emrs py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
-        >
-          <i class="fa-solid fa-truck-medical"></i> EMRS
-        </button>
-        <button
-          onclick="switchTab('water')"
-          class="tab-btn tab-water py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
-        >
-          <i class="fa-solid fa-truck-droplet"></i> WATER TANKER
-        </button>
-        <button
-          onclick="switchTab('dashboard')"
-          class="tab-btn tab-dashboard py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
-        >
-          <i class="fa-solid fa-chart-column"></i> DASHBOARD UTAMA (FIT VIEW)
-        </button>
-      </nav>
-    </div>
+        <div class="hidden sm:flex flex-col items-end text-[11px]">
+          <span id="lastUpdate">Dikemaskini: -</span>
+          <span id="countdown" class="text-slate-500">Auto Refresh: -</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button
+            onclick="toggleFullscreenDashboard()"
+            id="fullscreenBtn"
+            class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition text-xs"
+            title="Skrin Penuh"
+          >
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button
+            onclick="loadAllData()"
+            id="refreshBtn"
+            class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md shadow-red-600/20 transition flex items-center gap-1.5 text-xs"
+          >
+            <i class="fa-solid fa-arrows-rotate refresh-icon"></i>
+            <span class="hidden sm:inline">Kemaskini</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav
+      class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 flex gap-1 overflow-x-auto tab-nav-header sticky top-[57px] z-30"
+    >
+      <button
+        onclick="switchTab('cfrt')"
+        class="tab-btn tab-cfrt active py-2.5 px-3 text-xs font-bold border-b-2 border-red-500 text-red-400 whitespace-nowrap transition flex items-center gap-1.5"
+      >
+        <i class="fa-solid fa-fire-extinguisher"></i> RESCUE TENDER
+      </button>
+      <button
+        onclick="switchTab('emrs')"
+        class="tab-btn tab-emrs py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
+      >
+        <i class="fa-solid fa-truck-medical"></i> EMRS
+      </button>
+      <button
+        onclick="switchTab('water')"
+        class="tab-btn tab-water py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
+      >
+        <i class="fa-solid fa-truck-droplet"></i> WATER TANKER
+      </button>
+      <button
+        onclick="switchTab('dashboard')"
+        class="tab-btn tab-dashboard py-2.5 px-3 text-xs font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-1.5"
+      >
+        <i class="fa-solid fa-chart-column"></i> DASHBOARD UTAMA (FIT VIEW)
+      </button>
+    </nav>
 
     <main class="flex-1 p-2.5 sm:p-4 space-y-4 max-w-[1700px] w-full mx-auto">
       <!-- TAB: CFRT -->
@@ -429,8 +602,9 @@
                 onclick="copyAllTableData('cfrt')"
                 class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1"
               >
-                <i class="fa-solid fa-copy"></i> Salin Semua</button
-              ><button
+                <i class="fa-solid fa-copy"></i> Salin Semua
+              </button>
+              <button
                 onclick="eksportKeExcel('cfrt')"
                 class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1"
               >
@@ -442,8 +616,8 @@
             <div class="relative flex-1 min-w-[180px]">
               <i
                 class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"
-              ></i
-              ><input
+              ></i>
+              <input
                 type="text"
                 id="searchInput-cfrt"
                 oninput="Rt('cfrt')"
@@ -455,12 +629,14 @@
               <button class="ms-select-btn" onclick="toggleMsDropdown('cfrt')">
                 <span id="msText-cfrt"
                   ><i class="fa-solid fa-filter mr-1"></i> Semua Status</span
-                ><span
+                >
+                <span
                   class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="msCount-cfrt"
                   style="display: none"
                   >0</span
-                ><span class="text-[9px]">▼</span>
+                >
+                <span class="text-[9px]">▼</span>
               </button>
               <div class="ms-options" id="msOptions-cfrt"></div>
             </div>
@@ -548,8 +724,9 @@
                 onclick="copyAllTableData('emrs')"
                 class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1"
               >
-                <i class="fa-solid fa-copy"></i> Salin Semua</button
-              ><button
+                <i class="fa-solid fa-copy"></i> Salin Semua
+              </button>
+              <button
                 onclick="eksportKeExcel('emrs')"
                 class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1"
               >
@@ -561,8 +738,8 @@
             <div class="relative flex-1 min-w-[180px]">
               <i
                 class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"
-              ></i
-              ><input
+              ></i>
+              <input
                 type="text"
                 id="searchInput-emrs"
                 oninput="Rt('emrs')"
@@ -574,12 +751,14 @@
               <button class="ms-select-btn" onclick="toggleMsDropdown('emrs')">
                 <span id="msText-emrs"
                   ><i class="fa-solid fa-filter mr-1"></i> Semua Status</span
-                ><span
+                >
+                <span
                   class="text-[10px] bg-blue-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="msCount-emrs"
                   style="display: none"
                   >0</span
-                ><span class="text-[9px]">▼</span>
+                >
+                <span class="text-[9px]">▼</span>
               </button>
               <div class="ms-options" id="msOptions-emrs"></div>
             </div>
@@ -668,8 +847,9 @@
                 onclick="copyAllTableData('water')"
                 class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-600 text-xs font-semibold rounded-lg text-emerald-100 transition flex items-center gap-1"
               >
-                <i class="fa-solid fa-copy"></i> Salin Semua</button
-              ><button
+                <i class="fa-solid fa-copy"></i> Salin Semua
+              </button>
+              <button
                 onclick="eksportKeExcel('water')"
                 class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-xs font-semibold rounded-lg text-slate-200 transition flex items-center gap-1"
               >
@@ -681,8 +861,8 @@
             <div class="relative flex-1 min-w-[180px]">
               <i
                 class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"
-              ></i
-              ><input
+              ></i>
+              <input
                 type="text"
                 id="searchInput-water"
                 oninput="Rt('water')"
@@ -694,12 +874,14 @@
               <button class="ms-select-btn" onclick="toggleMsDropdown('water')">
                 <span id="msText-water"
                   ><i class="fa-solid fa-filter mr-1"></i> Semua Status</span
-                ><span
+                >
+                <span
                   class="text-[10px] bg-cyan-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="msCount-water"
                   style="display: none"
                   >0</span
-                ><span class="text-[9px]">▼</span>
+                >
+                <span class="text-[9px]">▼</span>
               </button>
               <div class="ms-options" id="msOptions-water"></div>
             </div>
@@ -757,56 +939,56 @@
                 <span id="jenisFilterText"
                   ><i class="fa-solid fa-layer-group mr-1"></i> Semua
                   Jenis</span
-                ><span
+                >
+                <span
                   class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="jenisFilterCount"
                   >3</span
-                ><span class="text-[8px]">▼</span>
+                >
+                <span class="text-[8px]">▼</span>
               </button>
               <div class="ms-options" id="jenisFilterOptions">
                 <label class="ms-option"
                   ><input
                     type="checkbox"
-                    value="frt"
+                    value="cfrt"
                     checked
                     onchange="applyJenisFilter()"
                   /><span
                     ><i
                       class="fa-solid fa-fire-extinguisher text-red-500 mr-1"
-                    ></i>
-                    Rescue Tender</span
+                    ></i
+                    >Rescue Tender</span
                   ><span
                     class="ml-auto text-[9px] bg-slate-700 px-1 rounded font-bold"
                     id="countCfrt"
                     >0</span
                   ></label
-                ><label class="ms-option"
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="emrs"
                     checked
                     onchange="applyJenisFilter()"
                   /><span
-                    ><i
-                      class="fa-solid fa-truck-medical text-blue-500 mr-1"
-                    ></i>
-                    EMRS</span
+                    ><i class="fa-solid fa-truck-medical text-blue-500 mr-1"></i
+                    >EMRS</span
                   ><span
                     class="ml-auto text-[9px] bg-slate-700 px-1 rounded font-bold"
                     id="countEmrs"
                     >0</span
                   ></label
-                ><label class="ms-option"
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="water"
                     checked
                     onchange="applyJenisFilter()"
                   /><span
-                    ><i
-                      class="fa-solid fa-truck-droplet text-cyan-500 mr-1"
-                    ></i>
-                    Water Tanker</span
+                    ><i class="fa-solid fa-truck-droplet text-cyan-500 mr-1"></i
+                    >Water Tanker</span
                   ><span
                     class="ml-auto text-[9px] bg-slate-700 px-1 rounded font-bold"
                     id="countWater"
@@ -823,13 +1005,14 @@
                 class="ms-select-btn bg-slate-900 py-1 text-[11px]"
                 onclick="toggleStatusFilter()"
               >
-                <span id="statusFilterText">Semua</span
-                ><span
+                <span id="statusFilterText">Semua</span>
+                <span
                   class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="statusFilterCount"
                   style="display: none"
                   >0</span
-                ><span class="text-[8px]">▼</span>
+                >
+                <span class="text-[8px]">▼</span>
               </button>
               <div class="ms-options" id="statusFilterOptions">
                 <label class="ms-option"
@@ -837,36 +1020,40 @@
                     type="checkbox"
                     value="BAIK"
                     onchange="applyStatusFilter()"
-                  /><span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  BAIK</label
-                ><label class="ms-option"
+                  /><span class="w-2 h-2 rounded-full bg-emerald-500"></span
+                  >BAIK</label
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="ROSAK MINOR"
                     onchange="applyStatusFilter()"
-                  /><span class="w-2 h-2 rounded-full bg-yellow-500"></span>
-                  ROSAK MINOR</label
-                ><label class="ms-option"
+                  /><span class="w-2 h-2 rounded-full bg-yellow-500"></span
+                  >ROSAK MINOR</label
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="ROSAK"
                     onchange="applyStatusFilter()"
-                  /><span class="w-2 h-2 rounded-full bg-red-500"></span>
-                  ROSAK</label
-                ><label class="ms-option"
+                  /><span class="w-2 h-2 rounded-full bg-red-500"></span
+                  >ROSAK</label
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="DIPULANGKAN"
                     onchange="applyStatusFilter()"
-                  /><span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                  DIPULANGKAN</label
-                ><label class="ms-option"
+                  /><span class="w-2 h-2 rounded-full bg-blue-500"></span
+                  >DIPULANGKAN</label
+                >
+                <label class="ms-option"
                   ><input
                     type="checkbox"
                     value="LAIN"
                     onchange="applyStatusFilter()"
-                  /><span class="w-2 h-2 rounded-full bg-slate-400"></span>
-                  LAIN-LAIN</label
+                  /><span class="w-2 h-2 rounded-full bg-slate-400"></span
+                  >LAIN-LAIN</label
                 >
               </div>
             </div>
@@ -911,8 +1098,8 @@
             id="slideshowAutoBtn"
             class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-bold flex items-center gap-1"
           >
-            <i class="fa-solid fa-circle-play"></i>
-            <span id="autoPlayLabel">Auto Play</span>
+            <i class="fa-solid fa-circle-play"></i
+            ><span id="autoPlayLabel">Auto Play</span>
           </button>
           <button
             onclick="stopSlideshow()"
@@ -932,40 +1119,27 @@
       </section>
     </main>
 
-    <footer>
-      <span>© 2026 PGO Johor</span>
-    </footer>
-
+    <!-- 🚒 VEHICLE SHAPE MODAL POPUP -->
     <div
       id="modalOverlay"
       class="modal-overlay p-4"
       onclick="closeModal(event)"
     >
       <div
-        class="bg-slate-900 border border-slate-700 rounded-xl max-w-md w-full p-5 space-y-4 shadow-2xl relative text-left"
+        class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-0 space-y-0 shadow-2xl relative text-left overflow-hidden"
         onclick="event.stopPropagation()"
       >
         <button
           onclick="closeModal()"
-          class="absolute top-3 right-3 text-slate-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700"
+          class="absolute top-3 right-3 text-slate-400 hover:text-white w-8 h-8 flex items-center justify-center rounded-full bg-slate-800 hover:bg-slate-700 z-20 transition"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <div
-          id="modalHeader"
-          class="text-center pb-3 border-b border-slate-800"
-        ></div>
-        <div
-          id="modalBody"
-          class="space-y-2 max-h-[60vh] overflow-y-auto text-xs"
-        ></div>
-        <div
-          id="modalFooter"
-          class="pt-3 border-t border-slate-800 flex justify-end gap-2"
-        ></div>
+        <div id="modalVehicleShape" class="w-full"></div>
       </div>
     </div>
 
+    <!-- Notification Toast -->
     <div
       id="toastNotification"
       class="fixed bottom-4 right-4 z-[120] bg-slate-800 border border-slate-700 text-slate-100 text-xs font-medium px-3.5 py-2.5 rounded-lg shadow-xl translate-x-full transition-transform duration-300 flex items-center gap-2"
@@ -984,6 +1158,7 @@
         water:
           'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=290336578&single=true&output=csv',
       };
+
       const REFRESH_INTERVAL_SEC = 300;
       let D = { cfrt: [], emrs: [], water: [] };
       let T = 'cfrt';
@@ -997,12 +1172,12 @@
         emrs: { s: null, z: null },
         water: { s: null, z: null },
       };
-      let isFullscreenDashboard = false;
-      let slideshowActive = false;
-      let slideshowAuto = false;
-      let slideshowInterval = null;
-      let currentSlideZone = 0;
-      let isZoomedOut = false;
+      let slideshowActive = false,
+        slideshowAuto = false,
+        slideshowInterval = null,
+        currentSlideZone = 0,
+        isZoomedOut = false;
+
       const zoneOrder = [
         'ZON 1',
         'ZON 2',
@@ -1056,6 +1231,8 @@
           'BALAI BOMBA DAN PENYELAMAT PAGOH',
         ],
       };
+
+      // Helper functions (sama seperti sebelumnya)
       function getStationCoreName(str) {
         if (!str) return '';
         return str
@@ -1085,9 +1262,8 @@
           if (
             coreB &&
             (coreLokasi.includes(coreB) || coreB.includes(coreLokasi))
-          ) {
+          )
             return b;
-          }
         }
         return null;
       }
@@ -1108,16 +1284,13 @@
           if (
             coreB &&
             (coreLokasi.includes(coreB) || coreB.includes(coreLokasi))
-          ) {
+          )
             return b;
-          }
         }
         return null;
       }
       function showNotification(msg, type = 'info') {
         const toast = document.getElementById('toastNotification');
-        const icon = document.getElementById('toastIcon');
-        const message = document.getElementById('toastMessage');
         const icons = {
           success: '<i class="fa-solid fa-circle-check text-emerald-400"></i>',
           error: '<i class="fa-solid fa-circle-xmark text-red-400"></i>',
@@ -1125,8 +1298,9 @@
             '<i class="fa-solid fa-triangle-exclamation text-yellow-400"></i>',
           info: '<i class="fa-solid fa-circle-info text-blue-400"></i>',
         };
-        icon.innerHTML = icons[type] || icons.info;
-        message.textContent = msg;
+        document.getElementById('toastIcon').innerHTML =
+          icons[type] || icons.info;
+        document.getElementById('toastMessage').textContent = msg;
         toast.classList.remove('translate-x-full');
         setTimeout(() => {
           toast.classList.add('translate-x-full');
@@ -1187,6 +1361,7 @@
         }
         return '';
       }
+
       async function fetchTabData(tab) {
         const url = U[tab];
         if (!url) return;
@@ -1196,8 +1371,7 @@
           const text = await res.text();
           const parsed = PP(text);
           if (parsed.length < 2) return;
-          const formatted = OO(parsed[0], parsed.slice(1));
-          D[tab] = formatted;
+          D[tab] = OO(parsed[0], parsed.slice(1));
           populateMultiSelectOptions(tab);
           populateZonOptions(tab);
           UU(tab);
@@ -1224,10 +1398,9 @@
         resetCountdown();
       }
       function updateTimestamp() {
-        const now = new Date();
         document.getElementById('lastUpdate').textContent =
           'Dikemaskini: ' +
-          now.toLocaleTimeString('ms-MY', {
+          new Date().toLocaleTimeString('ms-MY', {
             hour: '2-digit',
             minute: '2-digit',
             second: '2-digit',
@@ -1238,16 +1411,14 @@
         if (intervalTimer) clearInterval(intervalTimer);
         intervalTimer = setInterval(() => {
           remainingSeconds--;
-          const mins = Math.floor(remainingSeconds / 60);
-          const secs = remainingSeconds % 60;
+          const mins = Math.floor(remainingSeconds / 60),
+            secs = remainingSeconds % 60;
           document.getElementById(
             'countdown'
           ).textContent = `Auto Refresh: ${mins}:${secs
             .toString()
             .padStart(2, '0')}`;
-          if (remainingSeconds <= 0) {
-            loadAllData();
-          }
+          if (remainingSeconds <= 0) loadAllData();
         }, 1000);
       }
       function switchTab(tab) {
@@ -1264,13 +1435,9 @@
         document
           .querySelectorAll('.tab-content')
           .forEach((el) => el.classList.add('hidden'));
-        const currentContent = document.getElementById(`tab-${tab}`);
-        if (currentContent) currentContent.classList.remove('hidden');
-        if (tab === 'dashboard') {
-          renderMainDashboard();
-        } else {
-          setTimeout(() => Rc(tab), 50);
-        }
+        document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
+        if (tab === 'dashboard') renderMainDashboard();
+        else setTimeout(() => Rc(tab), 50);
       }
       function getStatusCategory(statusStr) {
         if (!statusStr) return 'U';
@@ -1281,6 +1448,7 @@
         if (t.includes('DIPULANGKAN')) return 'D';
         return 'U';
       }
+
       function UU(tab) {
         const list = D[tab] || [];
         let b = 0,
@@ -1296,12 +1464,13 @@
           else if (cat === 'D') d++;
           else u++;
         });
-        const total = list.length;
-        const rate = total > 0 ? (((b + rm) / total) * 100).toFixed(1) : '0';
+        const total = list.length,
+          rate = total > 0 ? (((b + rm) / total) * 100).toFixed(1) : '0';
         const container = document.getElementById(`statsRow-${tab}`);
         if (!container) return;
-        container.innerHTML = `<div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-white">${total}</div><div class="text-[9px] text-slate-400 uppercase font-semibold">Jumlah Jentera</div></div><div class="bg-slate-800/80 border border-emerald-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-emerald-400">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="bg-slate-800/80 border border-yellow-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-yellow-400">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="bg-slate-800/80 border border-red-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-red-400">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="bg-slate-800/80 border border-blue-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-blue-400">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketesediaan</div></div>`;
+        container.innerHTML = `<div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center float-badge"><div class="text-lg font-extrabold text-white">${total}</div><div class="text-[9px] text-slate-400 uppercase font-semibold">Jumlah Jentera</div></div><div class="bg-slate-800/80 border border-emerald-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="bg-slate-800/80 border border-yellow-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="bg-slate-800/80 border border-red-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="bg-slate-800/80 border border-blue-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center shimmer-effect"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketesediaan</div></div>`;
       }
+
       function Rc(tab) {
         const list = D[tab] || [];
         if (!list.length) return;
@@ -1347,6 +1516,11 @@
                   font: { weight: 'bold', size: 9 },
                 },
               },
+              animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 1500,
+              },
             },
             plugins: [ChartDataLabels],
           });
@@ -1387,11 +1561,13 @@
                 y: { ticks: { color: '#64748b' }, grid: { color: '#334155' } },
                 x: { ticks: { color: '#94a3b8' } },
               },
+              animation: { duration: 1200, easing: 'easeOutBounce' },
             },
             plugins: [ChartDataLabels],
           });
         }
       }
+
       function populateMultiSelectOptions(tab) {
         const list = D[tab] || [];
         const statuses = new Set();
@@ -1401,16 +1577,16 @@
         });
         const container = document.getElementById(`msOptions-${tab}`);
         if (!container) return;
-        let html = '';
-        Array.from(statuses)
+        container.innerHTML = Array.from(statuses)
           .sort()
-          .forEach((st) => {
-            html += `<label class="ms-option"><input type="checkbox" value="${st.replace(
-              /"/g,
-              '&quot;'
-            )}" onchange="updateSubTabMultiSelect('${tab}')"><span>${st}</span></label>`;
-          });
-        container.innerHTML = html;
+          .map(
+            (st) =>
+              `<label class="ms-option"><input type="checkbox" value="${st.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabMultiSelect('${tab}')"><span>${st}</span></label>`
+          )
+          .join('');
       }
       function populateZonOptions(tab) {
         const list = D[tab] || [];
@@ -1429,8 +1605,7 @@
             .join('');
       }
       function toggleMsDropdown(tab) {
-        const opts = document.getElementById(`msOptions-${tab}`);
-        if (opts) opts.classList.toggle('show');
+        document.getElementById(`msOptions-${tab}`)?.classList.toggle('show');
       }
       function updateSubTabMultiSelect(tab) {
         const opts = document.getElementById(`msOptions-${tab}`);
@@ -1440,8 +1615,8 @@
           if (cb.checked) selected.push(cb.value);
         });
         subTabSelectedStatus[tab] = selected;
-        const textSpan = document.getElementById(`msText-${tab}`);
-        const countSpan = document.getElementById(`msCount-${tab}`);
+        const textSpan = document.getElementById(`msText-${tab}`),
+          countSpan = document.getElementById(`msCount-${tab}`);
         if (selected.length === 0) {
           textSpan.innerHTML =
             '<i class="fa-solid fa-filter mr-1"></i> Semua Status';
@@ -1455,6 +1630,7 @@
         }
         Rt(tab);
       }
+
       function Rt(tab) {
         const list = D[tab] || [];
         const searchVal = (
@@ -1465,25 +1641,23 @@
         const selectedStatuses = subTabSelectedStatus[tab] || [];
         const filtered = list.filter((item) => {
           if (searchVal) {
-            const callsign = (G(item, 'CALLSIGN') || '').toLowerCase();
-            const plate = (G(item, 'PLATE') || '').toLowerCase();
-            const lokasi = (G(item, 'LOKASI SEMASA') || '').toLowerCase();
-            const model = (G(item, 'MODEL JENTERA') || '').toLowerCase();
+            const callsign = (G(item, 'CALLSIGN') || '').toLowerCase(),
+              plate = (G(item, 'PLATE') || '').toLowerCase(),
+              lokasi = (G(item, 'LOKASI SEMASA') || '').toLowerCase(),
+              model = (G(item, 'MODEL JENTERA') || '').toLowerCase();
             if (
               !callsign.includes(searchVal) &&
               !plate.includes(searchVal) &&
               !lokasi.includes(searchVal) &&
               !model.includes(searchVal)
-            ) {
+            )
               return false;
-            }
           }
           if (
             selectedZone &&
             (G(item, 'ZON') || '').toUpperCase() !== selectedZone.toUpperCase()
-          ) {
+          )
             return false;
-          }
           if (selectedStatuses.length > 0) {
             const statusVal = (G(item, 'STATUS JENTERA') || '').trim();
             if (!selectedStatuses.includes(statusVal)) return false;
@@ -1492,61 +1666,55 @@
         });
         const tbody = document.getElementById(`tableBody-${tab}`);
         if (!tbody) return;
-        if (filtered.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="10" class="p-3 text-center text-slate-500">Tiada jentera dijumpai.</td></tr>`;
-        } else {
-          tbody.innerHTML = filtered
-            .map((item, idx) => {
-              const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase();
-              const statusRaw = G(item, 'STATUS JENTERA') || 'TIADA';
-              const cat = getStatusCategory(statusRaw);
-              let badgeClass = 'badge-unknown';
-              if (cat === 'B') badgeClass = 'badge-baik';
-              else if (cat === 'RM') badgeClass = 'badge-minor';
-              else if (cat === 'R') badgeClass = 'badge-rosak';
-              else if (cat === 'D') badgeClass = 'badge-pulang';
-              const itemJson = encodeURIComponent(JSON.stringify(item));
-              return `<tr class="hover:bg-slate-700/30 cursor-pointer transition relative" onclick="showJenteraModal('${itemJson}')"><td class="p-2">${
-                idx + 1
-              }</td><td class="p-2 font-bold text-white">${callsign}</td><td class="p-2 font-mono">${(
-                G(item, 'PLATE') || '-'
-              ).toUpperCase()}</td><td class="p-2">${
-                G(item, 'MODEL JENTERA') || '-'
-              }</td><td class="p-2">${
-                G(item, 'PENEMPATAN ASAL') || '-'
-              }</td><td class="p-2">${
-                G(item, 'LOKASI SEMASA') || '-'
-              }</td><td class="p-2">${
-                G(item, 'ZON') || '-'
-              }</td><td class="p-2"><span class="badge-status ${badgeClass}">${statusRaw}</span></td><td class="p-2 text-slate-400 max-w-[140px] truncate">${
-                G(item, 'STATUS KEROSAKKAN') || '-'
-              }</td><td class="p-2 text-center" onclick="event.stopPropagation()"><button onclick="copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button></td></tr>`;
-            })
-            .join('');
-        }
-        const rowCount = document.getElementById(`rowCount-${tab}`);
-        if (rowCount)
-          rowCount.textContent = `Menunjukkan ${filtered.length} daripada ${list.length} jentera`;
+        tbody.innerHTML =
+          filtered.length === 0
+            ? `<tr><td colspan="10" class="p-3 text-center text-slate-500">Tiada jentera dijumpai.</td></tr>`
+            : filtered
+                .map((item, idx) => {
+                  const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase(),
+                    plate = (G(item, 'PLATE') || '-').toUpperCase(),
+                    statusRaw = G(item, 'STATUS JENTERA') || 'TIADA',
+                    cat = getStatusCategory(statusRaw);
+                  let badgeClass = 'badge-unknown';
+                  if (cat === 'B') badgeClass = 'badge-baik';
+                  else if (cat === 'RM') badgeClass = 'badge-minor';
+                  else if (cat === 'R') badgeClass = 'badge-rosak';
+                  else if (cat === 'D') badgeClass = 'badge-pulang';
+                  const itemJson = encodeURIComponent(JSON.stringify(item));
+                  return `<tr class="hover:bg-slate-700/30 cursor-pointer transition relative shimmer-effect" onclick="showVehicleModal('${itemJson}')"><td class="p-2">${
+                    idx + 1
+                  }</td><td class="p-2 font-bold text-white">${callsign}</td><td class="p-2"><span class="plate-number">${plate}</span></td><td class="p-2">${
+                    G(item, 'MODEL JENTERA') || '-'
+                  }</td><td class="p-2">${
+                    G(item, 'PENEMPATAN ASAL') || '-'
+                  }</td><td class="p-2">${
+                    G(item, 'LOKASI SEMASA') || '-'
+                  }</td><td class="p-2">${
+                    G(item, 'ZON') || '-'
+                  }</td><td class="p-2"><span class="badge-status ${badgeClass}">${statusRaw}</span></td><td class="p-2 text-slate-400 max-w-[140px] truncate">${
+                    G(item, 'STATUS KEROSAKKAN') || '-'
+                  }</td><td class="p-2 text-center" onclick="event.stopPropagation()"><button onclick="copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button></td></tr>`;
+                })
+                .join('');
+        document.getElementById(
+          `rowCount-${tab}`
+        ).textContent = `Menunjukkan ${filtered.length} daripada ${list.length} jentera`;
       }
+
       function copySingleAssetInfo(itemJson, btnElement) {
         try {
           const item = JSON.parse(decodeURIComponent(itemJson));
-          const text = formatAssetInfo(item);
           navigator.clipboard
-            .writeText(text)
+            .writeText(formatAssetInfo(item))
             .then(() => {
               showNotification('Maklumat jentera berjaya disalin!', 'success');
               if (btnElement) {
                 btnElement.classList.add('copied');
                 const icon = btnElement.querySelector('i');
-                if (icon) {
-                  icon.className = 'fa-solid fa-check';
-                }
+                if (icon) icon.className = 'fa-solid fa-check';
                 setTimeout(() => {
                   btnElement.classList.remove('copied');
-                  if (icon) {
-                    icon.className = 'fa-regular fa-copy';
-                  }
+                  if (icon) icon.className = 'fa-regular fa-copy';
                 }, 1500);
               }
             })
@@ -1554,7 +1722,6 @@
               showNotification('Gagal menyalin maklumat', 'error');
             });
         } catch (err) {
-          console.error('Error copying asset info:', err);
           showNotification('Ralat menyalin data', 'error');
         }
       }
@@ -1564,12 +1731,11 @@
           showNotification('Tiada data untuk disalin', 'warning');
           return;
         }
-        let text = `=== SENARAI JENTERA ${tab.toUpperCase()} ===\n`;
-        text += `Jumlah: ${list.length} jentera\n`;
-        text += `${'='.repeat(40)}\n\n`;
+        let text = `=== SENARAI JENTERA ${tab.toUpperCase()} ===\nJumlah: ${
+          list.length
+        } jentera\n${'='.repeat(40)}\n\n`;
         list.forEach((item, idx) => {
-          text += `[${idx + 1}] ${formatAssetInfo(item)}\n`;
-          text += `${'-'.repeat(30)}\n`;
+          text += `[${idx + 1}] ${formatAssetInfo(item)}\n${'-'.repeat(30)}\n`;
         });
         navigator.clipboard
           .writeText(text)
@@ -1584,19 +1750,22 @@
           });
       }
       function formatAssetInfo(item) {
-        const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase();
-        const plate = (G(item, 'PLATE') || '-').toUpperCase();
-        const model = G(item, 'MODEL JENTERA') || '-';
-        const asal = G(item, 'PENEMPATAN ASAL') || '-';
-        const lokasi = G(item, 'LOKASI SEMASA') || '-';
-        const zon = G(item, 'ZON') || '-';
-        const status = G(item, 'STATUS JENTERA') || '-';
-        const kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
-        let typeLabel = '';
-        if (item._j === 'cfrt') typeLabel = 'RESCUE TENDER';
-        else if (item._j === 'emrs') typeLabel = 'EMRS';
-        else if (item._j === 'water') typeLabel = 'WATER TANKER';
-        else typeLabel = 'JENTERA';
+        const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase(),
+          plate = (G(item, 'PLATE') || '-').toUpperCase(),
+          model = G(item, 'MODEL JENTERA') || '-',
+          asal = G(item, 'PENEMPATAN ASAL') || '-',
+          lokasi = G(item, 'LOKASI SEMASA') || '-',
+          zon = G(item, 'ZON') || '-',
+          status = G(item, 'STATUS JENTERA') || '-',
+          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
+        let typeLabel =
+          item._j === 'cfrt'
+            ? 'RESCUE TENDER'
+            : item._j === 'emrs'
+            ? 'EMRS'
+            : item._j === 'water'
+            ? 'WATER TANKER'
+            : 'JENTERA';
         return `[${typeLabel}] ${callsign} | ${plate} | ${model}\nPenempatan: ${asal}\nLokasi: ${lokasi}\nZon: ${zon}\nStatus: ${status}\nKerosakan: ${kerosakan}`;
       }
       function eksportKeExcel(tab) {
@@ -1664,13 +1833,11 @@
         cbs.forEach((cb) => {
           if (cb.checked) F.push(cb.value);
         });
-        const countText = document.getElementById('jenisFilterCount');
-        countText.textContent = F.length;
-        const textSpan = document.getElementById('jenisFilterText');
-        if (F.length === 3)
-          textSpan.innerHTML =
-            '<i class="fa-solid fa-layer-group mr-1"></i> Semua Jenis';
-        else textSpan.textContent = F.map((f) => f.toUpperCase()).join(', ');
+        document.getElementById('jenisFilterCount').textContent = F.length;
+        document.getElementById('jenisFilterText').innerHTML =
+          F.length === 3
+            ? '<i class="fa-solid fa-layer-group mr-1"></i> Semua Jenis'
+            : F.map((f) => f.toUpperCase()).join(', ');
         renderMainDashboard();
       }
       function toggleStatusFilter() {
@@ -1684,15 +1851,16 @@
         cbs.forEach((cb) => {
           if (cb.checked) SF.push(cb.value);
         });
-        const countText = document.getElementById('statusFilterCount');
+        const ct = document.getElementById('statusFilterCount');
         if (SF.length > 0) {
-          countText.textContent = SF.length;
-          countText.style.display = 'inline-block';
+          ct.textContent = SF.length;
+          ct.style.display = 'inline-block';
         } else {
-          countText.style.display = 'none';
+          ct.style.display = 'none';
         }
         renderMainDashboard();
       }
+
       function renderMainDashboard() {
         const all = getAllAssets();
         document.getElementById('countCfrt').textContent = D.cfrt.length;
@@ -1725,7 +1893,8 @@
         });
         document.getElementById(
           'dashStats'
-        ).innerHTML = `<div class="bg-slate-800 border border-slate-700 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-white">${filtered.length}</div><div class="text-[9px] text-slate-400">JUMLAH</div></div><div class="bg-slate-800 border border-emerald-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-emerald-400">${b}</div><div class="text-[9px] text-emerald-500/80">BAIK</div></div><div class="bg-slate-800 border border-yellow-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-yellow-400">${rm}</div><div class="text-[9px] text-yellow-500/80">MINOR</div></div><div class="bg-slate-800 border border-red-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-red-400">${r}</div><div class="text-[9px] text-red-500/80">ROSAK</div></div><div class="bg-slate-800 border border-blue-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-blue-400">${d}</div><div class="text-[9px] text-blue-500/80">PULANG</div></div>`;
+        ).innerHTML = `<div class="bg-slate-800 border border-slate-700 p-2 rounded-lg text-center float-badge"><div class="text-base font-extrabold text-white">${filtered.length}</div><div class="text-[9px] text-slate-400">JUMLAH</div></div><div class="bg-slate-800 border border-emerald-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80">BAIK</div></div><div class="bg-slate-800 border border-yellow-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80">MINOR</div></div><div class="bg-slate-800 border border-red-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80">ROSAK</div></div><div class="bg-slate-800 border border-blue-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80">PULANG</div></div>`;
+
         const zoneMap = {};
         filtered.forEach((item) => {
           const lokasi = (G(item, 'LOKASI SEMASA') || '').trim();
@@ -1733,21 +1902,20 @@
           if (
             lokasi.toUpperCase().includes('BENGKEL') ||
             lokasi.toUpperCase().includes('KJT')
-          ) {
+          )
             zoneKey = 'BENGKEL KJT BOMBA';
-          }
           if (!zoneMap[zoneKey]) zoneMap[zoneKey] = {};
           const listBalaiInZone = BALAI_ZON[zoneKey] || [];
           let matchedBalai = findMatchingBalai(lokasi, listBalaiInZone);
-          if (!matchedBalai && zoneKey !== 'BENGKEL KJT BOMBA') {
+          if (!matchedBalai && zoneKey !== 'BENGKEL KJT BOMBA')
             matchedBalai = findMatchingBalaiInAllZones(lokasi);
-          }
           const balaiKey = matchedBalai
             ? matchedBalai.toUpperCase()
             : lokasi.toUpperCase() || 'TANPA BALAI';
           if (!zoneMap[zoneKey][balaiKey]) zoneMap[zoneKey][balaiKey] = [];
           zoneMap[zoneKey][balaiKey].push(item);
         });
+
         let html = '';
         zoneOrder.forEach((zoneName) => {
           const dataZon = zoneMap[zoneName] || {};
@@ -1755,16 +1923,15 @@
           Object.values(dataZon).forEach(
             (arr) => (totalItemsInZone += arr.length)
           );
-          html += `<div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5 flex flex-col space-y-2 h-full"><div class="flex items-center justify-between pb-1.5 border-b border-slate-700"><h3 class="text-xs font-extrabold text-white flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-2 flex-1">`;
+          html += `<div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2.5 flex flex-col space-y-2 h-full"><div class="flex items-center justify-between pb-1.5 border-b border-slate-700"><h3 class="text-xs font-extrabold text-white flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500 siren-red shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-2 flex-1">`;
           if (zoneName === 'BENGKEL KJT BOMBA') {
             const sortedBalai = Object.keys(dataZon).sort();
-            if (sortedBalai.length === 0) {
+            if (sortedBalai.length === 0)
               html += renderBalaiCardGroup('BENGKEL KJT BOMBA', []);
-            } else {
+            else
               sortedBalai.forEach((balai) => {
                 html += renderBalaiCardGroup(balai, dataZon[balai]);
               });
-            }
           } else {
             const listBalai = BALAI_ZON[zoneName] || [];
             const renderedBalaiKeys = new Set();
@@ -1772,33 +1939,31 @@
               const balaiUpper = balaiFullName.toUpperCase();
               renderedBalaiKeys.add(balaiUpper);
               let items = dataZon[balaiUpper] || [];
-              const shortName = balaiFullName
-                .replace('BALAI BOMBA DAN PENYELAMAT', 'BBP')
-                .replace('FIRE POST', 'FP');
-              html += renderBalaiCardGroup(shortName, items);
+              html += renderBalaiCardGroup(
+                balaiFullName
+                  .replace('BALAI BOMBA DAN PENYELAMAT', 'BBP')
+                  .replace('FIRE POST', 'FP'),
+                items
+              );
             });
             Object.keys(dataZon).forEach((extraBalaiKey) => {
               if (
                 !renderedBalaiKeys.has(extraBalaiKey) &&
                 extraBalaiKey !== 'TANPA BALAI'
-              ) {
+              )
                 html += renderBalaiCardGroup(
                   extraBalaiKey,
                   dataZon[extraBalaiKey]
                 );
-              }
             });
-            if (dataZon['TANPA BALAI'] && dataZon['TANPA BALAI'].length > 0) {
-              html += renderBalaiCardGroup(
-                'LAIN-LAIN / TANPA LOKASI',
-                dataZon['TANPA BALAI']
-              );
-            }
+            if (dataZon['TANPA BALAI'] && dataZon['TANPA BALAI'].length > 0)
+              html += renderBalaiCardGroup('LAIN-LAIN', dataZon['TANPA BALAI']);
           }
           html += `</div></div>`;
         });
         document.getElementById('zoneContainer').innerHTML = html;
       }
+
       function renderEmptyStatusCards(selectedStatuses) {
         const statusesToDisplay =
           selectedStatuses.length > 0
@@ -1846,38 +2011,38 @@
             dot: 'bg-slate-400',
           },
         };
-        let cardsHtml = statusesToDisplay
+        return `<div class="col-span-full space-y-1 py-0.5"><div class="grid grid-cols-2 gap-1">${statusesToDisplay
           .map((stKey) => {
             const cfg = statusConfigs[stKey] || statusConfigs['LAIN'];
             return `<div class="border border-dashed ${cfg.border} ${cfg.bg} rounded px-1.5 py-1 flex items-center justify-between"><div class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full ${cfg.dot} animate-pulse"></span><span class="text-[9px] font-bold ${cfg.text}">${cfg.label}</span></div><span class="text-[8px] font-bold border ${cfg.badge} px-1 rounded">0</span></div>`;
           })
-          .join('');
-        return `<div class="col-span-full space-y-1 py-0.5"><div class="grid grid-cols-2 gap-1">${cardsHtml}</div></div>`;
+          .join('')}</div></div>`;
       }
+
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
           cardsHtml = items
             .map((item) => {
-              const callsign = G(item, 'CALLSIGN') || '-';
-              const plate = G(item, 'PLATE') || '-';
-              const model = G(item, 'MODEL JENTERA') || '';
-              const status = G(item, 'STATUS JENTERA') || 'TIADA';
-              const cat = getStatusCategory(status);
-              let glowClass = 'status-glow-u';
-              let statusDotBg = 'bg-slate-400';
+              const callsign = G(item, 'CALLSIGN') || '-',
+                plate = G(item, 'PLATE') || '-',
+                model = G(item, 'MODEL JENTERA') || '',
+                status = G(item, 'STATUS JENTERA') || 'TIADA',
+                cat = getStatusCategory(status);
+              let glowClass = 'status-glow-u',
+                statusDotBg = 'bg-slate-400';
               if (cat === 'B') {
                 glowClass = 'status-glow-b';
-                statusDotBg = 'bg-emerald-500';
+                statusDotBg = 'bg-emerald-500 siren-red';
               } else if (cat === 'RM') {
                 glowClass = 'status-glow-rm';
-                statusDotBg = 'bg-yellow-500';
+                statusDotBg = 'bg-yellow-500 siren-amber';
               } else if (cat === 'R') {
                 glowClass = 'status-glow-r';
-                statusDotBg = 'bg-red-500';
+                statusDotBg = 'bg-red-500 siren-red';
               } else if (cat === 'D') {
                 glowClass = 'status-glow-d';
-                statusDotBg = 'bg-blue-500';
+                statusDotBg = 'bg-blue-500 siren-blue';
               }
               const typeTag =
                 item._j === 'cfrt'
@@ -1892,46 +2057,298 @@
                   ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                   : 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
               const itemJson = encodeURIComponent(JSON.stringify(item));
-              return `<div class="jentera-card ${glowClass} ${item._tc} relative group" onclick="showJenteraModal('${itemJson}')" title="${callsign} - ${status}"><button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button><div class="flex items-center justify-between gap-1 pr-5"><div class="flex items-center gap-1.5 min-w-0"><span class="w-2 h-2 rounded-full ${statusDotBg} shrink-0 animate-pulse"></span><span class="text-[11px] font-extrabold text-white tracking-tight leading-tight truncate">${callsign}</span></div><span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded border shrink-0 ${typeColor}">${typeTag}</span></div><div class="flex items-center justify-between text-[10px] text-slate-400 font-mono leading-none pt-0.5"><span class="truncate">${plate}</span><span class="text-[9px] text-slate-500 truncate max-w-[80px]" title="${model}">${model}</span></div></div>`;
+              return `<div class="jentera-card ${glowClass} ${item._tc} relative group wheel-spin-container" onclick="showVehicleModal('${itemJson}')" title="${callsign} - ${status}"><button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button><div class="flex items-center justify-between gap-1 pr-4"><div class="flex items-center gap-1 min-w-0"><span class="w-1.5 h-1.5 rounded-full ${statusDotBg} shrink-0"></span><span class="text-[10px] font-extrabold text-white tracking-tight leading-tight truncate">${callsign}</span></div><span class="text-[8px] font-extrabold px-1 py-0.2 rounded border shrink-0 ${typeColor}">${typeTag}</span></div><div class="flex items-center justify-between text-[9px] text-slate-400 font-mono leading-none pt-0.5"><span class="plate-number text-[8px]">${plate}</span><span class="text-[8px] text-slate-500 truncate max-w-[60px]" title="${model}">${model}</span></div><div class="flex gap-1 mt-1 justify-center opacity-30 wheel-spin"><div class="w-2 h-2 rounded-full bg-slate-600 border border-slate-500"></div><div class="w-2 h-2 rounded-full bg-slate-600 border border-slate-500"></div></div></div>`;
             })
             .join('');
         } else {
           cardsHtml = renderEmptyStatusCards(SF);
         }
-        return `<div class="bg-slate-900/80 border border-slate-700/60 rounded-lg p-2 space-y-2 shadow-sm"><div class="flex items-center justify-between text-[11px] font-bold text-slate-200 border-b border-slate-800 pb-1.5"><span class="truncate max-w-[180px] flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-400 shrink-0"></span>${balaiName}</span><span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-full font-bold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-2">${cardsHtml}</div></div>`;
+        return `<div class="bg-slate-900/80 border border-slate-700/60 rounded-lg p-1.5 space-y-1 shadow-sm"><div class="flex items-center justify-between text-[10px] font-bold text-slate-200 border-b border-slate-800 pb-1"><span class="truncate max-w-[170px] flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0"></span>${balaiName}</span><span class="text-[9px] bg-slate-800 text-slate-300 border border-slate-700 px-1.5 py-0.2 rounded-full font-bold">${items.length}</span></div><div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 gap-1">${cardsHtml}</div></div>`;
       }
-      function showJenteraModal(itemJson) {
+
+      // 🚒🚑🚛 VEHICLE SHAPE MODAL GENERATORS
+      function generateFRTModalHTML(item) {
+        const callsign = G(item, 'CALLSIGN') || '-',
+          plate = G(item, 'PLATE') || '-',
+          model = G(item, 'MODEL JENTERA') || '-',
+          asal = G(item, 'PENEMPATAN ASAL') || '-',
+          lokasi = G(item, 'LOKASI SEMASA') || '-',
+          zon = G(item, 'ZON') || '-',
+          status = G(item, 'STATUS JENTERA') || '-',
+          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
+        const cat = getStatusCategory(status);
+        let bodyBg = 'from-red-600 via-red-700 to-red-900',
+          borderGlow = 'border-red-600/60';
+        if (cat === 'RM') {
+          bodyBg = 'from-amber-600 via-red-700 to-red-900';
+          borderGlow = 'border-amber-500/70';
+        } else if (cat === 'R') {
+          bodyBg = 'from-red-800 via-stone-800 to-slate-900';
+          borderGlow = 'border-red-500';
+        } else if (cat === 'D') {
+          bodyBg = 'from-blue-700 via-slate-800 to-slate-900';
+          borderGlow = 'border-blue-500/70';
+        }
+        let badgeClass = 'badge-unknown';
+        if (cat === 'B') badgeClass = 'badge-baik';
+        else if (cat === 'RM') badgeClass = 'badge-minor';
+        else if (cat === 'R') badgeClass = 'badge-rosak';
+        else if (cat === 'D') badgeClass = 'badge-pulang';
+
+        return `
+        <div class="vehicle-shape-modal bg-gradient-to-b ${bodyBg} border-2 ${borderGlow} rounded-2xl p-4 shadow-2xl">
+          <!-- Lightbar Siren -->
+          <div class="flex items-center justify-between border-b border-red-400/30 pb-3 mb-3">
+            <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-red-500/40">
+              <span class="w-3 h-3 rounded-full bg-red-500 siren-red"></span>
+              <span class="w-3 h-3 rounded-full bg-blue-500 siren-blue"></span>
+              <span class="text-xs font-black text-red-300 tracking-wider">RESCUE TENDER (FRT)</span>
+            </div>
+            <span class="text-xs font-bold uppercase tracking-widest bg-red-950/80 px-2 py-1 rounded border border-red-700/50 text-red-200">${zon}</span>
+          </div>
+
+          <!-- Fire Truck Body -->
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <!-- Cabin -->
+            <div class="col-span-5 bg-slate-950/90 rounded-xl p-3 border border-red-500/40 relative overflow-hidden">
+              <div class="absolute -right-4 -top-4 w-10 h-10 bg-red-600/20 rounded-full blur-sm"></div>
+              <div class="bg-gradient-to-b from-sky-900/60 to-slate-900 rounded-lg p-2 text-center border border-sky-400/30 mb-2">
+                <span class="text-sm font-black tracking-wide text-sky-200 block">${callsign}</span>
+              </div>
+              <div class="text-center mb-2"><span class="plate-number text-lg">${plate}</span></div>
+              <div class="text-xs text-slate-400 font-bold truncate text-center"><i class="fa-solid fa-truck text-red-400 mr-1"></i>${model}</div>
+            </div>
+            <!-- Equipment Body -->
+            <div class="col-span-7 bg-slate-900/90 rounded-xl p-3 border border-slate-700 space-y-2">
+              <div class="grid grid-cols-3 gap-1.5 bg-slate-950 p-2 rounded-lg border border-slate-800">
+                <div class="h-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
+                <div class="h-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
+                <div class="h-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
+              </div>
+              <div class="space-y-1.5">
+                <div class="text-xs text-slate-300 font-bold truncate"><i class="fa-solid fa-building-shield text-red-400 mr-1"></i>${asal}</div>
+                <div class="text-xs text-amber-300 font-bold truncate"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>${lokasi}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wheels & Status -->
+          <div class="flex items-center justify-between pt-3 border-t border-red-500/30">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin shadow"><div class="w-3 h-3 rounded-full bg-slate-400 border border-slate-200"></div></div>
+              <div class="w-8 h-8 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin shadow"><div class="w-3 h-3 rounded-full bg-slate-400 border border-slate-200"></div></div>
+            </div>
+            <span class="badge-status ${badgeClass} text-xs px-3 py-1">${status}</span>
+            <div class="w-8 h-8 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin shadow"><div class="w-3 h-3 rounded-full bg-slate-400 border border-slate-200"></div></div>
+          </div>
+
+          <!-- Damage Info -->
+          ${
+            kerosakan && kerosakan.toUpperCase() !== 'TIADA'
+              ? `<div class="mt-3 bg-slate-950/90 border border-red-500/50 rounded-lg p-2.5 text-xs text-red-200"><i class="fa-solid fa-triangle-exclamation text-red-400 mr-1.5"></i>${kerosakan}</div>`
+              : ''
+          }
+
+          <!-- Actions -->
+          <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-red-400/20">
+            <button onclick="copySingleAssetInfo('${encodeURIComponent(
+              JSON.stringify(item)
+            )}', null)" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-copy mr-1"></i>Salin</button>
+            <button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-clipboard mr-1"></i>Salin Callsign</button>
+            <button onclick="closeModal()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">Tutup</button>
+          </div>
+        </div>`;
+      }
+
+      function generateEMRSModalHTML(item) {
+        const callsign = G(item, 'CALLSIGN') || '-',
+          plate = G(item, 'PLATE') || '-',
+          model = G(item, 'MODEL JENTERA') || '-',
+          asal = G(item, 'PENEMPATAN ASAL') || '-',
+          lokasi = G(item, 'LOKASI SEMASA') || '-',
+          zon = G(item, 'ZON') || '-',
+          status = G(item, 'STATUS JENTERA') || '-',
+          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
+        const cat = getStatusCategory(status);
+        let borderGlow = 'border-blue-500/60';
+        if (cat === 'RM') borderGlow = 'border-amber-500/70';
+        else if (cat === 'R') borderGlow = 'border-red-500';
+        let badgeClass = 'badge-unknown';
+        if (cat === 'B') badgeClass = 'badge-baik';
+        else if (cat === 'RM') badgeClass = 'badge-minor';
+        else if (cat === 'R') badgeClass = 'badge-rosak';
+        else if (cat === 'D') badgeClass = 'badge-pulang';
+
+        return `
+        <div class="vehicle-shape-modal bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 ${borderGlow} rounded-2xl p-4 shadow-2xl">
+          <!-- Ambulance Header -->
+          <div class="flex items-center justify-between border-b border-blue-500/30 pb-3 mb-3">
+            <div class="flex items-center gap-2 bg-blue-950 px-3 py-1 rounded-full border border-blue-400/40">
+              <span class="w-3 h-3 rounded-full bg-blue-400 siren-blue"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-400 siren-amber"></span>
+              <span class="text-xs font-black text-blue-200 tracking-wider">AMBULANS EMRS</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-square-plus text-red-500 text-lg"></i>
+              <span class="text-xs font-bold uppercase tracking-widest bg-blue-950 px-2 py-1 rounded border border-blue-700/50 text-blue-200">${zon}</span>
+            </div>
+          </div>
+
+          <!-- Ambulance Body -->
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <div class="col-span-5 bg-slate-950 rounded-xl p-3 border border-blue-400/40">
+              <div class="bg-gradient-to-b from-blue-900/40 to-slate-900 rounded-lg p-2 text-center border border-blue-400/30 mb-2">
+                <span class="text-sm font-black tracking-wide text-blue-100 block">${callsign}</span>
+              </div>
+              <div class="text-center mb-2"><span class="plate-number text-lg">${plate}</span></div>
+              <div class="text-xs text-slate-400 font-bold truncate text-center"><i class="fa-solid fa-truck-medical text-blue-400 mr-1"></i>${model}</div>
+            </div>
+            <div class="col-span-7 bg-slate-900/90 rounded-xl p-3 border border-slate-700 relative overflow-hidden">
+              <div class="h-3 w-full bg-gradient-to-r from-yellow-400 via-green-500 to-yellow-400 rounded opacity-80 mb-2 flex items-center justify-center">
+                <span class="text-[8px] font-black text-slate-950 uppercase tracking-widest">EMERGENCY MEDICAL</span>
+              </div>
+              <div class="space-y-1.5">
+                <div class="text-xs text-slate-300 font-bold truncate"><i class="fa-solid fa-hospital text-blue-400 mr-1"></i>${asal}</div>
+                <div class="text-xs text-amber-300 font-bold truncate"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>${lokasi}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wheels & Status -->
+          <div class="flex items-center justify-between pt-3 border-t border-blue-500/30">
+            <div class="w-8 h-8 rounded-full bg-slate-950 border-2 border-slate-500 flex items-center justify-center wheel-spin shadow"><div class="w-3 h-3 rounded-full bg-slate-300 border border-slate-100"></div></div>
+            <span class="badge-status ${badgeClass} text-xs px-3 py-1">${status}</span>
+            <div class="w-8 h-8 rounded-full bg-slate-950 border-2 border-slate-500 flex items-center justify-center wheel-spin shadow"><div class="w-3 h-3 rounded-full bg-slate-300 border border-slate-100"></div></div>
+          </div>
+
+          ${
+            kerosakan && kerosakan.toUpperCase() !== 'TIADA'
+              ? `<div class="mt-3 bg-slate-950/90 border border-amber-500/50 rounded-lg p-2.5 text-xs text-amber-200"><i class="fa-solid fa-wrench text-amber-400 mr-1.5"></i>${kerosakan}</div>`
+              : ''
+          }
+
+          <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-blue-400/20">
+            <button onclick="copySingleAssetInfo('${encodeURIComponent(
+              JSON.stringify(item)
+            )}', null)" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-copy mr-1"></i>Salin</button>
+            <button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-clipboard mr-1"></i>Salin Callsign</button>
+            <button onclick="closeModal()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">Tutup</button>
+          </div>
+        </div>`;
+      }
+
+      function generateWaterModalHTML(item) {
+        const callsign = G(item, 'CALLSIGN') || '-',
+          plate = G(item, 'PLATE') || '-',
+          model = G(item, 'MODEL JENTERA') || '-',
+          asal = G(item, 'PENEMPATAN ASAL') || '-',
+          lokasi = G(item, 'LOKASI SEMASA') || '-',
+          zon = G(item, 'ZON') || '-',
+          status = G(item, 'STATUS JENTERA') || '-',
+          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
+        const cat = getStatusCategory(status);
+        let borderGlow = 'border-cyan-500/60';
+        if (cat === 'RM') borderGlow = 'border-amber-500/70';
+        else if (cat === 'R') borderGlow = 'border-red-500';
+        let badgeClass = 'badge-unknown';
+        if (cat === 'B') badgeClass = 'badge-baik';
+        else if (cat === 'RM') badgeClass = 'badge-minor';
+        else if (cat === 'R') badgeClass = 'badge-rosak';
+        else if (cat === 'D') badgeClass = 'badge-pulang';
+
+        return `
+        <div class="vehicle-shape-modal bg-gradient-to-b from-slate-900 via-cyan-950/40 to-slate-950 border-2 ${borderGlow} rounded-2xl p-4 shadow-2xl">
+          <!-- Water Tanker Header -->
+          <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3 mb-3">
+            <div class="flex items-center gap-2 bg-cyan-950 px-3 py-1 rounded-full border border-cyan-400/40">
+              <span class="w-3 h-3 rounded-full bg-cyan-400 siren-blue"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-400 siren-amber"></span>
+              <span class="text-xs font-black text-cyan-200 tracking-wider">WATER TANKER</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-faucet-drip text-cyan-400 text-lg"></i>
+              <span class="text-xs font-bold uppercase tracking-widest bg-cyan-950 px-2 py-1 rounded border border-cyan-700/50 text-cyan-200">${zon}</span>
+            </div>
+          </div>
+
+          <!-- Tanker Body -->
+          <div class="grid grid-cols-12 gap-3 mb-3">
+            <div class="col-span-5 bg-slate-950 rounded-xl p-3 border border-cyan-500/40">
+              <div class="bg-gradient-to-b from-cyan-900/50 to-slate-900 rounded-lg p-2 text-center border border-cyan-400/30 mb-2">
+                <span class="text-sm font-black tracking-wide text-cyan-100 block">${callsign}</span>
+              </div>
+              <div class="text-center mb-2"><span class="plate-number text-lg">${plate}</span></div>
+              <div class="text-xs text-slate-400 font-bold truncate text-center"><i class="fa-solid fa-truck-droplet text-cyan-400 mr-1"></i>${model}</div>
+            </div>
+            <div class="col-span-7 bg-gradient-to-r from-slate-900 via-cyan-900/30 to-slate-900 rounded-2xl p-3 border border-cyan-400/30 relative overflow-hidden">
+              <div class="flex items-center justify-between bg-slate-950/80 px-3 py-1.5 rounded-lg border border-cyan-500/40 mb-2">
+                <span class="text-xs font-black text-cyan-300">TANGKI AIR</span>
+                <i class="fa-solid fa-droplet text-cyan-400 animate-bounce text-sm"></i>
+              </div>
+              <div class="space-y-1.5">
+                <div class="text-xs text-slate-300 font-bold truncate"><i class="fa-solid fa-warehouse text-cyan-400 mr-1"></i>${asal}</div>
+                <div class="text-xs text-amber-300 font-bold truncate"><i class="fa-solid fa-location-dot text-amber-400 mr-1"></i>${lokasi}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Triple Axle Wheels -->
+          <div class="flex items-center justify-between pt-3 border-t border-cyan-500/30">
+            <div class="flex items-center gap-1.5">
+              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-500 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div></div>
+              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-500 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div></div>
+            </div>
+            <span class="badge-status ${badgeClass} text-xs px-3 py-1">${status}</span>
+            <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-500 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-300"></div></div>
+          </div>
+
+          ${
+            kerosakan && kerosakan.toUpperCase() !== 'TIADA'
+              ? `<div class="mt-3 bg-slate-950/90 border border-cyan-500/50 rounded-lg p-2.5 text-xs text-cyan-200"><i class="fa-solid fa-triangle-exclamation text-amber-400 mr-1.5"></i>${kerosakan}</div>`
+              : ''
+          }
+
+          <div class="flex justify-end gap-2 mt-4 pt-3 border-t border-cyan-400/20">
+            <button onclick="copySingleAssetInfo('${encodeURIComponent(
+              JSON.stringify(item)
+            )}', null)" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-copy mr-1"></i>Salin</button>
+            <button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition"><i class="fa-regular fa-clipboard mr-1"></i>Salin Callsign</button>
+            <button onclick="closeModal()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">Tutup</button>
+          </div>
+        </div>`;
+      }
+
+      // 🚒 MAIN MODAL FUNCTION - Detect vehicle type
+      function showVehicleModal(itemJson) {
         try {
           const item = JSON.parse(decodeURIComponent(itemJson));
           const overlay = document.getElementById('modalOverlay');
-          const header = document.getElementById('modalHeader');
-          const body = document.getElementById('modalBody');
-          const footer = document.getElementById('modalFooter');
-          const callsign = G(item, 'CALLSIGN') || '-';
-          const plate = G(item, 'PLATE') || '-';
-          const model = G(item, 'MODEL JENTERA') || '-';
-          const asal = G(item, 'PENEMPATAN ASAL') || '-';
-          const lokasi = G(item, 'LOKASI SEMASA') || '-';
-          const zon = G(item, 'ZON') || '-';
-          const status = G(item, 'STATUS JENTERA') || '-';
-          const kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
-          header.innerHTML = `<div class="text-3xl mb-2 flex justify-center">${
-            item._icon ||
-            '<i class="fa-solid fa-fire-extinguisher text-red-500"></i>'
-          }</div><h2 class="text-base font-bold text-white">${callsign}</h2><p class="text-xs font-mono text-slate-400">${plate}</p>`;
-          body.innerHTML = `<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Model:</span><span class="font-semibold text-white">${model}</span></div><div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Penempatan Asal:</span><span class="font-semibold text-white">${asal}</span></div><div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Lokasi Semasa:</span><span class="font-semibold text-white">${lokasi}</span></div><div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Zon:</span><span class="font-semibold text-white">${zon}</span></div><div class="flex justify-between py-1.5 border-b border-slate-800"><span class="text-slate-400">Status:</span><span class="font-semibold text-red-400">${status}</span></div><div class="flex justify-between py-1.5"><span class="text-slate-400">Status Kerosakan:</span><span class="font-semibold text-slate-300 text-right max-w-[200px]">${kerosakan}</span></div>`;
-          footer.innerHTML = `<button onclick="copySingleAssetInfo('${encodeURIComponent(
-            JSON.stringify(item)
-          )}', null)" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-600 text-emerald-100 text-xs font-semibold rounded-lg transition flex items-center gap-1.5"><i class="fa-regular fa-copy"></i> Salin Maklumat</button><button onclick="copyToClipboard('${callsign}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition flex items-center gap-1.5"><i class="fa-regular fa-clipboard"></i> Salin Callsign</button><button onclick="closeModal()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg transition">Tutup</button>`;
+          const shapeContainer = document.getElementById('modalVehicleShape');
+
+          // Detect vehicle type and generate appropriate shape
+          const jenis = item._j || 'cfrt';
+          if (jenis === 'cfrt') {
+            shapeContainer.innerHTML = generateFRTModalHTML(item);
+          } else if (jenis === 'emrs') {
+            shapeContainer.innerHTML = generateEMRSModalHTML(item);
+          } else if (jenis === 'water') {
+            shapeContainer.innerHTML = generateWaterModalHTML(item);
+          } else {
+            // Fallback to FRT
+            shapeContainer.innerHTML = generateFRTModalHTML(item);
+          }
+
           overlay.classList.add('show');
         } catch (err) {
-          console.error(err);
+          console.error('Error showing vehicle modal:', err);
         }
       }
+
       function closeModal(e) {
         if (e && e.target !== document.getElementById('modalOverlay')) return;
         document.getElementById('modalOverlay').classList.remove('show');
       }
+
       function copyToClipboard(text) {
         navigator.clipboard
           .writeText(text)
@@ -1942,20 +2359,18 @@
             showNotification('Gagal menyalin', 'error');
           });
       }
+
       function toggleZoomDashboard() {
         document.body.classList.toggle('fullscreen-mode');
         isZoomedOut = !isZoomedOut;
-        const btn = document.getElementById('zoomInBtn');
-        btn.innerHTML = isZoomedOut
+        document.getElementById('zoomInBtn').innerHTML = isZoomedOut
           ? '<i class="fa-solid fa-compress"></i> Mod Asal'
           : '<i class="fa-solid fa-expand"></i> Skrin Penuh Fit';
       }
       function toggleFullscreenDashboard() {
-        if (!document.fullscreenElement) {
+        if (!document.fullscreenElement)
           document.documentElement.requestFullscreen().catch(() => {});
-        } else {
-          if (document.exitFullscreen) document.exitFullscreen();
-        }
+        else if (document.exitFullscreen) document.exitFullscreen();
       }
       function toggleSlideshow() {
         slideshowActive = !slideshowActive;
@@ -1964,10 +2379,6 @@
           nav.classList.remove('hidden');
           currentSlideZone = 0;
           updateSlideshowView();
-          showNotification(
-            'Mod Slideshow diaktifkan. Gunakan butang navigasi.',
-            'info'
-          );
         } else {
           nav.classList.add('hidden');
           stopSlideshow();
@@ -2000,23 +2411,17 @@
             currentSlideZone = (currentSlideZone + 1) % zoneOrder.length;
             updateSlideshowView();
           }, 4000);
-          showNotification(
-            'Auto Play diaktifkan - bertukar setiap 4 saat',
-            'success'
-          );
         } else {
           if (slideshowInterval) {
             clearInterval(slideshowInterval);
             slideshowInterval = null;
           }
-          showNotification('Auto Play dihentikan', 'info');
         }
         updateAutoPlayButtonState();
       }
       function updateAutoPlayButtonState() {
         const btn = document.getElementById('slideshowAutoBtn');
-        const label = document.getElementById('autoPlayLabel');
-        if (!btn || !label) return;
+        if (!btn) return;
         if (slideshowAuto) {
           btn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
           btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
@@ -2034,21 +2439,22 @@
           zoneOrder[currentSlideZone]
         } (${currentSlideZone + 1}/${zoneOrder.length})`;
         const container = document.getElementById('zoneContainer');
-        const columns = container.children;
-        if (columns[currentSlideZone]) {
-          columns[currentSlideZone].scrollIntoView({
+        if (container?.children[currentSlideZone]) {
+          container.children[currentSlideZone].scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
             inline: 'center',
           });
         }
       }
+
       document.addEventListener('click', (e) => {
         ['cfrt', 'emrs', 'water'].forEach((tab) => {
-          const dropdown = document.getElementById(`msDropdown-${tab}`);
-          if (dropdown && !dropdown.contains(e.target)) {
-            const opts = document.getElementById(`msOptions-${tab}`);
-            if (opts) opts.classList.remove('show');
+          const dd = document.getElementById(`msDropdown-${tab}`);
+          if (dd && !dd.contains(e.target)) {
+            document
+              .getElementById(`msOptions-${tab}`)
+              ?.classList.remove('show');
           }
         });
         const jd = document.getElementById('jenisFilterDropdown');
@@ -2064,6 +2470,7 @@
             .classList.remove('show');
         }
       });
+
       window.onload = function () {
         loadAllData();
       };
