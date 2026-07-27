@@ -1011,7 +1011,6 @@
             <span class="text-[11px] font-bold text-slate-400 uppercase"
               >Jenis:</span
             >
-            <!-- 🎯 FRT DROPDOWN UPDATED HERE -->
             <div class="ms-dropdown" id="jenisFilterDropdown">
               <button
                 class="ms-select-btn bg-slate-900 py-1 text-[11px]"
@@ -1273,6 +1272,9 @@
         slideshowAuto = false,
         slideshowInterval = null,
         currentSlideZone = 0;
+
+      // 🎯 ZON ORDER UTK CARTA BAR AGIHAN MENGIKUT ZON
+      const ZON_ORDER = ['ZON 1', 'ZON 2', 'ZON 3', 'ZON 4', 'BENGKEL KJT BOMBA'];
 
       const zoneOrder = [
         'ZON 1',
@@ -1693,28 +1695,52 @@
           });
         }
 
-        // 3. Chart Zon
-        const zc = {};
+        // 🎯 3. Chart Zon - DISUSUN MENGIKUT ZON_ORDER
+        const zcRaw = {};
         list.forEach((i) => {
           const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
-          zc[z] = (zc[z] || 0) + 1;
+          zcRaw[z] = (zcRaw[z] || 0) + 1;
         });
+
+        // Susun data mengikut ZON_ORDER
+        const sortedLabels = [];
+        const sortedData = [];
+        ZON_ORDER.forEach((zone) => {
+          const upperZone = zone.toUpperCase();
+          if (zcRaw[upperZone] !== undefined) {
+            sortedLabels.push(zone);
+            sortedData.push(zcRaw[upperZone]);
+            delete zcRaw[upperZone];
+          }
+        });
+        // Tambah baki zon yang tidak tersenarai
+        Object.keys(zcRaw).forEach((key) => {
+          sortedLabels.push(key);
+          sortedData.push(zcRaw[key]);
+        });
+
         if (CC[tab].z) CC[tab].z.destroy();
         const cz = document.getElementById(`chartZon-${tab}`);
         if (cz) {
+          const colorMap = {
+            'ZON 1': '#ef4444',
+            'ZON 2': '#f59e0b',
+            'ZON 3': '#22c55e',
+            'ZON 4': '#3b82f6',
+            'BENGKEL KJT BOMBA': '#8b5cf6',
+          };
+          const bgColors = sortedLabels.map(
+            (label) => colorMap[label] || '#64748b'
+          );
+
           CC[tab].z = new Chart(cz.getContext('2d'), {
             type: 'bar',
             data: {
-              labels: Object.keys(zc),
+              labels: sortedLabels,
               datasets: [
                 {
-                  data: Object.values(zc),
-                  backgroundColor:
-                    tab === 'cfrt'
-                      ? '#ef4444'
-                      : tab === 'emrs'
-                      ? '#3b82f6'
-                      : '#06b6d4',
+                  data: sortedData,
+                  backgroundColor: bgColors,
                   borderRadius: 4,
                 },
               ],
@@ -1732,8 +1758,18 @@
                 },
               },
               scales: {
-                y: { ticks: { color: '#64748b' }, grid: { color: '#334155' } },
-                x: { ticks: { color: '#94a3b8' } },
+                y: {
+                  ticks: { color: '#64748b', stepSize: 1 },
+                  grid: { color: '#334155' },
+                  beginAtZero: true,
+                },
+                x: {
+                  ticks: {
+                    color: '#94a3b8',
+                    maxRotation: 15,
+                    minRotation: 0,
+                  },
+                },
               },
               animation: { duration: 1000 },
             },
@@ -2064,7 +2100,6 @@
         document.getElementById('jenisFilterOptions').classList.toggle('show');
       }
 
-      /* 🎯 FIX: UPDATE MULTISELECT DROPDOWN TITLE FOR FRT */
       function applyJenisFilter() {
         const cbs = document.querySelectorAll(
           '#jenisFilterOptions input[type="checkbox"]'
@@ -2265,7 +2300,6 @@
           .join('')}</div></div>`;
       }
 
-      /* 🚒 OPTIMIZED JENTERA CARD FIT VIEW RENDERER */
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -2293,7 +2327,6 @@
                 statusDotBg = 'bg-blue-500 siren-blue';
               }
 
-              /* 🎯 FIX: TYPE TAG DISPLAY FRT INSTEAD OF CFRT */
               const typeTag =
                 item._j === 'cfrt'
                   ? 'FRT'
@@ -2340,7 +2373,6 @@
             </span>
             <span class="text-[9px] bg-slate-800 text-slate-300 border border-slate-700 px-1.5 py-0.2 rounded-full font-bold">${items.length}</span>
           </div>
-          <!-- 🎯 FIT VIEW GRID LAYOUT -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">${cardsHtml}</div>
         </div>`;
       }
