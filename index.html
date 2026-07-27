@@ -44,7 +44,7 @@
         background-color: var(--bg-main);
         color: var(--text-primary);
         overflow-x: hidden;
-        
+
         /* 🚒 BACKGROUND IMAGE DARI GITHUB */
         background-image: url('https://raw.githubusercontent.com/pgojhbravo5/DASHBOARD-DATA-JENTERA-JBPM-JOHOR/ce5530ee5e69d80d7b478a2af4919f7c243f3800/firetruck-BG.png');
         background-size: cover;
@@ -257,6 +257,8 @@
         border-radius: 0.375rem;
         z-index: 50;
         min-width: 190px;
+        max-height: 220px;
+        overflow-y: auto;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
         padding: 0.375rem;
       }
@@ -553,7 +555,7 @@
           id="statsRow-cfrt"
           class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4"
         ></div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
@@ -565,6 +567,18 @@
             </h3>
             <div class="h-48 relative">
               <canvas id="chartStatus-cfrt"></canvas>
+            </div>
+          </div>
+          <div
+            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+          >
+            <h3
+              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-truck text-red-500"></i> Model Jentera FRT
+            </h3>
+            <div class="h-48 relative">
+              <canvas id="chartModel-cfrt"></canvas>
             </div>
           </div>
           <div
@@ -634,6 +648,22 @@
               </button>
               <div class="ms-options" id="msOptions-cfrt"></div>
             </div>
+            <!-- Multi-Select Model Jentera FRT -->
+            <div class="ms-dropdown" id="msDropdownModel-cfrt">
+              <button class="ms-select-btn" onclick="toggleMsModelDropdown('cfrt')">
+                <span id="msTextModel-cfrt"
+                  ><i class="fa-solid fa-truck mr-1"></i> Semua Model</span
+                >
+                <span
+                  class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountModel-cfrt"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsModel-cfrt"></div>
+            </div>
             <select
               id="filterZon-cfrt"
               onchange="Rt('cfrt')"
@@ -676,7 +706,7 @@
           id="statsRow-emrs"
           class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4"
         ></div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
@@ -687,6 +717,18 @@
             </h3>
             <div class="h-48 relative">
               <canvas id="chartStatus-emrs"></canvas>
+            </div>
+          </div>
+          <div
+            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+          >
+            <h3
+              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-truck-medical text-blue-500"></i> Model Jentera EMRS
+            </h3>
+            <div class="h-48 relative">
+              <canvas id="chartModel-emrs"></canvas>
             </div>
           </div>
           <div
@@ -756,6 +798,22 @@
               </button>
               <div class="ms-options" id="msOptions-emrs"></div>
             </div>
+            <!-- Multi-Select Model Jentera EMRS -->
+            <div class="ms-dropdown" id="msDropdownModel-emrs">
+              <button class="ms-select-btn" onclick="toggleMsModelDropdown('emrs')">
+                <span id="msTextModel-emrs"
+                  ><i class="fa-solid fa-truck-medical mr-1"></i> Semua Model</span
+                >
+                <span
+                  class="text-[10px] bg-blue-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountModel-emrs"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsModel-emrs"></div>
+            </div>
             <select
               id="filterZon-emrs"
               onchange="Rt('emrs')"
@@ -798,7 +856,7 @@
           id="statsRow-water"
           class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-4"
         ></div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
@@ -810,6 +868,18 @@
             </h3>
             <div class="h-48 relative">
               <canvas id="chartStatus-water"></canvas>
+            </div>
+          </div>
+          <div
+            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+          >
+            <h3
+              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model Water Tanker
+            </h3>
+            <div class="h-48 relative">
+              <canvas id="chartModel-water"></canvas>
             </div>
           </div>
           <div
@@ -878,6 +948,22 @@
                 <span class="text-[9px]">▼</span>
               </button>
               <div class="ms-options" id="msOptions-water"></div>
+            </div>
+            <!-- Multi-Select Model Water Tanker -->
+            <div class="ms-dropdown" id="msDropdownModel-water">
+              <button class="ms-select-btn" onclick="toggleMsModelDropdown('water')">
+                <span id="msTextModel-water"
+                  ><i class="fa-solid fa-truck-droplet mr-1"></i> Semua Model</span
+                >
+                <span
+                  class="text-[10px] bg-cyan-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountModel-water"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsModel-water"></div>
             </div>
             <select
               id="filterZon-water"
@@ -1174,13 +1260,14 @@
       let T = 'cfrt';
       let F = ['cfrt', 'emrs', 'water'];
       let subTabSelectedStatus = { cfrt: [], emrs: [], water: [] };
+      let subTabSelectedModel = { cfrt: [], emrs: [], water: [] };
       let SF = [];
       let intervalTimer = null;
       let remainingSeconds = REFRESH_INTERVAL_SEC;
       let CC = {
-        cfrt: { s: null, z: null },
-        emrs: { s: null, z: null },
-        water: { s: null, z: null },
+        cfrt: { s: null, z: null, m: null },
+        emrs: { s: null, z: null, m: null },
+        water: { s: null, z: null, m: null },
       };
       let slideshowActive = false,
         slideshowAuto = false,
@@ -1388,6 +1475,7 @@
           if (parsed.length < 2) return;
           D[tab] = OO(parsed[0], parsed.slice(1));
           populateMultiSelectOptions(tab);
+          populateModelOptions(tab);
           populateZonOptions(tab);
           UU(tab);
           Rc(tab);
@@ -1494,6 +1582,8 @@
       function Rc(tab) {
         const list = D[tab] || [];
         if (!list.length) return;
+
+        // 1. Chart Status Jentera
         const sc = {};
         list.forEach((i) => {
           const s = (G(i, 'STATUS JENTERA') || 'LAIN-LAIN')
@@ -1545,6 +1635,65 @@
             plugins: [ChartDataLabels],
           });
         }
+
+        // 2. Carta Pie Model Jentera
+        const mc = {};
+        list.forEach((i) => {
+          const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
+          mc[m] = (mc[m] || 0) + 1;
+        });
+        if (CC[tab].m) CC[tab].m.destroy();
+        const cm = document.getElementById(`chartModel-${tab}`);
+        if (cm) {
+          const palette = [
+            '#f59e0b',
+            '#10b981',
+            '#6366f1',
+            '#ec4899',
+            '#8b5cf6',
+            '#14b8a6',
+            '#f97316',
+            '#06b6d4',
+            '#3b82f6',
+            '#ef4444',
+          ];
+          CC[tab].m = new Chart(cm.getContext('2d'), {
+            type: 'pie',
+            data: {
+              labels: Object.keys(mc),
+              datasets: [
+                {
+                  data: Object.values(mc),
+                  backgroundColor: palette.slice(0, Object.keys(mc).length),
+                  borderWidth: 2,
+                  borderColor: '#1e293b',
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels: { color: '#94a3b8', font: { size: 9 } },
+                },
+                datalabels: {
+                  color: '#fff',
+                  font: { weight: 'bold', size: 9 },
+                },
+              },
+              animation: {
+                animateScale: true,
+                animateRotate: true,
+                duration: 1200,
+              },
+            },
+            plugins: [ChartDataLabels],
+          });
+        }
+
+        // 3. Chart Zon
         const zc = {};
         list.forEach((i) => {
           const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
@@ -1560,7 +1709,12 @@
               datasets: [
                 {
                   data: Object.values(zc),
-                  backgroundColor: '#ef4444',
+                  backgroundColor:
+                    tab === 'cfrt'
+                      ? '#ef4444'
+                      : tab === 'emrs'
+                      ? '#3b82f6'
+                      : '#06b6d4',
                   borderRadius: 4,
                 },
               ],
@@ -1609,6 +1763,27 @@
           .join('');
       }
 
+      function populateModelOptions(tab) {
+        const list = D[tab] || [];
+        const models = new Set();
+        list.forEach((i) => {
+          const m = (G(i, 'MODEL JENTERA') || '').trim();
+          if (m) models.add(m);
+        });
+        const container = document.getElementById(`msOptionsModel-${tab}`);
+        if (!container) return;
+        container.innerHTML = Array.from(models)
+          .sort()
+          .map(
+            (md) =>
+              `<label class="ms-option"><input type="checkbox" value="${md.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabModelMultiSelect('${tab}')"><span>${md}</span></label>`
+          )
+          .join('');
+      }
+
       function populateZonOptions(tab) {
         const list = D[tab] || [];
         const zones = new Set();
@@ -1628,6 +1803,12 @@
 
       function toggleMsDropdown(tab) {
         document.getElementById(`msOptions-${tab}`)?.classList.toggle('show');
+      }
+
+      function toggleMsModelDropdown(tab) {
+        document
+          .getElementById(`msOptionsModel-${tab}`)
+          ?.classList.toggle('show');
       }
 
       function updateSubTabMultiSelect(tab) {
@@ -1654,6 +1835,30 @@
         Rt(tab);
       }
 
+      function updateSubTabModelMultiSelect(tab) {
+        const opts = document.getElementById(`msOptionsModel-${tab}`);
+        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach((cb) => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        subTabSelectedModel[tab] = selected;
+        const textSpan = document.getElementById(`msTextModel-${tab}`),
+          countSpan = document.getElementById(`msCountModel-${tab}`);
+        if (selected.length === 0) {
+          textSpan.innerHTML =
+            '<i class="fa-solid fa-truck mr-1"></i> Semua Model';
+          countSpan.style.display = 'none';
+        } else {
+          textSpan.textContent =
+            selected.slice(0, 2).join(', ') +
+            (selected.length > 2 ? '...' : '');
+          countSpan.textContent = selected.length;
+          countSpan.style.display = 'inline-block';
+        }
+        Rt(tab);
+      }
+
       function Rt(tab) {
         const list = D[tab] || [];
         const searchVal = (
@@ -1662,6 +1867,7 @@
         const selectedZone =
           document.getElementById(`filterZon-${tab}`)?.value || '';
         const selectedStatuses = subTabSelectedStatus[tab] || [];
+        const selectedModels = subTabSelectedModel[tab] || [];
         const filtered = list.filter((item) => {
           if (searchVal) {
             const callsign = (G(item, 'CALLSIGN') || '').toLowerCase(),
@@ -1684,6 +1890,10 @@
           if (selectedStatuses.length > 0) {
             const statusVal = (G(item, 'STATUS JENTERA') || '').trim();
             if (!selectedStatuses.includes(statusVal)) return false;
+          }
+          if (selectedModels.length > 0) {
+            const modelVal = (G(item, 'MODEL JENTERA') || '').trim();
+            if (!selectedModels.includes(modelVal)) return false;
           }
           return true;
         });
