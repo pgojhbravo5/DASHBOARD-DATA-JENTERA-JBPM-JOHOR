@@ -454,17 +454,60 @@
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Loading Overlay -->
+    <!-- Loading Overlay -->
     <div
       id="loadingOverlay"
-      class="fixed inset-0 bg-slate-950/90 z-[110] flex flex-col items-center justify-center gap-3"
+      class="fixed inset-0 bg-slate-950/95 z-[110] flex flex-col items-center justify-center gap-6 overflow-hidden select-none"
     >
+      <!-- Animasi Jentera Bomba & Lampu Bicon -->
       <div
-        class="w-10 h-10 border-4 border-slate-700 border-t-red-600 rounded-full animate-spin"
-      ></div>
-      <div
-        class="text-xs font-semibold tracking-wider text-slate-300 uppercase"
+        class="relative w-80 h-36 bg-slate-900/90 rounded-2xl border border-slate-800 p-4 flex flex-col items-center justify-center shadow-2xl overflow-hidden"
       >
-        Memuatkan Data Jentera Bomba...
+        <!-- Garisan Jalan Raya -->
+        <div class="absolute bottom-4 left-0 w-full h-1 bg-slate-700/60"></div>
+        <div
+          class="absolute bottom-4 left-0 w-full h-1 animate-road-line"
+        ></div>
+
+        <!-- Bentuk Jentera Bomba -->
+        <div class="relative animate-truck-drive flex flex-col items-center">
+          <!-- Lampu Bicon Kelip Merah & Biru -->
+          <div class="absolute -top-3 flex gap-2 z-20">
+            <span class="w-3.5 h-3.5 rounded-full animate-beacon-red"></span>
+            <span class="w-3.5 h-3.5 rounded-full animate-beacon-blue"></span>
+          </div>
+
+          <!-- Icon Vector Jentera Bomba -->
+          <div
+            class="text-6xl text-red-600 drop-shadow-[0_4px_16px_rgba(239,68,68,0.6)]"
+          >
+            <i class="fa-solid fa-truck-field"></i>
+          </div>
+
+          <!-- Roda Bergerak -->
+          <div
+            class="absolute -bottom-1 left-1.5 right-1.5 flex justify-between px-1"
+          >
+            <div
+              class="w-4 h-4 bg-slate-950 border-2 border-slate-400 rounded-full animate-spin"
+            ></div>
+            <div
+              class="w-4 h-4 bg-slate-950 border-2 border-slate-400 rounded-full animate-spin"
+            ></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teks Status -->
+      <div class="flex flex-col items-center gap-1 text-center">
+        <div
+          class="text-xs font-black tracking-widest text-red-500 uppercase animate-pulse"
+        >
+          Memuatkan Data Jentera Bomba...
+        </div>
+        <p class="text-[11px] text-slate-400 font-medium">
+          Sila tunggu sebentar, sistem sedang dikemaskini
+        </p>
       </div>
     </div>
 
@@ -2474,6 +2517,92 @@
       window.onload = function () {
         loadAllData();
       };
+      // 🚨 SINTESIS BUNYI SIREN BOMBA (Web Audio API)
+      let sirenAudioCtx = null;
+      let sirenOscillator = null;
+      let sirenGainNode = null;
+      let sirenTimer = null;
+
+      function startSirenSound() {
+        try {
+          if (!sirenAudioCtx) {
+            sirenAudioCtx = new (window.AudioContext ||
+              window.webkitAudioContext)();
+          }
+          if (sirenAudioCtx.state === 'suspended') {
+            sirenAudioCtx.resume();
+          }
+          if (sirenOscillator) stopSirenSound();
+
+          sirenOscillator = sirenAudioCtx.createOscillator();
+          sirenGainNode = sirenAudioCtx.createGain();
+
+          sirenOscillator.type = 'sawtooth';
+          sirenGainNode.gain.setValueAtTime(0.06, sirenAudioCtx.currentTime); // Aras kelantangan diselaraskan sederhana
+
+          sirenOscillator.connect(sirenGainNode);
+          sirenGainNode.connect(sirenAudioCtx.destination);
+
+          let highPitch = false;
+          sirenOscillator.frequency.setValueAtTime(
+            650,
+            sirenAudioCtx.currentTime
+          );
+          sirenOscillator.start();
+
+          // Tukar frekuensi siren berulang antara 650Hz dan 1250Hz
+          sirenTimer = setInterval(() => {
+            if (!sirenOscillator || !sirenAudioCtx) return;
+            const targetFreq = highPitch ? 650 : 1250;
+            sirenOscillator.frequency.exponentialRampToValueAtTime(
+              targetFreq,
+              sirenAudioCtx.currentTime + 0.35
+            );
+            highPitch = !highPitch;
+          }, 450);
+        } catch (e) {
+          console.warn('Siren audio dimatikan atau tidak disokong:', e);
+        }
+      }
+
+      function stopSirenSound() {
+        if (sirenTimer) {
+          clearInterval(sirenTimer);
+          sirenTimer = null;
+        }
+        if (sirenOscillator) {
+          try {
+            sirenOscillator.stop();
+            sirenOscillator.disconnect();
+          } catch (e) {}
+          sirenOscillator = null;
+        }
+      }
+
+      // 🔄 KEMASKINI FUNGSI loadAllData()
+      async function loadAllData() {
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+        startSirenSound(); // Bunyi siren bermula
+
+        const refreshBtn = document.getElementById('refreshBtn');
+        if (refreshBtn) refreshBtn.classList.add('animate-pulse');
+        updateTimestamp();
+
+        await Promise.all([
+          fetchTabData('cfrt'),
+          fetchTabData('emrs'),
+          fetchTabData('water'),
+        ]);
+
+        renderMainDashboard();
+
+        document.getElementById('loadingOverlay').classList.add('hidden');
+        stopSirenSound(); // Bunyi siren berhenti selepas data selesai dimuatkan
+
+        if (refreshBtn) refreshBtn.classList.remove('animate-pulse');
+        showNotification('Data berjaya dikemaskini', 'success');
+        resetCountdown();
+      }
     </script>
   </body>
 </html>
