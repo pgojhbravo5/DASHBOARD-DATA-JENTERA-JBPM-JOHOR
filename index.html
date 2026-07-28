@@ -69,8 +69,7 @@
 
       /* 🚨 ANIMASI SIREN */
       @keyframes sirenRed {
-        0%,
-        100% {
+        0%, 100% {
           box-shadow: 0 0 4px #ef4444, 0 0 12px #ef4444;
           opacity: 1;
         }
@@ -80,8 +79,7 @@
         }
       }
       @keyframes sirenBlue {
-        0%,
-        100% {
+        0%, 100% {
           box-shadow: 0 0 1px #3b82f6;
           opacity: 0.3;
         }
@@ -91,8 +89,7 @@
         }
       }
       @keyframes sirenAmber {
-        0%,
-        100% {
+        0%, 100% {
           box-shadow: 0 0 4px #f59e0b, 0 0 12px #f59e0b;
           opacity: 1;
         }
@@ -102,125 +99,9 @@
         }
       }
 
-      .siren-red {
-        animation: sirenRed 0.8s infinite alternate;
-      }
-      .siren-blue {
-        animation: sirenBlue 0.8s infinite alternate;
-      }
-      .siren-amber {
-        animation: sirenAmber 0.9s infinite alternate;
-      }
-
-      /* 🚛 ANIMASI WHEEL SPIN */
-      @keyframes wheelSpin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      .jentera-card:hover .wheel-spin {
-        animation: wheelSpin 1.5s linear infinite;
-      }
-
-      /* 🎯 ANIMASI PULSE GLOW */
-      @keyframes pulseGlow {
-        0%,
-        100% {
-          box-shadow: 0 0 2px currentColor;
-        }
-        50% {
-          box-shadow: 0 0 8px currentColor, 0 0 14px currentColor;
-        }
-      }
-      .pulse-glow-b {
-        animation: pulseGlow 2s infinite;
-        color: #22c55e;
-      }
-      .pulse-glow-rm {
-        animation: pulseGlow 2s infinite;
-        color: #eab308;
-      }
-      .pulse-glow-r {
-        animation: pulseGlow 1s infinite;
-        color: #ef4444;
-      }
-      .pulse-glow-d {
-        animation: pulseGlow 2.5s infinite;
-        color: #3b82f6;
-      }
-
-      /* 🎴 ANIMASI CARD HOVER */
-      .jentera-card {
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .jentera-card:hover {
-        transform: translateY(-2px) scale(1.02);
-        border-color: #64748b;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
-          0 0 12px rgba(239, 68, 68, 0.2);
-        z-index: 10;
-      }
-
-      /* 🔔 ANIMASI BELL */
-      @keyframes bellShake {
-        0%,
-        100% {
-          transform: rotate(0deg);
-        }
-        10%,
-        30%,
-        50%,
-        70%,
-        90% {
-          transform: rotate(-5deg);
-        }
-        20%,
-        40%,
-        60%,
-        80% {
-          transform: rotate(5deg);
-        }
-      }
-      .bell-animate {
-        animation: bellShake 2s ease-in-out infinite;
-      }
-
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0f172a;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-      }
-
-      /* 🏷️ PLATE NUMBER */
-      .plate-number {
-        background-color: #000000;
-        color: #ffffff;
-        border: 1px solid #9ca3af;
-        border-radius: 0.2rem;
-        padding: 0.05rem 0.3rem;
-        font-family: 'Orbitron', monospace;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2),
-          0 1px 3px rgba(0, 0, 0, 0.5);
-        display: inline-block;
-        font-size: 0.68rem;
-        text-shadow: 0 0 1px #fff;
-        line-height: 1.1;
-      }
+      .siren-red { animation: sirenRed 0.8s infinite alternate; }
+      .siren-blue { animation: sirenBlue 0.8s infinite alternate; }
+      .siren-amber { animation: sirenAmber 0.9s infinite alternate; }
 
       /* MULTISELECT DROPDOWN STYLES */
       .ms-dropdown {
@@ -297,30 +178,26 @@
         letter-spacing: 0.025em;
         display: inline-block;
       }
-      .badge-baik {
-        background-color: rgba(34, 197, 94, 0.2);
-        color: #4ade80;
-        border: 1px solid rgba(34, 197, 94, 0.4);
-      }
-      .badge-minor {
-        background-color: rgba(234, 179, 8, 0.2);
-        color: #fde047;
-        border: 1px solid rgba(234, 179, 8, 0.4);
-      }
-      .badge-rosak {
-        background-color: rgba(239, 68, 68, 0.2);
-        color: #fca5a5;
-        border: 1px solid rgba(239, 68, 68, 0.4);
-      }
-      .badge-pulang {
-        background-color: rgba(59, 130, 246, 0.2);
-        color: #93c5fd;
-        border: 1px solid rgba(59, 130, 246, 0.4);
-      }
-      .badge-unknown {
-        background-color: rgba(148, 163, 184, 0.2);
-        color: #cbd5e1;
-        border: 1px solid rgba(148, 163, 184, 0.4);
+      .badge-baik { background-color: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); }
+      .badge-minor { background-color: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.4); }
+      .badge-rosak { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); }
+      .badge-pulang { background-color: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
+      .badge-unknown { background-color: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); }
+
+      .plate-number {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #9ca3af;
+        border-radius: 0.2rem;
+        padding: 0.05rem 0.3rem;
+        font-family: 'Orbitron', monospace;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2), 0 1px 3px rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        font-size: 0.68rem;
+        text-shadow: 0 0 1px #fff;
+        line-height: 1.1;
       }
 
       /* 🚒 OPTIMIZED FIT KAD JENTERA */
@@ -336,32 +213,23 @@
         position: relative;
         overflow: hidden;
         min-width: 0;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
-      .jentera-card.status-glow-b {
-        border-left: 3px solid #22c55e;
+      .jentera-card:hover {
+        transform: translateY(-2px) scale(1.02);
+        border-color: #64748b;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(239, 68, 68, 0.2);
+        z-index: 10;
       }
-      .jentera-card.status-glow-rm {
-        border-left: 3px solid #eab308;
-      }
-      .jentera-card.status-glow-r {
-        border-left: 3px solid #ef4444;
-      }
-      .jentera-card.status-glow-d {
-        border-left: 3px solid #3b82f6;
-      }
-      .jentera-card.status-glow-u {
-        border-left: 3px solid #94a3b8;
-      }
+      .jentera-card.status-glow-b { border-left: 3px solid #22c55e; }
+      .jentera-card.status-glow-rm { border-left: 3px solid #eab308; }
+      .jentera-card.status-glow-r { border-left: 3px solid #ef4444; }
+      .jentera-card.status-glow-d { border-left: 3px solid #3b82f6; }
+      .jentera-card.status-glow-u { border-left: 3px solid #94a3b8; }
 
-      .jentera-card.type-cfrt {
-        border-top: 1.5px solid var(--accent-red);
-      }
-      .jentera-card.type-emrs {
-        border-top: 1.5px solid var(--accent-blue);
-      }
-      .jentera-card.type-water {
-        border-top: 1.5px solid var(--accent-cyan);
-      }
+      .jentera-card.type-cfrt { border-top: 1.5px solid var(--accent-red); }
+      .jentera-card.type-emrs { border-top: 1.5px solid var(--accent-blue); }
+      .jentera-card.type-water { border-top: 1.5px solid var(--accent-cyan); }
 
       .copy-btn {
         position: absolute;
@@ -382,31 +250,13 @@
         transition: all 0.15s ease;
         z-index: 5;
       }
-      .jentera-card:hover .copy-btn,
-      tr:hover .copy-btn {
-        opacity: 1;
-      }
-      .copy-btn:hover {
-        background: #334155;
-        color: #fff;
-        border-color: #64748b;
-      }
-      .copy-btn.copied {
-        background: #22c55e !important;
-        border-color: #22c55e !important;
-        color: #fff !important;
-      }
+      .jentera-card:hover .copy-btn, tr:hover .copy-btn { opacity: 1; }
+      .copy-btn:hover { background: #334155; color: #fff; border-color: #64748b; }
+      .copy-btn.copied { background: #22c55e !important; border-color: #22c55e !important; color: #fff !important; }
 
-      /* Fullscreen dashboard optimization */
-      body.fullscreen-mode .tab-nav-header,
-      body.fullscreen-mode .sub-header-controls {
-        display: none !important;
-      }
-      body.fullscreen-mode #zoneContainer {
-        gap: 0.5rem;
-      }
+      body.fullscreen-mode .tab-nav-header, body.fullscreen-mode .sub-header-controls { display: none !important; }
+      body.fullscreen-mode #zoneContainer { gap: 0.5rem; }
 
-      /* VEHICLE SHAPE MODAL STYLES */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -423,13 +273,6 @@
       .modal-overlay.show {
         opacity: 1;
         pointer-events: auto;
-      }
-
-      .vehicle-shape-modal {
-        position: relative;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        user-select: none;
-        overflow: hidden;
       }
     </style>
   </head>
@@ -473,7 +316,7 @@
         <div
           class="w-9 h-9 bg-red-600 rounded-lg flex items-center justify-center text-lg shadow-lg shadow-red-600/30"
         >
-          <i class="fa-solid fa-fire-extinguisher text-white bell-animate"></i>
+          <i class="fa-solid fa-fire-extinguisher text-white"></i>
         </div>
         <div>
           <h1
@@ -633,6 +476,7 @@
                 class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
               />
             </div>
+            <!-- Multi-Select Status FRT -->
             <div class="ms-dropdown" id="msDropdown-cfrt">
               <button class="ms-select-btn" onclick="toggleMsDropdown('cfrt')">
                 <span id="msText-cfrt"
@@ -650,7 +494,10 @@
             </div>
             <!-- Multi-Select Model Jentera FRT -->
             <div class="ms-dropdown" id="msDropdownModel-cfrt">
-              <button class="ms-select-btn" onclick="toggleMsModelDropdown('cfrt')">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsModelDropdown('cfrt')"
+              >
                 <span id="msTextModel-cfrt"
                   ><i class="fa-solid fa-truck mr-1"></i> Semua Model</span
                 >
@@ -664,13 +511,25 @@
               </button>
               <div class="ms-options" id="msOptionsModel-cfrt"></div>
             </div>
-            <select
-              id="filterZon-cfrt"
-              onchange="Rt('cfrt')"
-              class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 outline-none"
-            >
-              <option value="">Semua Zon</option>
-            </select>
+            <!-- Multi-Select Zon FRT (REPLACED SINGLE SELECT) -->
+            <div class="ms-dropdown" id="msDropdownZon-cfrt">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsZonDropdown('cfrt')"
+              >
+                <span id="msTextZon-cfrt"
+                  ><i class="fa-solid fa-location-dot mr-1"></i> Semua Zon</span
+                >
+                <span
+                  class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountZon-cfrt"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsZon-cfrt"></div>
+            </div>
           </div>
           <div class="overflow-x-auto rounded-lg border border-slate-700/50">
             <table class="w-full text-left border-collapse text-xs">
@@ -725,7 +584,8 @@
             <h3
               class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
             >
-              <i class="fa-solid fa-truck-medical text-blue-500"></i> Model Jentera EMRS
+              <i class="fa-solid fa-truck-medical text-blue-500"></i> Model
+              Jentera EMRS
             </h3>
             <div class="h-48 relative">
               <canvas id="chartModel-emrs"></canvas>
@@ -783,6 +643,7 @@
                 class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
               />
             </div>
+            <!-- Multi-Select Status EMRS -->
             <div class="ms-dropdown" id="msDropdown-emrs">
               <button class="ms-select-btn" onclick="toggleMsDropdown('emrs')">
                 <span id="msText-emrs"
@@ -800,9 +661,13 @@
             </div>
             <!-- Multi-Select Model Jentera EMRS -->
             <div class="ms-dropdown" id="msDropdownModel-emrs">
-              <button class="ms-select-btn" onclick="toggleMsModelDropdown('emrs')">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsModelDropdown('emrs')"
+              >
                 <span id="msTextModel-emrs"
-                  ><i class="fa-solid fa-truck-medical mr-1"></i> Semua Model</span
+                  ><i class="fa-solid fa-truck-medical mr-1"></i> Semua
+                  Model</span
                 >
                 <span
                   class="text-[10px] bg-blue-600 text-white px-1.5 py-0.2 rounded font-bold"
@@ -814,13 +679,25 @@
               </button>
               <div class="ms-options" id="msOptionsModel-emrs"></div>
             </div>
-            <select
-              id="filterZon-emrs"
-              onchange="Rt('emrs')"
-              class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 outline-none"
-            >
-              <option value="">Semua Zon</option>
-            </select>
+            <!-- Multi-Select Zon EMRS (REPLACED SINGLE SELECT) -->
+            <div class="ms-dropdown" id="msDropdownZon-emrs">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsZonDropdown('emrs')"
+              >
+                <span id="msTextZon-emrs"
+                  ><i class="fa-solid fa-location-dot mr-1"></i> Semua Zon</span
+                >
+                <span
+                  class="text-[10px] bg-blue-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountZon-emrs"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsZon-emrs"></div>
+            </div>
           </div>
           <div class="overflow-x-auto rounded-lg border border-slate-700/50">
             <table class="w-full text-left border-collapse text-xs">
@@ -876,7 +753,8 @@
             <h3
               class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
             >
-              <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model Water Tanker
+              <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model
+              Water Tanker
             </h3>
             <div class="h-48 relative">
               <canvas id="chartModel-water"></canvas>
@@ -934,6 +812,7 @@
                 class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
               />
             </div>
+            <!-- Multi-Select Status Water Tanker -->
             <div class="ms-dropdown" id="msDropdown-water">
               <button class="ms-select-btn" onclick="toggleMsDropdown('water')">
                 <span id="msText-water"
@@ -951,9 +830,13 @@
             </div>
             <!-- Multi-Select Model Water Tanker -->
             <div class="ms-dropdown" id="msDropdownModel-water">
-              <button class="ms-select-btn" onclick="toggleMsModelDropdown('water')">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsModelDropdown('water')"
+              >
                 <span id="msTextModel-water"
-                  ><i class="fa-solid fa-truck-droplet mr-1"></i> Semua Model</span
+                  ><i class="fa-solid fa-truck-droplet mr-1"></i> Semua
+                  Model</span
                 >
                 <span
                   class="text-[10px] bg-cyan-600 text-white px-1.5 py-0.2 rounded font-bold"
@@ -965,13 +848,25 @@
               </button>
               <div class="ms-options" id="msOptionsModel-water"></div>
             </div>
-            <select
-              id="filterZon-water"
-              onchange="Rt('water')"
-              class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1.5 outline-none"
-            >
-              <option value="">Semua Zon</option>
-            </select>
+            <!-- Multi-Select Zon Water Tanker (REPLACED SINGLE SELECT) -->
+            <div class="ms-dropdown" id="msDropdownZon-water">
+              <button
+                class="ms-select-btn"
+                onclick="toggleMsZonDropdown('water')"
+              >
+                <span id="msTextZon-water"
+                  ><i class="fa-solid fa-location-dot mr-1"></i> Semua Zon</span
+                >
+                <span
+                  class="text-[10px] bg-cyan-600 text-white px-1.5 py-0.2 rounded font-bold"
+                  id="msCountZon-water"
+                  style="display: none"
+                  >0</span
+                >
+                <span class="text-[9px]">▼</span>
+              </button>
+              <div class="ms-options" id="msOptionsZon-water"></div>
+            </div>
           </div>
           <div class="overflow-x-auto rounded-lg border border-slate-700/50">
             <table class="w-full text-left border-collapse text-xs">
@@ -1260,6 +1155,7 @@
       let F = ['cfrt', 'emrs', 'water'];
       let subTabSelectedStatus = { cfrt: [], emrs: [], water: [] };
       let subTabSelectedModel = { cfrt: [], emrs: [], water: [] };
+      let subTabSelectedZon = { cfrt: [], emrs: [], water: [] }; // MULTI-SELECT ZON STATE
       let SF = [];
       let intervalTimer = null;
       let remainingSeconds = REFRESH_INTERVAL_SEC;
@@ -1273,8 +1169,13 @@
         slideshowInterval = null,
         currentSlideZone = 0;
 
-      // 🎯 ZON ORDER UTK CARTA BAR AGIHAN MENGIKUT ZON
-      const ZON_ORDER = ['ZON 1', 'ZON 2', 'ZON 3', 'ZON 4', 'BENGKEL KJT BOMBA'];
+      const ZON_ORDER = [
+        'ZON 1',
+        'ZON 2',
+        'ZON 3',
+        'ZON 4',
+        'BENGKEL KJT BOMBA',
+      ];
 
       const zoneOrder = [
         'ZON 1',
@@ -1478,7 +1379,7 @@
           D[tab] = OO(parsed[0], parsed.slice(1));
           populateMultiSelectOptions(tab);
           populateModelOptions(tab);
-          populateZonOptions(tab);
+          populateZonOptions(tab); // Diterapkan untuk Multi-Select Zon
           UU(tab);
           Rc(tab);
           Rt(tab);
@@ -1638,7 +1539,7 @@
           });
         }
 
-        // 2. Carta Pie Model Jentera
+        // 2. Chart Model Jentera
         const mc = {};
         list.forEach((i) => {
           const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
@@ -1695,14 +1596,13 @@
           });
         }
 
-        // 🎯 3. Chart Zon - DISUSUN MENGIKUT ZON_ORDER
+        // 3. Chart Zon
         const zcRaw = {};
         list.forEach((i) => {
           const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
           zcRaw[z] = (zcRaw[z] || 0) + 1;
         });
 
-        // Susun data mengikut ZON_ORDER
         const sortedLabels = [];
         const sortedData = [];
         ZON_ORDER.forEach((zone) => {
@@ -1713,7 +1613,6 @@
             delete zcRaw[upperZone];
           }
         });
-        // Tambah baki zon yang tidak tersenarai
         Object.keys(zcRaw).forEach((key) => {
           sortedLabels.push(key);
           sortedData.push(zcRaw[key]);
@@ -1820,6 +1719,7 @@
           .join('');
       }
 
+      // 📍 MULTI-SELECT ZON POPULATE FUNCTION
       function populateZonOptions(tab) {
         const list = D[tab] || [];
         const zones = new Set();
@@ -1827,14 +1727,18 @@
           const z = (G(i, 'ZON') || '').trim();
           if (z) zones.add(z);
         });
-        const select = document.getElementById(`filterZon-${tab}`);
-        if (!select) return;
-        select.innerHTML =
-          '<option value="">Semua Zon</option>' +
-          Array.from(zones)
-            .sort()
-            .map((z) => `<option value="${z}">${z}</option>`)
-            .join('');
+        const container = document.getElementById(`msOptionsZon-${tab}`);
+        if (!container) return;
+        container.innerHTML = Array.from(zones)
+          .sort()
+          .map(
+            (zn) =>
+              `<label class="ms-option"><input type="checkbox" value="${zn.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabZonMultiSelect('${tab}')"><span>${zn}</span></label>`
+          )
+          .join('');
       }
 
       function toggleMsDropdown(tab) {
@@ -1844,6 +1748,13 @@
       function toggleMsModelDropdown(tab) {
         document
           .getElementById(`msOptionsModel-${tab}`)
+          ?.classList.toggle('show');
+      }
+
+      // 📍 TOGGLE DROPDOWN ZON MULTI-SELECT
+      function toggleMsZonDropdown(tab) {
+        document
+          .getElementById(`msOptionsZon-${tab}`)
           ?.classList.toggle('show');
       }
 
@@ -1895,15 +1806,40 @@
         Rt(tab);
       }
 
+      // 📍 UPDATE SELECTED ZONES MULTI-SELECT
+      function updateSubTabZonMultiSelect(tab) {
+        const opts = document.getElementById(`msOptionsZon-${tab}`);
+        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach((cb) => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        subTabSelectedZon[tab] = selected;
+        const textSpan = document.getElementById(`msTextZon-${tab}`),
+          countSpan = document.getElementById(`msCountZon-${tab}`);
+        if (selected.length === 0) {
+          textSpan.innerHTML =
+            '<i class="fa-solid fa-location-dot mr-1"></i> Semua Zon';
+          countSpan.style.display = 'none';
+        } else {
+          textSpan.textContent =
+            selected.slice(0, 2).join(', ') +
+            (selected.length > 2 ? '...' : '');
+          countSpan.textContent = selected.length;
+          countSpan.style.display = 'inline-block';
+        }
+        Rt(tab);
+      }
+
       function Rt(tab) {
         const list = D[tab] || [];
         const searchVal = (
           document.getElementById(`searchInput-${tab}`)?.value || ''
         ).toLowerCase();
-        const selectedZone =
-          document.getElementById(`filterZon-${tab}`)?.value || '';
         const selectedStatuses = subTabSelectedStatus[tab] || [];
         const selectedModels = subTabSelectedModel[tab] || [];
+        const selectedZones = subTabSelectedZon[tab] || []; // Penapis Pelbagai Zon
+
         const filtered = list.filter((item) => {
           if (searchVal) {
             const callsign = (G(item, 'CALLSIGN') || '').toLowerCase(),
@@ -1918,11 +1854,10 @@
             )
               return false;
           }
-          if (
-            selectedZone &&
-            (G(item, 'ZON') || '').toUpperCase() !== selectedZone.toUpperCase()
-          )
-            return false;
+          if (selectedZones.length > 0) {
+            const zoneVal = (G(item, 'ZON') || '').trim();
+            if (!selectedZones.includes(zoneVal)) return false;
+          }
           if (selectedStatuses.length > 0) {
             const statusVal = (G(item, 'STATUS JENTERA') || '').trim();
             if (!selectedStatuses.includes(statusVal)) return false;
@@ -1933,6 +1868,7 @@
           }
           return true;
         });
+
         const tbody = document.getElementById(`tableBody-${tab}`);
         if (!tbody) return;
         tbody.innerHTML =
@@ -2311,21 +2247,11 @@
                 status = G(item, 'STATUS JENTERA') || 'TIADA',
                 cat = getStatusCategory(status);
 
-              let glowClass = 'status-glow-u',
-                statusDotBg = 'bg-slate-400';
-              if (cat === 'B') {
-                glowClass = 'status-glow-b';
-                statusDotBg = 'bg-emerald-500 siren-red';
-              } else if (cat === 'RM') {
-                glowClass = 'status-glow-rm';
-                statusDotBg = 'bg-yellow-500 siren-amber';
-              } else if (cat === 'R') {
-                glowClass = 'status-glow-r';
-                statusDotBg = 'bg-red-500 siren-red';
-              } else if (cat === 'D') {
-                glowClass = 'status-glow-d';
-                statusDotBg = 'bg-blue-500 siren-blue';
-              }
+              let glowClass = 'status-glow-u';
+              if (cat === 'B') glowClass = 'status-glow-b';
+              else if (cat === 'RM') glowClass = 'status-glow-rm';
+              else if (cat === 'R') glowClass = 'status-glow-r';
+              else if (cat === 'D') glowClass = 'status-glow-d';
 
               const typeTag =
                 item._j === 'cfrt'
@@ -2342,281 +2268,111 @@
 
               const itemJson = encodeURIComponent(JSON.stringify(item));
 
-              return `
-            <div class="jentera-card ${glowClass} ${item._tc} relative group" onclick="showVehicleModal('${itemJson}')" title="${callsign} - ${status} (${model})">
-              <button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat">
-                <i class="fa-regular fa-copy"></i>
-              </button>
-              <div class="flex items-center justify-between gap-1 pr-3 min-w-0">
-                <div class="flex items-center gap-1 min-w-0">
-                  <span class="w-1.5 h-1.5 rounded-full ${statusDotBg} shrink-0"></span>
-                  <span class="text-[10px] font-extrabold text-white tracking-tight leading-none truncate" title="${callsign}">${callsign}</span>
+              return `<div class="jentera-card ${glowClass} ${
+                item._tc
+              }" onclick="showVehicleModal('${itemJson}')">
+                <button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button>
+                <div class="flex items-center justify-between gap-1">
+                  <span class="font-extrabold text-white text-[11px] truncate flex items-center gap-1">${
+                    item._icon
+                  } ${callsign}</span>
+                  <span class="text-[8px] font-extrabold px-1 py-0.2 rounded border ${typeColor}">${typeTag}</span>
                 </div>
-                <span class="text-[8px] font-extrabold px-1 py-0.2 rounded border shrink-0 ${typeColor}">${typeTag}</span>
-              </div>
-              <div class="flex items-center justify-between gap-1 text-[9px] pt-0.5 min-w-0">
-                <span class="plate-number shrink-0">${plate}</span>
-                <span class="text-[8px] text-slate-400 truncate font-medium text-right flex-1" title="${model}">${model}</span>
-              </div>
-            </div>`;
+                <div class="flex items-center justify-between text-[10px] gap-1">
+                  <span class="plate-number">${plate}</span>
+                  <span class="text-slate-400 text-[9px] truncate max-w-[100px] font-medium" title="${model}">${model}</span>
+                </div>
+              </div>`;
             })
             .join('');
         } else {
-          cardsHtml = renderEmptyStatusCards(SF);
+          const selStatuses = SF || [];
+          cardsHtml = renderEmptyStatusCards(selStatuses);
         }
 
-        return `
-        <div class="bg-slate-900/90 border border-slate-700/60 rounded-lg p-1.5 space-y-1 shadow-sm">
-          <div class="flex items-center justify-between text-[10px] font-bold text-slate-200 border-b border-slate-800 pb-0.5">
-            <span class="truncate max-w-[160px] flex items-center gap-1" title="${balaiName}">
-              <span class="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0"></span>${balaiName}
-            </span>
-            <span class="text-[9px] bg-slate-800 text-slate-300 border border-slate-700 px-1.5 py-0.2 rounded-full font-bold">${items.length}</span>
+        return `<div class="bg-slate-900/60 border border-slate-700/60 rounded-lg p-1.5 space-y-1">
+          <div class="flex items-center justify-between text-[10px] font-bold text-slate-300 px-0.5">
+            <span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building-shield text-slate-500 text-[9px]"></i> ${balaiName}</span>
+            <span class="text-slate-500 text-[9px] font-semibold">${items.length}</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">${cardsHtml}</div>
-        </div>`;
-      }
-
-      function generateFRTModalHTML(item) {
-        const callsign = G(item, 'CALLSIGN') || '-',
-          plate = G(item, 'PLATE') || '-',
-          model = G(item, 'MODEL JENTERA') || '-',
-          asal = G(item, 'PENEMPATAN ASAL') || '-',
-          lokasi = G(item, 'LOKASI SEMASA') || '-',
-          zon = G(item, 'ZON') || '-',
-          status = G(item, 'STATUS JENTERA') || '-',
-          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
-        const cat = getStatusCategory(status);
-
-        let bodyBg = 'from-red-600 via-red-800 to-slate-900',
-          borderGlow = 'border-red-600/60';
-        if (cat === 'RM') {
-          bodyBg = 'from-amber-600 via-red-800 to-slate-900';
-          borderGlow = 'border-amber-500';
-        } else if (cat === 'R') {
-          bodyBg = 'from-red-900 via-slate-900 to-black';
-          borderGlow = 'border-red-500';
-        } else if (cat === 'D') {
-          bodyBg = 'from-blue-700 via-slate-800 to-slate-900';
-          borderGlow = 'border-blue-500';
-        }
-
-        let badgeClass = 'badge-unknown';
-        if (cat === 'B') badgeClass = 'badge-baik';
-        else if (cat === 'RM') badgeClass = 'badge-minor';
-        else if (cat === 'R') badgeClass = 'badge-rosak';
-        else if (cat === 'D') badgeClass = 'badge-pulang';
-
-        return `
-        <div class="vehicle-shape-modal bg-gradient-to-b ${bodyBg} border-2 ${borderGlow} rounded-2xl p-4 shadow-2xl">
-          <div class="flex items-center justify-between border-b border-red-400/30 pb-3 mb-3">
-            <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-red-500/40">
-              <span class="w-3 h-3 rounded-full bg-red-500 siren-red"></span>
-              <span class="w-3 h-3 rounded-full bg-blue-500 siren-blue"></span>
-              <span class="text-xs font-black text-red-300 tracking-wider">FIRE RESCUE TENDER (FRT)</span>
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest bg-red-950/80 px-2 py-1 rounded border border-red-700/50 text-red-200">${zon}</span>
-          </div>
-
-          <div class="grid grid-cols-12 gap-3 mb-3">
-            <div class="col-span-5 bg-slate-950/90 rounded-xl p-3 border border-red-500/40 relative overflow-hidden">
-              <div class="bg-gradient-to-b from-sky-900/60 to-slate-900 rounded-lg p-2 text-center border border-sky-400/30 mb-2">
-                <span class="text-sm font-black tracking-wide text-sky-200 block">${callsign}</span>
-              </div>
-              <div class="text-center mb-2"><span class="plate-number text-sm">${plate}</span></div>
-              <div class="text-xs text-slate-300 font-bold truncate text-center"><i class="fa-solid fa-truck text-red-400 mr-1"></i>${model}</div>
-            </div>
-            <div class="col-span-7 bg-slate-900/90 rounded-xl p-3 border border-slate-700 space-y-2">
-              <div class="grid grid-cols-3 gap-1 bg-slate-950 p-1.5 rounded-lg border border-slate-800">
-                <div class="h-4 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
-                <div class="h-4 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
-                <div class="h-4 bg-gradient-to-b from-slate-700 to-slate-800 rounded border-t border-slate-500"></div>
-              </div>
-              <div class="space-y-1">
-                <div class="text-xs text-slate-300 font-medium"><span class="text-slate-400">Asal:</span> ${asal}</div>
-                <div class="text-xs text-amber-300 font-bold"><span class="text-slate-400 font-normal">Lokasi:</span> ${lokasi}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 mb-3 space-y-1">
-            <div class="text-[10px] uppercase font-bold text-slate-400">Status & Kerosakan:</div>
-            <div class="flex items-center gap-2">
-              <span class="badge-status ${badgeClass}">${status}</span>
-              <span class="text-xs text-slate-300 truncate">${kerosakan}</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-2 border-t border-red-500/30">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-            </div>
-            <button onclick="copySingleAssetInfo('${encodeURIComponent(
-              JSON.stringify(item)
-            )}', this)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg border border-slate-600 transition flex items-center gap-1 text-slate-200">
-              <i class="fa-regular fa-copy"></i> Salin Maklumat
-            </button>
-          </div>
-        </div>`;
-      }
-
-      function generateEMRSModalHTML(item) {
-        const callsign = G(item, 'CALLSIGN') || '-',
-          plate = G(item, 'PLATE') || '-',
-          model = G(item, 'MODEL JENTERA') || '-',
-          asal = G(item, 'PENEMPATAN ASAL') || '-',
-          lokasi = G(item, 'LOKASI SEMASA') || '-',
-          zon = G(item, 'ZON') || '-',
-          status = G(item, 'STATUS JENTERA') || '-',
-          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
-        const cat = getStatusCategory(status);
-
-        let badgeClass = 'badge-unknown';
-        if (cat === 'B') badgeClass = 'badge-baik';
-        else if (cat === 'RM') badgeClass = 'badge-minor';
-        else if (cat === 'R') badgeClass = 'badge-rosak';
-        else if (cat === 'D') badgeClass = 'badge-pulang';
-
-        return `
-        <div class="vehicle-shape-modal bg-gradient-to-b from-blue-700 via-slate-800 to-slate-950 border-2 border-blue-500 rounded-2xl p-4 shadow-2xl">
-          <div class="flex items-center justify-between border-b border-blue-400/30 pb-3 mb-3">
-            <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-blue-500/40">
-              <span class="w-3 h-3 rounded-full bg-red-500 siren-red"></span>
-              <span class="w-3 h-3 rounded-full bg-blue-500 siren-blue"></span>
-              <span class="text-xs font-black text-blue-300 tracking-wider">AMBULANS EMRS</span>
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest bg-blue-950/80 px-2 py-1 rounded border border-blue-700/50 text-blue-200">${zon}</span>
-          </div>
-
-          <div class="grid grid-cols-12 gap-3 mb-3">
-            <div class="col-span-5 bg-slate-950/90 rounded-xl p-3 border border-blue-500/40 text-center">
-              <div class="bg-blue-900/40 rounded-lg p-2 text-center border border-blue-400/30 mb-2">
-                <span class="text-sm font-black tracking-wide text-blue-200 block">${callsign}</span>
-              </div>
-              <div class="mb-2"><span class="plate-number text-sm">${plate}</span></div>
-              <div class="text-xs text-slate-300 font-bold truncate"><i class="fa-solid fa-truck-medical text-blue-400 mr-1"></i>${model}</div>
-            </div>
-            <div class="col-span-7 bg-slate-900/90 rounded-xl p-3 border border-slate-700 space-y-2">
-              <div class="space-y-1">
-                <div class="text-xs text-slate-300 font-medium"><span class="text-slate-400">Asal:</span> ${asal}</div>
-                <div class="text-xs text-amber-300 font-bold"><span class="text-slate-400 font-normal">Lokasi:</span> ${lokasi}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 mb-3 space-y-1">
-            <div class="text-[10px] uppercase font-bold text-slate-400">Status & Kerosakan:</div>
-            <div class="flex items-center gap-2">
-              <span class="badge-status ${badgeClass}">${status}</span>
-              <span class="text-xs text-slate-300 truncate">${kerosakan}</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-2 border-t border-blue-500/30">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-            </div>
-            <button onclick="copySingleAssetInfo('${encodeURIComponent(
-              JSON.stringify(item)
-            )}', this)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg border border-slate-600 transition flex items-center gap-1 text-slate-200">
-              <i class="fa-regular fa-copy"></i> Salin Maklumat
-            </button>
-          </div>
-        </div>`;
-      }
-
-      function generateWaterModalHTML(item) {
-        const callsign = G(item, 'CALLSIGN') || '-',
-          plate = G(item, 'PLATE') || '-',
-          model = G(item, 'MODEL JENTERA') || '-',
-          asal = G(item, 'PENEMPATAN ASAL') || '-',
-          lokasi = G(item, 'LOKASI SEMASA') || '-',
-          zon = G(item, 'ZON') || '-',
-          status = G(item, 'STATUS JENTERA') || '-',
-          kerosakan = G(item, 'STATUS KEROSAKKAN') || '-';
-        const cat = getStatusCategory(status);
-
-        let badgeClass = 'badge-unknown';
-        if (cat === 'B') badgeClass = 'badge-baik';
-        else if (cat === 'RM') badgeClass = 'badge-minor';
-        else if (cat === 'R') badgeClass = 'badge-rosak';
-        else if (cat === 'D') badgeClass = 'badge-pulang';
-
-        return `
-        <div class="vehicle-shape-modal bg-gradient-to-b from-cyan-700 via-slate-800 to-slate-950 border-2 border-cyan-500 rounded-2xl p-4 shadow-2xl">
-          <div class="flex items-center justify-between border-b border-cyan-400/30 pb-3 mb-3">
-            <div class="flex items-center gap-2 bg-slate-950/80 px-3 py-1 rounded-full border border-cyan-500/40">
-              <span class="w-3 h-3 rounded-full bg-amber-500 siren-amber"></span>
-              <span class="text-xs font-black text-cyan-300 tracking-wider">WATER TANKER</span>
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest bg-cyan-950/80 px-2 py-1 rounded border border-cyan-700/50 text-cyan-200">${zon}</span>
-          </div>
-
-          <div class="grid grid-cols-12 gap-3 mb-3">
-            <div class="col-span-5 bg-slate-950/90 rounded-xl p-3 border border-cyan-500/40 text-center">
-              <div class="bg-cyan-900/40 rounded-lg p-2 text-center border border-cyan-400/30 mb-2">
-                <span class="text-sm font-black tracking-wide text-cyan-200 block">${callsign}</span>
-              </div>
-              <div class="mb-2"><span class="plate-number text-sm">${plate}</span></div>
-              <div class="text-xs text-slate-300 font-bold truncate"><i class="fa-solid fa-truck-droplet text-cyan-400 mr-1"></i>${model}</div>
-            </div>
-            <div class="col-span-7 bg-slate-900/90 rounded-xl p-3 border border-slate-700 space-y-2">
-              <div class="space-y-1">
-                <div class="text-xs text-slate-300 font-medium"><span class="text-slate-400">Asal:</span> ${asal}</div>
-                <div class="text-xs text-amber-300 font-bold"><span class="text-slate-400 font-normal">Lokasi:</span> ${lokasi}</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-slate-950/80 rounded-xl p-2.5 border border-slate-800 mb-3 space-y-1">
-            <div class="text-[10px] uppercase font-bold text-slate-400">Status & Kerosakan:</div>
-            <div class="flex items-center gap-2">
-              <span class="badge-status ${badgeClass}">${status}</span>
-              <span class="text-xs text-slate-300 truncate">${kerosakan}</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between pt-2 border-t border-cyan-500/30">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-              <div class="w-7 h-7 rounded-full bg-slate-950 border-2 border-slate-600 flex items-center justify-center wheel-spin"><div class="w-2.5 h-2.5 rounded-full bg-slate-400"></div></div>
-            </div>
-            <button onclick="copySingleAssetInfo('${encodeURIComponent(
-              JSON.stringify(item)
-            )}', this)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-xs font-bold rounded-lg border border-slate-600 transition flex items-center gap-1 text-slate-200">
-              <i class="fa-regular fa-copy"></i> Salin Maklumat
-            </button>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">
+            ${cardsHtml}
           </div>
         </div>`;
       }
 
       function showVehicleModal(itemJson) {
         try {
-          const item =
-            typeof itemJson === 'string'
-              ? JSON.parse(decodeURIComponent(itemJson))
-              : itemJson;
-          const container = document.getElementById('modalVehicleShape');
-          if (!container) return;
+          const item = JSON.parse(decodeURIComponent(itemJson));
+          const modal = document.getElementById('modalOverlay');
+          const content = document.getElementById('modalVehicleShape');
 
-          if (
-            item._j === 'emrs' ||
-            (G(item, 'CALLSIGN') || '').includes('EMRS')
-          ) {
-            container.innerHTML = generateEMRSModalHTML(item);
-          } else if (
-            item._j === 'water' ||
-            (G(item, 'CALLSIGN') || '').includes('WATER') ||
-            (G(item, 'CALLSIGN') || '').includes('TANKER')
-          ) {
-            container.innerHTML = generateWaterModalHTML(item);
-          } else {
-            container.innerHTML = generateFRTModalHTML(item);
-          }
+          const status = G(item, 'STATUS JENTERA') || 'TIADA';
+          const cat = getStatusCategory(status);
+          let statusBadge = 'badge-unknown';
+          if (cat === 'B') statusBadge = 'badge-baik';
+          else if (cat === 'RM') statusBadge = 'badge-minor';
+          else if (cat === 'R') statusBadge = 'badge-rosak';
+          else if (cat === 'D') statusBadge = 'badge-pulang';
 
-          document.getElementById('modalOverlay').classList.add('show');
+          content.innerHTML = `
+            <div class="p-4 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-xl text-red-500">${
+                  item._icon || '<i class="fa-solid fa-truck"></i>'
+                }</span>
+                <div>
+                  <h3 class="font-extrabold text-base text-white">${(
+                    G(item, 'CALLSIGN') || '-'
+                  ).toUpperCase()}</h3>
+                  <p class="text-xs text-slate-400">${
+                    G(item, 'MODEL JENTERA') || '-'
+                  }</p>
+                </div>
+              </div>
+              <span class="badge-status ${statusBadge}">${status}</span>
+            </div>
+            <div class="p-4 space-y-3 text-xs">
+              <div class="grid grid-cols-2 gap-2 bg-slate-800/60 p-3 rounded-lg border border-slate-700/50">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block">No. Pendaftaran</span>
+                  <span class="plate-number mt-1">${(
+                    G(item, 'PLATE') || '-'
+                  ).toUpperCase()}</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block">Zon</span>
+                  <span class="font-bold text-slate-200 mt-1 block">${
+                    G(item, 'ZON') || '-'
+                  }</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block">Penempatan Asal</span>
+                  <span class="font-semibold text-slate-300 mt-1 block">${
+                    G(item, 'PENEMPATAN ASAL') || '-'
+                  }</span>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-semibold block">Lokasi Semasa</span>
+                  <span class="font-semibold text-slate-300 mt-1 block">${
+                    G(item, 'LOKASI SEMASA') || '-'
+                  }</span>
+                </div>
+              </div>
+              <div class="bg-slate-800/60 p-3 rounded-lg border border-slate-700/50">
+                <span class="text-[10px] text-slate-400 uppercase font-semibold block mb-1">Status Kerosakan / Catatan</span>
+                <p class="text-slate-300 text-xs leading-relaxed font-medium">${
+                  G(item, 'STATUS KEROSAKKAN') || 'Tiada maklumat kerosakan'
+                }</p>
+              </div>
+              <div class="flex justify-end pt-2">
+                <button onclick="copySingleAssetInfo('${itemJson}', this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-lg border border-slate-700 transition flex items-center gap-1.5 text-xs">
+                  <i class="fa-regular fa-copy"></i> Salin Maklumat
+                </button>
+              </div>
+            </div>
+          `;
+          modal.classList.add('show');
         } catch (e) {
           console.error(e);
         }
@@ -2624,20 +2380,24 @@
 
       function closeModal(e) {
         if (
-          e &&
-          e.target !== e.currentTarget &&
-          e.target.closest('#modalVehicleShape')
-        )
-          return;
-        document.getElementById('modalOverlay').classList.remove('show');
+          !e ||
+          e.target === document.getElementById('modalOverlay') ||
+          e.currentTarget
+        ) {
+          document.getElementById('modalOverlay').classList.remove('show');
+        }
       }
 
       function toggleFullscreenDashboard() {
         document.body.classList.toggle('fullscreen-mode');
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => {});
+        if (document.body.classList.contains('fullscreen-mode')) {
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {});
+          }
         } else {
-          document.documentElement.requestFullscreen().catch(() => {});
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
         }
       }
 
@@ -2646,8 +2406,7 @@
         const nav = document.getElementById('slideshowNav');
         if (slideshowActive) {
           nav.classList.remove('hidden');
-          currentSlideZone = 0;
-          showSlideZone(currentSlideZone);
+          showSlideZone(0);
         } else {
           nav.classList.add('hidden');
           stopSlideshow();
@@ -2656,42 +2415,42 @@
       }
 
       function showSlideZone(idx) {
-        const zoneEls = document.querySelectorAll('#zoneContainer > div');
-        zoneEls.forEach((el, i) => {
-          if (i === idx) el.style.display = 'block';
-          else el.style.display = 'none';
+        currentSlideZone = (idx + zoneOrder.length) % zoneOrder.length;
+        document.getElementById(
+          'slideshowCounter'
+        ).textContent = `${zoneOrder[currentSlideZone]} (${currentSlideZone + 1}/${zoneOrder.length})`;
+
+        const containers = document.querySelectorAll('#zoneContainer > div');
+        containers.forEach((c, i) => {
+          if (i === currentSlideZone) {
+            c.style.display = 'block';
+            c.className = 'col-span-full max-w-2xl mx-auto w-full';
+          } else {
+            c.style.display = 'none';
+          }
         });
-        document.getElementById('slideshowCounter').textContent = `ZON ${
-          idx + 1
-        } / ${zoneEls.length}`;
       }
 
       function prevZone() {
-        const zoneEls = document.querySelectorAll('#zoneContainer > div');
-        if (!zoneEls.length) return;
-        currentSlideZone =
-          (currentSlideZone - 1 + zoneEls.length) % zoneEls.length;
-        showSlideZone(currentSlideZone);
+        showSlideZone(currentSlideZone - 1);
       }
-
       function nextZone() {
-        const zoneEls = document.querySelectorAll('#zoneContainer > div');
-        if (!zoneEls.length) return;
-        currentSlideZone = (currentSlideZone + 1) % zoneEls.length;
-        showSlideZone(currentSlideZone);
+        showSlideZone(currentSlideZone + 1);
       }
 
       function toggleAutoSlideshow() {
         slideshowAuto = !slideshowAuto;
-        const btn = document.getElementById('slideshowAutoBtn'),
-          label = document.getElementById('autoPlayLabel');
+        const btn = document.getElementById('slideshowAutoBtn');
+        const label = document.getElementById('autoPlayLabel');
         if (slideshowAuto) {
-          label.textContent = 'Pause';
           btn.classList.replace('bg-purple-600', 'bg-amber-600');
-          slideshowInterval = setInterval(nextZone, 5000);
+          btn.classList.replace('hover:bg-purple-700', 'hover:bg-amber-700');
+          label.textContent = 'Pause';
+          slideshowInterval = setInterval(() => nextZone(), 5000);
         } else {
-          label.textContent = 'Auto Play';
           btn.classList.replace('bg-amber-600', 'bg-purple-600');
+          btn.classList.replace('hover:bg-amber-700', 'hover:bg-purple-700');
+          label.textContent = 'Auto Play';
           if (slideshowInterval) clearInterval(slideshowInterval);
         }
       }
@@ -2700,17 +2459,21 @@
         slideshowActive = false;
         slideshowAuto = false;
         if (slideshowInterval) clearInterval(slideshowInterval);
-        document.getElementById('slideshowNav')?.classList.add('hidden');
-        const zoneEls = document.querySelectorAll('#zoneContainer > div');
-        zoneEls.forEach((el) => (el.style.display = 'block'));
+        document.getElementById('slideshowNav').classList.add('hidden');
+        const containers = document.querySelectorAll('#zoneContainer > div');
+        containers.forEach((c) => {
+          c.style.display = 'flex';
+          c.className =
+            'bg-slate-800/60 border border-slate-700/80 rounded-xl p-2 flex flex-col space-y-2 h-full';
+        });
       }
- 
-      // Close dropdowns on outside click
-      document.addEventListener('click', (e) => {
+
+      // Tutup semua dropdown sekiranya pengguna klik di luar
+      window.addEventListener('click', function (e) {
         if (!e.target.closest('.ms-dropdown')) {
           document
             .querySelectorAll('.ms-options')
-            .forEach((o) => o.classList.remove('show'));
+            .forEach((el) => el.classList.remove('show'));
         }
       });
 
