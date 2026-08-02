@@ -123,7 +123,6 @@
         animation: wheelSpin 1.5s linear infinite;
       }
 
-      /* 🎯 ANIMASI PULSE GLOW */
       @keyframes pulseGlow {
         0%,
         100% {
@@ -150,7 +149,6 @@
         color: #3b82f6;
       }
 
-      /* 🎴 ANIMASI CARD HOVER */
       .jentera-card {
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
@@ -162,7 +160,6 @@
         z-index: 10;
       }
 
-      /* 🔔 ANIMASI BELL */
       @keyframes bellShake {
         0%,
         100% {
@@ -186,7 +183,6 @@
         animation: bellShake 2s ease-in-out infinite;
       }
 
-      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -303,7 +299,6 @@
         border: 1px solid rgba(148, 163, 184, 0.4);
       }
 
-      /* 🏷️ PLATE NUMBER */
       .plate-number {
         background-color: #000000;
         color: #ffffff;
@@ -321,7 +316,6 @@
         line-height: 1.1;
       }
 
-      /* 🚒 OPTIMIZED FIT KAD JENTERA */
       .jentera-card {
         background-color: #0d1527;
         border: 1px solid var(--border-color);
@@ -403,7 +397,6 @@
         gap: 0.5rem;
       }
 
-      /* VEHICLE SHAPE MODAL STYLES - DIPERBESARKAN */
       .modal-overlay {
         position: fixed;
         inset: 0;
@@ -432,7 +425,6 @@
         width: 100%;
       }
 
-      /* ILUSTRASI JENTERA DALAM MODAL */
       .vehicle-illustration {
         position: relative;
         background: linear-gradient(
@@ -484,7 +476,6 @@
     </style>
   </head>
   <body class="min-h-screen flex flex-col">
-    <!-- LOADING OVERLAY -->
     <div
       id="loadingOverlay"
       class="fixed inset-0 bg-slate-950/95 z-[110] flex flex-col items-center justify-center gap-6 overflow-hidden select-none"
@@ -571,7 +562,6 @@
       </div>
     </header>
 
-    <!-- NAVIGASI TAB -->
     <nav
       class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 flex gap-1 overflow-x-auto tab-nav-header sticky top-[57px] z-30"
     >
@@ -601,7 +591,6 @@
       </button>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <main class="flex-1 p-2.5 sm:p-4 space-y-4 max-w-[1700px] w-full mx-auto">
       <!-- TAB: FRT -->
       <section id="tab-cfrt" class="tab-content">
@@ -613,12 +602,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-chart-pie text-red-500"></i> Status Jentera
-              FRT
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-chart-pie text-red-500"></i> Status
+                Jentera FRT (%)
+              </h3>
+              <span
+                class="text-[9px] bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Doughnut (%)</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartStatus-cfrt"></canvas>
             </div>
@@ -626,11 +621,20 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-truck text-red-500"></i> Model Jentera FRT
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-truck text-red-500"></i> Model Jentera FRT
+              </h3>
+              <button
+                onclick="toggleChartType('cfrt')"
+                class="text-[9px] bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 px-2 py-0.5 rounded font-bold transition flex items-center gap-1"
+                id="chartTypeBtn-cfrt"
+              >
+                <i class="fa-solid fa-chart-bar"></i> Tukar Carta Bar
+              </button>
+            </div>
             <div class="h-48 relative">
               <canvas id="chartModel-cfrt"></canvas>
             </div>
@@ -638,12 +642,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-location-dot text-red-500"></i> Agihan
-              Mengikut Zon
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-location-dot text-red-500"></i> Agihan
+                Mengikut Zon
+              </h3>
+              <span
+                class="text-[9px] bg-red-500/20 text-red-400 border border-red-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Carta Bar</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartZon-cfrt"></canvas>
             </div>
@@ -777,11 +787,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-chart-pie text-blue-500"></i> Status EMRS
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-chart-pie text-blue-500"></i> Status EMRS
+                (%)
+              </h3>
+              <span
+                class="text-[9px] bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Doughnut (%)</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartStatus-emrs"></canvas>
             </div>
@@ -789,12 +806,21 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-truck-medical text-blue-500"></i> Model
-              Jentera EMRS
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-truck-medical text-blue-500"></i> Model
+                Jentera EMRS
+              </h3>
+              <button
+                onclick="toggleChartType('emrs')"
+                class="text-[9px] bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 px-2 py-0.5 rounded font-bold transition flex items-center gap-1"
+                id="chartTypeBtn-emrs"
+              >
+                <i class="fa-solid fa-chart-bar"></i> Tukar Carta Bar
+              </button>
+            </div>
             <div class="h-48 relative">
               <canvas id="chartModel-emrs"></canvas>
             </div>
@@ -802,12 +828,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-location-dot text-blue-500"></i> Agihan
-              Mengikut Zon
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-location-dot text-blue-500"></i> Agihan
+                Mengikut Zon
+              </h3>
+              <span
+                class="text-[9px] bg-blue-500/20 text-blue-400 border border-blue-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Carta Bar</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartZon-emrs"></canvas>
             </div>
@@ -942,12 +974,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-chart-pie text-cyan-500"></i> Status Water
-              Tanker
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-chart-pie text-cyan-500"></i> Status Water
+                Tanker (%)
+              </h3>
+              <span
+                class="text-[9px] bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Doughnut (%)</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartStatus-water"></canvas>
             </div>
@@ -955,12 +993,21 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model
-              Water Tanker
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model
+                Water Tanker
+              </h3>
+              <button
+                onclick="toggleChartType('water')"
+                class="text-[9px] bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 px-2 py-0.5 rounded font-bold transition flex items-center gap-1"
+                id="chartTypeBtn-water"
+              >
+                <i class="fa-solid fa-chart-bar"></i> Tukar Carta Bar
+              </button>
+            </div>
             <div class="h-48 relative">
               <canvas id="chartModel-water"></canvas>
             </div>
@@ -968,12 +1015,18 @@
           <div
             class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
           >
-            <h3
-              class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-2"
-            >
-              <i class="fa-solid fa-location-dot text-cyan-500"></i> Agihan
-              Mengikut Zon
-            </h3>
+            <div class="flex items-center justify-between mb-2">
+              <h3
+                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-location-dot text-cyan-500"></i> Agihan
+                Mengikut Zon
+              </h3>
+              <span
+                class="text-[9px] bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 px-1.5 py-0.5 rounded font-bold"
+                >Carta Bar</span
+              >
+            </div>
             <div class="h-48 relative">
               <canvas id="chartZon-water"></canvas>
             </div>
@@ -1307,7 +1360,7 @@
       </section>
     </main>
 
-    <!-- 🚒 VEHICLE SHAPE MODAL POPUP - DIPERBESARKAN -->
+    <!-- 🚒 VEHICLE SHAPE MODAL POPUP -->
     <div id="modalOverlay" class="modal-overlay" onclick="closeModal(event)">
       <div
         class="bg-slate-900 border border-slate-600 rounded-2xl max-w-2xl w-full p-0 shadow-2xl relative text-left overflow-hidden"
@@ -1355,6 +1408,7 @@
       let subTabSelectedStatus = { cfrt: [], emrs: [], water: [] };
       let subTabSelectedModel = { cfrt: [], emrs: [], water: [] };
       let subTabSelectedZon = { cfrt: [], emrs: [], water: [] };
+      let chartTypeConfig = { cfrt: 'pie', emrs: 'pie', water: 'pie' };
       let SF = [];
       let intervalTimer = null;
       let remainingSeconds = REFRESH_INTERVAL_SEC;
@@ -1579,8 +1633,7 @@
           populateModelOptions(tab);
           populateZonOptions(tab);
           UU(tab);
-          Rc(tab);
-          Rt(tab);
+          Rt(tab); // Rt calls Rc with filtered list!
         } catch (err) {
           console.error(`Error fetching ${tab}:`, err);
         }
@@ -1645,7 +1698,7 @@
           .forEach((el) => el.classList.add('hidden'));
         document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
         if (tab === 'dashboard') renderMainDashboard();
-        else setTimeout(() => Rc(tab), 50);
+        else setTimeout(() => Rt(tab), 50);
       }
 
       function getStatusCategory(statusStr) {
@@ -1680,9 +1733,24 @@
         container.innerHTML = `<div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-white">${total}</div><div class="text-[9px] text-slate-400 uppercase font-semibold">Jumlah Jentera</div></div><div class="bg-slate-800/80 border border-emerald-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="bg-slate-800/80 border border-yellow-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="bg-slate-800/80 border border-red-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="bg-slate-800/80 border border-blue-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketesediaan</div></div>`;
       }
 
-      function Rc(tab) {
-        const list = D[tab] || [];
-        if (!list.length) return;
+      function toggleChartType(tab) {
+        chartTypeConfig[tab] = chartTypeConfig[tab] === 'pie' ? 'bar' : 'pie';
+        const btn = document.getElementById(`chartTypeBtn-${tab}`);
+        if (btn) {
+          btn.innerHTML =
+            chartTypeConfig[tab] === 'pie'
+              ? '<i class="fa-solid fa-chart-bar"></i> Tukar Carta Bar'
+              : '<i class="fa-solid fa-chart-pie"></i> Tukar Carta Pie (%)';
+        }
+        Rt(tab);
+      }
+
+      // 📊 Dynamic Rendering for Charts according to list selection & percentage datalabels
+      function Rc(tab, currentList) {
+        const list = currentList || D[tab] || [];
+        const totalCount = list.length;
+
+        // 1️⃣ Status Chart (Doughnut with % Datalabels)
         const sc = {};
         list.forEach((i) => {
           const s = (G(i, 'STATUS JENTERA') || 'LAIN-LAIN')
@@ -1720,20 +1788,39 @@
                   position: 'bottom',
                   labels: { color: '#94a3b8', font: { size: 9 } },
                 },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const val = context.raw || 0;
+                      const pct =
+                        totalCount > 0
+                          ? ((val / totalCount) * 100).toFixed(1)
+                          : 0;
+                      return ` ${context.label}: ${val} unit (${pct}%)`;
+                    },
+                  },
+                },
                 datalabels: {
-                  color: '#fff',
-                  font: { weight: 'bold', size: 9 },
+                  color: '#ffffff',
+                  font: { weight: 'bold', size: 10 },
+                  formatter: (value) => {
+                    if (totalCount === 0 || value === 0) return '';
+                    const pct = ((value / totalCount) * 100).toFixed(1);
+                    return pct > 3 ? `${pct}%` : ''; // Show percentage if above 3%
+                  },
                 },
               },
               animation: {
                 animateScale: true,
                 animateRotate: true,
-                duration: 1200,
+                duration: 800,
               },
             },
             plugins: [ChartDataLabels],
           });
         }
+
+        // 2️⃣ Model Chart (Pie with % Datalabels OR Bar Chart by Selection)
         const mc = {};
         list.forEach((i) => {
           const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
@@ -1754,16 +1841,20 @@
             '#3b82f6',
             '#ef4444',
           ];
+          const isPie = chartTypeConfig[tab] === 'pie';
+
           CC[tab].m = new Chart(cm.getContext('2d'), {
-            type: 'pie',
+            type: isPie ? 'pie' : 'bar',
             data: {
               labels: Object.keys(mc),
               datasets: [
                 {
+                  label: 'Unit Jentera',
                   data: Object.values(mc),
                   backgroundColor: palette.slice(0, Object.keys(mc).length),
-                  borderWidth: 2,
+                  borderWidth: isPie ? 2 : 1,
                   borderColor: '#1e293b',
+                  borderRadius: isPie ? 0 : 4,
                 },
               ],
             },
@@ -1772,23 +1863,62 @@
               maintainAspectRatio: false,
               plugins: {
                 legend: {
+                  display: isPie,
                   position: 'bottom',
                   labels: { color: '#94a3b8', font: { size: 9 } },
                 },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const val = context.raw || 0;
+                      const pct =
+                        totalCount > 0
+                          ? ((val / totalCount) * 100).toFixed(1)
+                          : 0;
+                      return ` ${context.label || 'Model'}: ${val} (${pct}%)`;
+                    },
+                  },
+                },
                 datalabels: {
-                  color: '#fff',
+                  color: '#ffffff',
+                  anchor: isPie ? 'center' : 'end',
+                  align: isPie ? 'center' : 'top',
                   font: { weight: 'bold', size: 9 },
+                  formatter: (value) => {
+                    if (totalCount === 0 || value === 0) return '';
+                    const pct = ((value / totalCount) * 100).toFixed(1);
+                    return isPie
+                      ? pct > 4
+                        ? `${pct}%`
+                        : ''
+                      : `${value} (${pct}%)`;
+                  },
                 },
               },
-              animation: {
-                animateScale: true,
-                animateRotate: true,
-                duration: 1200,
-              },
+              scales: isPie
+                ? {}
+                : {
+                    y: {
+                      ticks: { color: '#64748b', stepSize: 1 },
+                      grid: { color: '#334155' },
+                      beginAtZero: true,
+                    },
+                    x: {
+                      ticks: {
+                        color: '#94a3b8',
+                        maxRotation: 25,
+                        minRotation: 0,
+                        font: { size: 8 },
+                      },
+                    },
+                  },
+              animation: { duration: 800 },
             },
             plugins: [ChartDataLabels],
           });
         }
+
+        // 3️⃣ Zon Bar Chart (Dynamic Bar Chart generated according to selection list)
         const zcRaw = {};
         list.forEach((i) => {
           const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
@@ -1838,11 +1968,31 @@
               maintainAspectRatio: false,
               plugins: {
                 legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const val = context.raw || 0;
+                      const pct =
+                        totalCount > 0
+                          ? ((val / totalCount) * 100).toFixed(1)
+                          : 0;
+                      return ` ${context.label}: ${val} unit (${pct}%)`;
+                    },
+                  },
+                },
                 datalabels: {
                   color: '#fff',
                   anchor: 'end',
                   align: 'top',
                   font: { weight: 'bold', size: 9 },
+                  formatter: (value) => {
+                    if (value === 0) return '';
+                    const pct =
+                      totalCount > 0
+                        ? ((value / totalCount) * 100).toFixed(1)
+                        : 0;
+                    return `${value} (${pct}%)`;
+                  },
                 },
               },
               scales: {
@@ -1855,7 +2005,7 @@
                   ticks: { color: '#94a3b8', maxRotation: 15, minRotation: 0 },
                 },
               },
-              animation: { duration: 1000 },
+              animation: { duration: 800 },
             },
             plugins: [ChartDataLabels],
           });
@@ -2049,6 +2199,10 @@
           }
           return true;
         });
+
+        // 🔄 Regenerate Pie and Bar Charts according to selected list
+        Rc(tab, filtered);
+
         const tbody = document.getElementById(`tableBody-${tab}`);
         if (!tbody) return;
         tbody.innerHTML =
@@ -2413,7 +2567,6 @@
           .join('')}</div></div>`;
       }
 
-      // 🔧 FUNGSI renderBalaiCardGroup - TELAH DIKEMASKINI DENGAN LABEL MODEL LENGKAP
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -2440,11 +2593,9 @@
                 statusDotBg = 'bg-blue-500 siren-blue';
               }
 
-              // 🔧 PEMBETULAN LABEL MENGIKUT MODEL JENTERA (KEMASKINI)
               const modelUpper = model.toUpperCase();
-              let typeTag = 'FRT'; // Default untuk unknown model
+              let typeTag = 'FRT';
 
-              // FRT Models
               if (
                 modelUpper.includes('HINO') &&
                 modelUpper.includes('XZC720R')
@@ -2477,16 +2628,12 @@
                 modelUpper.includes('F350')
               ) {
                 typeTag = 'FRT';
-              }
-              // EMRS Models
-              else if (
+              } else if (
                 modelUpper.includes('TOYOTA') &&
                 modelUpper.includes('HIACE')
               ) {
                 typeTag = 'EMRS';
-              }
-              // Water Tanker Models
-              else if (
+              } else if (
                 modelUpper.includes('SCANIA') &&
                 modelUpper.includes('WT') &&
                 modelUpper.includes('20000')
@@ -2517,7 +2664,6 @@
         return `<div class="bg-slate-900/60 border border-slate-700/60 rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold text-slate-300 px-0.5"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building-shield text-slate-500 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
       }
 
-      // 🚒🚑🚿 MODAL FUNCTIONS
       function generateFRTModalHTML(item) {
         const callsign = G(item, 'CALLSIGN') || '-',
           plate = G(item, 'PLATE') || '-',
