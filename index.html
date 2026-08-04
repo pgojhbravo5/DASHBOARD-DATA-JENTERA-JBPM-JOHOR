@@ -20,20 +20,45 @@
     />
 
     <style>
+      /* ========== CSS VARIABLES UNTUK DARK/LIGHT MODE ========== */
       :root {
         --bg-main: #0f172a;
         --bg-card: #1e293b;
-        --bg-card-hover: #334155;
+        --bg-card-alt: #0d1527;
+        --bg-header: #0f172a;
+        --bg-input: #0f172a;
+        --bg-table-header: rgba(15, 23, 42, 0.8);
+        --bg-modal: #0f172a;
         --border-color: #334155;
+        --border-light: rgba(51, 65, 85, 0.5);
         --text-primary: #f8fafc;
         --text-secondary: #94a3b8;
+        --text-muted: #64748b;
         --accent-red: #ef4444;
         --accent-blue: #3b82f6;
         --accent-cyan: #06b6d4;
-        --status-baik: #22c55e;
-        --status-minor: #eab308;
-        --status-rosak: #ef4444;
-        --status-pulang: #3b82f6;
+        --shadow-color: rgba(0, 0, 0, 0.6);
+        --overlay-bg: rgba(15, 23, 42, 0.82);
+        --card-hover-bg: #334155;
+      }
+
+      /* ========== LIGHT MODE ========== */
+      body.light-mode {
+        --bg-main: #f1f5f9;
+        --bg-card: #ffffff;
+        --bg-card-alt: #f8fafc;
+        --bg-header: #ffffff;
+        --bg-input: #ffffff;
+        --bg-table-header: #f1f5f9;
+        --bg-modal: #ffffff;
+        --border-color: #e2e8f0;
+        --border-light: rgba(203, 213, 225, 0.8);
+        --text-primary: #1e293b;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --overlay-bg: rgba(241, 245, 249, 0.9);
+        --card-hover-bg: #f1f5f9;
       }
 
       body {
@@ -47,6 +72,7 @@
         background-attachment: fixed;
         background-repeat: no-repeat;
         position: relative;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
 
       body::before {
@@ -56,9 +82,17 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(15, 23, 42, 0.82);
+        background: var(--overlay-bg);
         z-index: -1;
         pointer-events: none;
+        transition: background 0.3s ease;
+      }
+
+      body.light-mode {
+        background-image: none;
+      }
+      body.light-mode::before {
+        background: rgba(241, 245, 249, 0.7);
       }
 
       @keyframes sirenRed {
@@ -150,7 +184,7 @@
       .jentera-card:hover {
         transform: translateY(-2px) scale(1.02);
         border-color: #64748b;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6),
+        box-shadow: 0 6px 20px var(--shadow-color),
           0 0 12px rgba(239, 68, 68, 0.2);
         z-index: 10;
       }
@@ -183,7 +217,7 @@
         height: 5px;
       }
       ::-webkit-scrollbar-track {
-        background: #0f172a;
+        background: var(--bg-main);
       }
       ::-webkit-scrollbar-thumb {
         background: #334155;
@@ -198,7 +232,7 @@
         display: inline-block;
       }
       .ms-select-btn {
-        background-color: #0f172a;
+        background-color: var(--bg-input);
         border: 1px solid var(--border-color);
         color: var(--text-primary);
         padding: 0.35rem 0.65rem;
@@ -222,14 +256,14 @@
         top: 100%;
         left: 0;
         margin-top: 0.25rem;
-        background-color: #1e293b;
-        border: 1px solid #475569;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
         border-radius: 0.375rem;
         z-index: 50;
         min-width: 190px;
         max-height: 220px;
         overflow-y: auto;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
         padding: 0.375rem;
       }
       .ms-options.show {
@@ -243,13 +277,13 @@
         border-radius: 0.25rem;
         cursor: pointer;
         font-size: 0.75rem;
-        color: #cbd5e1;
+        color: var(--text-secondary);
         transition: background 0.15s;
         user-select: none;
       }
       .ms-option:hover {
-        background-color: #334155;
-        color: #fff;
+        background-color: var(--card-hover-bg);
+        color: var(--text-primary);
       }
       .ms-option input[type='checkbox'] {
         accent-color: #ef4444;
@@ -319,7 +353,7 @@
       }
 
       .jentera-card {
-        background-color: #0d1527;
+        background-color: var(--bg-card-alt);
         border: 1px solid var(--border-color);
         border-radius: 0.375rem;
         padding: 0.35rem 0.45rem;
@@ -474,6 +508,143 @@
         background: linear-gradient(180deg, #cbd5e1 0%, #64748b 100%);
         border-radius: 2px;
       }
+
+      /* ========== HEADER & NAV STYLES ========== */
+      .header-bg {
+        background-color: var(--bg-header);
+        border-color: var(--border-color);
+      }
+      .nav-bg {
+        background-color: var(--bg-header);
+        border-color: var(--border-color);
+      }
+      .card-bg {
+        background-color: var(--bg-card);
+        border-color: var(--border-color);
+      }
+      .table-header-bg {
+        background-color: var(--bg-table-header);
+      }
+      .input-bg {
+        background-color: var(--bg-input);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+      }
+      .text-secondary-custom {
+        color: var(--text-secondary);
+      }
+      .text-muted-custom {
+        color: var(--text-muted);
+      }
+      .border-custom {
+        border-color: var(--border-color);
+      }
+
+      /* ========== PRINT STYLES ========== */
+      @media print {
+        body,
+        body.light-mode,
+        body.dark-mode {
+          background: white !important;
+          background-image: none !important;
+          color: #000 !important;
+          --text-primary: #000 !important;
+          --text-secondary: #333 !important;
+          --bg-main: #fff !important;
+          --bg-card: #fff !important;
+          --bg-header: #fff !important;
+          --border-color: #ccc !important;
+        }
+        body::before {
+          display: none !important;
+        }
+
+        /* Sembunyikan elemen tidak perlu */
+        .tab-nav-header,
+        .sub-header-controls,
+        footer,
+        #loadingOverlay,
+        #toastNotification,
+        #modalOverlay,
+        .copy-btn,
+        .ms-dropdown,
+        #dashboardFilters,
+        #slideshowNav,
+        #refreshBtn,
+        #printBtn,
+        #themeToggleBtn,
+        #fullscreenBtn,
+        #zoomInBtn,
+        button:not(.keep-in-print) {
+          display: none !important;
+        }
+
+        /* Pastikan semua teks kelihatan */
+        * {
+          color: #000 !important;
+          text-shadow: none !important;
+          box-shadow: none !important;
+        }
+
+        /* Jadual */
+        table {
+          border: 1px solid #000 !important;
+        }
+        th {
+          background: #e5e7eb !important;
+          color: #000 !important;
+        }
+        td,
+        th {
+          border: 1px solid #ccc !important;
+          color: #000 !important;
+        }
+
+        /* Kad */
+        .jentera-card,
+        .bg-slate-800,
+        .bg-slate-900,
+        .bg-slate-950 {
+          background: #fff !important;
+          border: 1px solid #ccc !important;
+        }
+
+        /* Badge */
+        .badge-status {
+          border: 1px solid #000 !important;
+        }
+
+        /* Carta */
+        canvas {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
+        /* Plate number */
+        .plate-number {
+          background: #fff !important;
+          color: #000 !important;
+          border: 1px solid #000 !important;
+        }
+
+        /* Page break */
+        .tab-content {
+          page-break-inside: avoid;
+        }
+
+        @page {
+          margin: 1cm;
+          size: A4 landscape;
+        }
+      }
+
+      /* Theme toggle button */
+      #themeToggleBtn {
+        transition: all 0.2s ease;
+      }
+      #themeToggleBtn:hover {
+        transform: scale(1.1);
+      }
     </style>
   </head>
   <body class="min-h-screen flex flex-col">
@@ -509,8 +680,9 @@
       </div>
     </div>
 
+    <!-- HEADER -->
     <header
-      class="bg-slate-900 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40"
+      class="header-bg border-b px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 transition-colors duration-300"
     >
       <div class="flex items-center gap-3">
         <div
@@ -520,12 +692,13 @@
         </div>
         <div>
           <h1
-            class="text-sm sm:text-base font-extrabold tracking-wide text-white uppercase leading-tight"
+            class="text-sm sm:text-base font-extrabold tracking-wide uppercase leading-tight"
+            style="color: var(--text-primary)"
           >
             Dashboard Jentera Bomba Johor
           </h1>
           <p
-            class="text-[11px] text-slate-400 font-medium flex items-center gap-2"
+            class="text-[11px] font-medium flex items-center gap-2 text-secondary-custom"
           >
             <span
               class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"
@@ -535,35 +708,56 @@
         </div>
       </div>
       <div
-        class="flex items-center gap-3 text-xs font-medium text-slate-400 sub-header-controls"
+        class="flex items-center gap-2 text-xs font-medium sub-header-controls"
       >
-        <div class="hidden sm:flex flex-col items-end text-[11px]">
+        <div
+          class="hidden sm:flex flex-col items-end text-[11px] text-secondary-custom"
+        >
           <span id="lastUpdate">Dikemaskini: -</span>
-          <span id="countdown" class="text-slate-500">Auto Refresh: -</span>
+          <span id="countdown" class="text-muted-custom">Auto Refresh: -</span>
         </div>
-        <div class="flex items-center gap-2">
-          <button
-            onclick="toggleFullscreenDashboard()"
-            id="fullscreenBtn"
-            class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 transition text-xs"
-            title="Skrin Penuh"
-          >
-            <i class="fa-solid fa-expand"></i>
-          </button>
+        <div class="flex items-center gap-1.5">
           <button
             onclick="loadAllData()"
             id="refreshBtn"
-            class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md shadow-red-600/20 transition flex items-center gap-1.5 text-xs"
+            class="px-2.5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md shadow-red-600/20 transition flex items-center gap-1 text-xs"
           >
             <i class="fa-solid fa-arrows-rotate refresh-icon"></i
             ><span class="hidden sm:inline">Kemaskini</span>
+          </button>
+          <!-- 🌓 BUTANG THEME TOGGLE -->
+          <button
+            onclick="toggleTheme()"
+            id="themeToggleBtn"
+            class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg border border-slate-600 transition text-xs"
+            title="Tukar Mod Siang/Malam"
+          >
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+          <!-- 🖨️ BUTANG PRINT -->
+          <button
+            onclick="printDashboard()"
+            id="printBtn"
+            class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg border border-slate-600 transition text-xs"
+            title="Cetak Dashboard"
+          >
+            <i class="fa-solid fa-print"></i>
+          </button>
+          <!-- ⛶ BUTANG FULLSCREEN -->
+          <button
+            onclick="toggleFullscreenDashboard()"
+            id="fullscreenBtn"
+            class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg border border-slate-600 transition text-xs"
+            title="Skrin Penuh"
+          >
+            <i class="fa-solid fa-expand"></i>
           </button>
         </div>
       </div>
     </header>
 
     <nav
-      class="bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 flex gap-1 overflow-x-auto tab-nav-header sticky top-[57px] z-30"
+      class="nav-bg backdrop-blur border-b px-4 flex gap-1 overflow-x-auto tab-nav-header sticky top-[57px] z-30 transition-colors duration-300"
     >
       <button
         onclick="switchTab('cfrt')"
@@ -592,6 +786,7 @@
     </nav>
 
     <main class="flex-1 p-2.5 sm:p-4 space-y-4 max-w-[1700px] w-full mx-auto">
+      <!-- TAB: FRT -->
       <section id="tab-cfrt" class="tab-content">
         <div
           id="statsRow-cfrt"
@@ -599,11 +794,12 @@
         ></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-chart-pie text-red-500"></i> Status
                 Jentera FRT (%)
@@ -618,11 +814,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-truck text-red-500"></i> Model Jentera FRT
               </h3>
@@ -639,11 +836,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-location-dot text-red-500"></i> Agihan
                 Mengikut Zon
@@ -659,11 +857,13 @@
           </div>
         </div>
         <div
-          class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 space-y-3"
+          class="card-bg border-custom rounded-xl p-3 space-y-3 transition-colors duration-300"
+          style="border-width: 1px"
         >
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h3
-              class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2"
+              class="text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              style="color: var(--text-primary)"
             >
               <i class="fa-solid fa-list-check text-red-500"></i> Senarai
               Jentera FRT
@@ -692,7 +892,7 @@
                 id="searchInput-cfrt"
                 oninput="Rt('cfrt')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
+                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
             </div>
             <div class="ms-dropdown" id="msDropdown-cfrt">
@@ -741,10 +941,13 @@
               <div class="ms-options" id="msOptionsZon-cfrt"></div>
             </div>
           </div>
-          <div class="overflow-x-auto rounded-lg border border-slate-700/50">
+          <div
+            class="overflow-x-auto rounded-lg border-custom"
+            style="border-width: 1px"
+          >
             <table class="w-full text-left border-collapse text-xs">
               <thead
-                class="bg-slate-900/80 text-slate-400 font-semibold uppercase border-b border-slate-700 text-[11px]"
+                class="table-header-bg text-secondary-custom font-semibold uppercase border-b border-custom text-[11px]"
               >
                 <tr>
                   <th class="p-2">Bil</th>
@@ -761,14 +964,16 @@
               </thead>
               <tbody
                 id="tableBody-cfrt"
-                class="divide-y divide-slate-700/40 text-slate-300 text-[11px]"
+                class="divide-y divide-slate-700/40 text-[11px]"
+                style="color: var(--text-secondary)"
               ></tbody>
             </table>
           </div>
-          <div class="text-[11px] text-slate-400" id="rowCount-cfrt">-</div>
+          <div class="text-[11px] text-muted-custom" id="rowCount-cfrt">-</div>
         </div>
       </section>
 
+      <!-- TAB: EMRS -->
       <section id="tab-emrs" class="tab-content hidden">
         <div
           id="statsRow-emrs"
@@ -776,11 +981,12 @@
         ></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-chart-pie text-blue-500"></i> Status EMRS
                 (%)
@@ -795,11 +1001,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-truck-medical text-blue-500"></i> Model
                 Jentera EMRS
@@ -817,11 +1024,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-location-dot text-blue-500"></i> Agihan
                 Mengikut Zon
@@ -837,11 +1045,13 @@
           </div>
         </div>
         <div
-          class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 space-y-3"
+          class="card-bg border-custom rounded-xl p-3 space-y-3 transition-colors duration-300"
+          style="border-width: 1px"
         >
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h3
-              class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2"
+              class="text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              style="color: var(--text-primary)"
             >
               <i class="fa-solid fa-list-check text-blue-500"></i> Senarai
               Jentera EMRS
@@ -870,7 +1080,7 @@
                 id="searchInput-emrs"
                 oninput="Rt('emrs')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
+                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
             </div>
             <div class="ms-dropdown" id="msDropdown-emrs">
@@ -920,10 +1130,13 @@
               <div class="ms-options" id="msOptionsZon-emrs"></div>
             </div>
           </div>
-          <div class="overflow-x-auto rounded-lg border border-slate-700/50">
+          <div
+            class="overflow-x-auto rounded-lg border-custom"
+            style="border-width: 1px"
+          >
             <table class="w-full text-left border-collapse text-xs">
               <thead
-                class="bg-slate-900/80 text-slate-400 font-semibold uppercase border-b border-slate-700 text-[11px]"
+                class="table-header-bg text-secondary-custom font-semibold uppercase border-b border-custom text-[11px]"
               >
                 <tr>
                   <th class="p-2">Bil</th>
@@ -940,14 +1153,16 @@
               </thead>
               <tbody
                 id="tableBody-emrs"
-                class="divide-y divide-slate-700/40 text-slate-300 text-[11px]"
+                class="divide-y divide-slate-700/40 text-[11px]"
+                style="color: var(--text-secondary)"
               ></tbody>
             </table>
           </div>
-          <div class="text-[11px] text-slate-400" id="rowCount-emrs">-</div>
+          <div class="text-[11px] text-muted-custom" id="rowCount-emrs">-</div>
         </div>
       </section>
 
+      <!-- TAB: WATER TANKER -->
       <section id="tab-water" class="tab-content hidden">
         <div
           id="statsRow-water"
@@ -955,11 +1170,12 @@
         ></div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-chart-pie text-cyan-500"></i> Status Water
                 Tanker (%)
@@ -974,11 +1190,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-truck-droplet text-cyan-500"></i> Model
                 Water Tanker
@@ -996,11 +1213,12 @@
             </div>
           </div>
           <div
-            class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3"
+            class="card-bg border-custom rounded-xl p-3 transition-colors duration-300"
+            style="border-width: 1px"
           >
             <div class="flex items-center justify-between mb-2">
               <h3
-                class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2"
+                class="text-xs font-bold uppercase tracking-wider flex items-center gap-2 text-secondary-custom"
               >
                 <i class="fa-solid fa-location-dot text-cyan-500"></i> Agihan
                 Mengikut Zon
@@ -1016,11 +1234,13 @@
           </div>
         </div>
         <div
-          class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-3 space-y-3"
+          class="card-bg border-custom rounded-xl p-3 space-y-3 transition-colors duration-300"
+          style="border-width: 1px"
         >
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h3
-              class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-2"
+              class="text-xs font-bold uppercase tracking-wider flex items-center gap-2"
+              style="color: var(--text-primary)"
             >
               <i class="fa-solid fa-list-check text-cyan-500"></i> Senarai Water
               Tanker
@@ -1049,7 +1269,7 @@
                 id="searchInput-water"
                 oninput="Rt('water')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500"
+                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
             </div>
             <div class="ms-dropdown" id="msDropdown-water">
@@ -1099,10 +1319,13 @@
               <div class="ms-options" id="msOptionsZon-water"></div>
             </div>
           </div>
-          <div class="overflow-x-auto rounded-lg border border-slate-700/50">
+          <div
+            class="overflow-x-auto rounded-lg border-custom"
+            style="border-width: 1px"
+          >
             <table class="w-full text-left border-collapse text-xs">
               <thead
-                class="bg-slate-900/80 text-slate-400 font-semibold uppercase border-b border-slate-700 text-[11px]"
+                class="table-header-bg text-secondary-custom font-semibold uppercase border-b border-custom text-[11px]"
               >
                 <tr>
                   <th class="p-2">Bil</th>
@@ -1119,27 +1342,30 @@
               </thead>
               <tbody
                 id="tableBody-water"
-                class="divide-y divide-slate-700/40 text-slate-300 text-[11px]"
+                class="divide-y divide-slate-700/40 text-[11px]"
+                style="color: var(--text-secondary)"
               ></tbody>
             </table>
           </div>
-          <div class="text-[11px] text-slate-400" id="rowCount-water">-</div>
+          <div class="text-[11px] text-muted-custom" id="rowCount-water">-</div>
         </div>
       </section>
 
+      <!-- TAB: MAIN DASHBOARD GRID (FIT VIEW) -->
       <section id="tab-dashboard" class="tab-content hidden space-y-3">
         <div
-          class="bg-slate-800/80 border border-slate-700/60 rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2"
+          class="card-bg border-custom rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2 transition-colors duration-300"
           id="dashboardFilters"
+          style="border-width: 1px"
         >
           <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] font-bold text-slate-400 uppercase"
+            <span class="text-[11px] font-bold uppercase text-secondary-custom"
               >Jenis:</span
             >
             <div class="ms-dropdown" id="jenisFilterDropdown">
               <button
-                class="ms-select-btn bg-slate-900 py-1 text-[11px]"
-                onclick="toggleJenisFilter()"
+                class="ms-select-btn text-[11px]"
+                style="padding: 0.25rem 0.5rem"
               >
                 <span id="jenisFilterText"
                   ><i class="fa-solid fa-layer-group mr-1"></i> Semua
@@ -1198,13 +1424,14 @@
                 >
               </div>
             </div>
-            <span class="text-[11px] font-bold text-slate-400 uppercase ml-1"
+            <span
+              class="text-[11px] font-bold uppercase text-secondary-custom ml-1"
               >Status:</span
             >
             <div class="ms-dropdown" id="statusFilterDropdown">
               <button
-                class="ms-select-btn bg-slate-900 py-1 text-[11px]"
-                onclick="toggleStatusFilter()"
+                class="ms-select-btn text-[11px]"
+                style="padding: 0.25rem 0.5rem"
               >
                 <span id="statusFilterText">Semua</span
                 ><span
@@ -1354,6 +1581,7 @@
     </div>
 
     <script>
+      // Google Sheets CSV Endpoints
       const U = {
         cfrt: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=0&single=true&output=csv',
         emrs: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=795399708&single=true&output=csv',
@@ -1383,6 +1611,57 @@
         currentSlideZone = 0;
       let legendHiddenStatus = { cfrt: [], emrs: [], water: [] };
       let legendHiddenStatusModel = { cfrt: [], emrs: [], water: [] };
+
+      // 🌓 THEME TOGGLE
+      function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        const isLight = document.body.classList.contains('light-mode');
+        const icon = document.getElementById('themeIcon');
+        if (isLight) {
+          icon.className = 'fa-solid fa-sun';
+          localStorage.setItem('theme', 'light');
+        } else {
+          icon.className = 'fa-solid fa-moon';
+          localStorage.setItem('theme', 'dark');
+        }
+        // Update semua carta
+        Object.keys(CC).forEach((tab) => {
+          if (
+            T === tab ||
+            document
+              .getElementById(`tab-${tab}`)
+              ?.classList.contains('hidden') === false
+          ) {
+            Rt(tab);
+          }
+        });
+      }
+
+      // Load theme dari localStorage
+      function loadTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+          document.body.classList.add('light-mode');
+          document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+        } else if (savedTheme === 'dark') {
+          document.body.classList.remove('light-mode');
+          document.getElementById('themeIcon').className = 'fa-solid fa-moon';
+        } else {
+          // Ikut sistem OS
+          if (
+            window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches
+          ) {
+            document.body.classList.add('light-mode');
+            document.getElementById('themeIcon').className = 'fa-solid fa-sun';
+          }
+        }
+      }
+
+      // 🖨️ PRINT FUNCTION
+      function printDashboard() {
+        window.print();
+      }
 
       const ZON_ORDER = [
         'ZON 1',
@@ -1679,7 +1958,7 @@
           rate = total > 0 ? (((b + rm) / total) * 100).toFixed(1) : '0';
         const container = document.getElementById(`statsRow-${tab}`);
         if (!container) return;
-        container.innerHTML = `<div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-white">${total}</div><div class="text-[9px] text-slate-400 uppercase font-semibold">Jumlah Jentera</div></div><div class="bg-slate-800/80 border border-emerald-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="bg-slate-800/80 border border-yellow-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="bg-slate-800/80 border border-red-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="bg-slate-800/80 border border-blue-500/30 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="bg-slate-800/80 border border-slate-700/60 p-2.5 rounded-xl text-center"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketersediaan</div></div>`;
+        container.innerHTML = `<div class="card-bg border-custom p-2.5 rounded-xl text-center transition-colors duration-300" style="border-width:1px;"><div class="text-lg font-extrabold" style="color:var(--text-primary);">${total}</div><div class="text-[9px] uppercase font-semibold text-secondary-custom">Jumlah Jentera</div></div><div class="card-bg border border-emerald-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="card-bg border border-yellow-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="card-bg border border-red-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="card-bg border border-blue-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="card-bg border-custom p-2.5 rounded-xl text-center transition-colors duration-300" style="border-width:1px;"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketersediaan</div></div>`;
       }
       function toggleChartType(tab) {
         chartTypeConfig[tab] = chartTypeConfig[tab] === 'pie' ? 'bar' : 'pie';
@@ -1696,6 +1975,10 @@
       function Rc(tab, currentList) {
         const list = currentList || D[tab] || [];
         const totalCount = list.length;
+        const isLight = document.body.classList.contains('light-mode');
+        const legendTextColor = isLight ? '#1e293b' : '#f8fafc';
+        const axisTextColor = isLight ? '#475569' : '#f8fafc';
+        const gridColor = isLight ? '#e2e8f0' : '#334155';
 
         // 1️⃣ Status Chart
         const sc = {};
@@ -1752,7 +2035,7 @@
                   data: dataValues,
                   backgroundColor: backgroundColors,
                   borderWidth: 2,
-                  borderColor: '#1e293b',
+                  borderColor: isLight ? '#e2e8f0' : '#1e293b',
                 },
               ],
             },
@@ -1763,7 +2046,7 @@
                 legend: {
                   position: 'bottom',
                   labels: {
-                    color: '#f8fafc',
+                    color: legendTextColor,
                     font: { size: 9 },
                     generateLabels: function (chart) {
                       const data = chart.data;
@@ -1775,7 +2058,7 @@
                             fillStyle: data.datasets[0].backgroundColor[i],
                             strokeStyle: data.datasets[0].borderColor,
                             lineWidth: data.datasets[0].borderWidth,
-                            fontColor: isHidden ? '#64748b' : '#f8fafc',
+                            fontColor: isHidden ? '#94a3b8' : legendTextColor,
                             hidden: false,
                             index: i,
                           };
@@ -1812,7 +2095,7 @@
                   },
                 },
                 datalabels: {
-                  color: '#ffffff',
+                  color: isLight ? '#1e293b' : '#ffffff', //
                   font: { weight: 'bold', size: 10 },
                   formatter: (value, context) => {
                     if (legendHiddenStatus[tab][context.dataIndex]) return '';
@@ -1874,7 +2157,7 @@
                   data: modelData,
                   backgroundColor: palette.slice(0, modelLabels.length),
                   borderWidth: isPie ? 2 : 1,
-                  borderColor: '#1e293b',
+                  borderColor: isLight ? '#e2e8f0' : '#1e293b',
                   borderRadius: isPie ? 0 : 4,
                 },
               ],
@@ -1890,7 +2173,7 @@
                   display: isPie,
                   position: 'bottom',
                   labels: {
-                    color: '#f8fafc',
+                    color: legendTextColor,
                     font: { size: 9 },
                     generateLabels: function (chart) {
                       const data = chart.data;
@@ -1905,7 +2188,7 @@
                             fillStyle: data.datasets[0].backgroundColor[i],
                             strokeStyle: data.datasets[0].borderColor,
                             lineWidth: data.datasets[0].borderWidth,
-                            fontColor: isHidden ? '#64748b' : '#f8fafc',
+                            fontColor: isHidden ? '#94a3b8' : legendTextColor,
                             hidden: false,
                             index: i,
                           };
@@ -1946,7 +2229,7 @@
                   },
                 },
                 datalabels: {
-                  color: '#ffffff',
+                  color: isLight ? '#1e293b' : '#ffffff',
                   anchor: isPie ? 'center' : 'end',
                   align: isPie ? 'center' : 'top',
                   font: { weight: 'bold', size: 9 },
@@ -1971,14 +2254,14 @@
                 ? {}
                 : {
                     y: {
-                      ticks: { color: '#f8fafc', stepSize: 1 },
-                      grid: { color: '#334155' },
+                      ticks: { color: axisTextColor, stepSize: 1 },
+                      grid: { color: gridColor },
                       beginAtZero: true,
                       grace: '18%',
                     },
                     x: {
                       ticks: {
-                        color: '#f8fafc',
+                        color: axisTextColor,
                         maxRotation: 25,
                         minRotation: 0,
                         font: { size: 8 },
@@ -2071,13 +2354,17 @@
               },
               scales: {
                 y: {
-                  ticks: { color: '#f8fafc', stepSize: 1 },
-                  grid: { color: '#334155' },
+                  ticks: { color: axisTextColor, stepSize: 1 },
+                  grid: { color: gridColor },
                   beginAtZero: true,
                   grace: '18%',
                 },
                 x: {
-                  ticks: { color: '#f8fafc', maxRotation: 15, minRotation: 0 },
+                  ticks: {
+                    color: axisTextColor,
+                    maxRotation: 15,
+                    minRotation: 0,
+                  },
                 },
               },
               animation: { duration: 800 },
@@ -2289,7 +2576,7 @@
                   );
                   return `<tr class="hover:bg-slate-700/30 cursor-pointer transition relative" onclick="showVehicleModal('${itemJson}')"><td class="p-2">${
                     idx + 1
-                  }</td><td class="p-2 font-bold text-white">${callsign}</td><td class="p-2"><span class="plate-number">${plate}</span></td><td class="p-2">${
+                  }</td><td class="p-2 font-bold" style="color:var(--text-primary);">${callsign}</td><td class="p-2"><span class="plate-number">${plate}</span></td><td class="p-2">${
                     G(item, 'MODEL JENTERA') || '-'
                   }</td><td class="p-2">${
                     G(item, 'PENEMPATAN ASAL') || '-'
@@ -2297,7 +2584,7 @@
                     G(item, 'LOKASI SEMASA') || '-'
                   }</td><td class="p-2">${
                     G(item, 'ZON') || '-'
-                  }</td><td class="p-2"><span class="badge-status ${badgeClass}">${statusRaw}</span></td><td class="p-2 text-slate-400 max-w-[140px] truncate">${
+                  }</td><td class="p-2"><span class="badge-status ${badgeClass}">${statusRaw}</span></td><td class="p-2 max-w-[140px] truncate" style="color:var(--text-secondary);">${
                     G(item, 'STATUS KEROSAKKAN') || '-'
                   }</td><td class="p-2 text-center" onclick="event.stopPropagation()"><button onclick="copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button></td></tr>`;
                 })
@@ -2502,7 +2789,7 @@
         });
         document.getElementById(
           'dashStats'
-        ).innerHTML = `<div class="bg-slate-800 border border-slate-700 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-white">${filtered.length}</div><div class="text-[9px] text-slate-400">JUMLAH</div></div><div class="bg-slate-800 border border-emerald-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80">BAIK</div></div><div class="bg-slate-800 border border-yellow-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80">MINOR</div></div><div class="bg-slate-800 border border-red-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80">ROSAK</div></div><div class="bg-slate-800 border border-blue-500/30 p-2 rounded-lg text-center"><div class="text-base font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80">PULANG</div></div>`;
+        ).innerHTML = `<div class="card-bg border-custom p-2 rounded-lg text-center transition-colors duration-300" style="border-width:1px;"><div class="text-base font-extrabold" style="color:var(--text-primary);">${filtered.length}</div><div class="text-[9px] text-secondary-custom">JUMLAH</div></div><div class="card-bg border border-emerald-500/30 p-2 rounded-lg text-center transition-colors duration-300"><div class="text-base font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80">BAIK</div></div><div class="card-bg border border-yellow-500/30 p-2 rounded-lg text-center transition-colors duration-300"><div class="text-base font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80">MINOR</div></div><div class="card-bg border border-red-500/30 p-2 rounded-lg text-center transition-colors duration-300"><div class="text-base font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80">ROSAK</div></div><div class="card-bg border border-blue-500/30 p-2 rounded-lg text-center transition-colors duration-300"><div class="text-base font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80">PULANG</div></div>`;
         const zoneMap = {};
         filtered.forEach((item) => {
           const lokasi = (G(item, 'LOKASI SEMASA') || '').trim();
@@ -2530,7 +2817,7 @@
           Object.values(dataZon).forEach(
             (arr) => (totalItemsInZone += arr.length)
           );
-          html += `<div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-2 flex flex-col space-y-2 h-full"><div class="flex items-center justify-between pb-1 border-b border-slate-700/80"><h3 class="text-xs font-extrabold text-white flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-red-500 siren-red shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-1.5 flex-1">`;
+          html += `<div class="card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300" style="border-width:1px;"><div class="flex items-center justify-between pb-1 border-b border-custom"><h3 class="text-xs font-extrabold flex items-center gap-1.5" style="color:var(--text-primary);"><span class="w-2 h-2 rounded-full bg-red-500 siren-red shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-1.5 flex-1">`;
           if (zoneName === 'BENGKEL KJT BOMBA') {
             const sortedBalai = Object.keys(dataZon).sort();
             if (sortedBalai.length === 0)
@@ -2707,14 +2994,14 @@
                   ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
                   : 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30';
               const itemJson = encodeURIComponent(JSON.stringify(item));
-              return `<div class="jentera-card ${glowClass} ${item._tc} relative group" onclick="showVehicleModal('${itemJson}')" title="${callsign} - ${status} (${model})"><button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button><div class="flex items-center justify-between gap-1 pr-3 min-w-0"><div class="flex items-center gap-1 min-w-0"><span class="w-1.5 h-1.5 rounded-full ${statusDotBg} shrink-0"></span><span class="text-[10px] font-extrabold text-white tracking-tight leading-none truncate" title="${callsign}">${callsign}</span></div><span class="text-[8px] font-extrabold px-1 py-0.2 rounded border shrink-0 ${typeColor}">${typeTag}</span></div><div class="flex items-center justify-between gap-1 text-[9px] pt-0.5 min-w-0"><span class="plate-number shrink-0">${plate}</span><span class="text-[8px] text-slate-400 truncate font-medium text-right flex-1" title="${model}">${model}</span></div><div class="flex items-center justify-between pt-0.5 border-t border-slate-700/30"><div class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-slate-950 border border-slate-600 flex items-center justify-center wheel-spin"><div class="w-1 h-1 rounded-full bg-slate-500"></div></div><div class="w-3 h-3 rounded-full bg-slate-950 border border-slate-600 flex items-center justify-center wheel-spin"><div class="w-1 h-1 rounded-full bg-slate-500"></div></div></div></div></div>`;
+              return `<div class="jentera-card ${glowClass} ${item._tc} relative group" onclick="showVehicleModal('${itemJson}')" title="${callsign} - ${status} (${model})"><button onclick="event.stopPropagation(); copySingleAssetInfo('${itemJson}', this)" class="copy-btn" title="Salin maklumat"><i class="fa-regular fa-copy"></i></button><div class="flex items-center justify-between gap-1 pr-3 min-w-0"><div class="flex items-center gap-1 min-w-0"><span class="w-1.5 h-1.5 rounded-full ${statusDotBg} shrink-0"></span><span class="text-[10px] font-extrabold tracking-tight leading-none truncate" style="color:var(--text-primary);" title="${callsign}">${callsign}</span></div><span class="text-[8px] font-extrabold px-1 py-0.2 rounded border shrink-0 ${typeColor}">${typeTag}</span></div><div class="flex items-center justify-between gap-1 text-[9px] pt-0.5 min-w-0"><span class="plate-number shrink-0">${plate}</span><span class="text-[8px] truncate font-medium text-right flex-1 text-secondary-custom" title="${model}">${model}</span></div><div class="flex items-center justify-between pt-0.5 border-t border-custom"><div class="flex items-center gap-1"><div class="w-3 h-3 rounded-full bg-slate-950 border border-slate-600 flex items-center justify-center wheel-spin"><div class="w-1 h-1 rounded-full bg-slate-500"></div></div><div class="w-3 h-3 rounded-full bg-slate-950 border border-slate-600 flex items-center justify-center wheel-spin"><div class="w-1 h-1 rounded-full bg-slate-500"></div></div></div></div></div>`;
             })
             .join('');
         } else {
           const selStatuses = SF || [];
           cardsHtml = renderEmptyStatusCards(selStatuses);
         }
-        return `<div class="bg-slate-900/60 border border-slate-700/60 rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold text-slate-300 px-0.5"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building-shield text-slate-500 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
+        return `<div class="bg-slate-900/60 border border-custom rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold px-0.5" style="color:var(--text-secondary);"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building-shield text-slate-500 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
       }
 
       function generateFRTModalHTML(item) {
@@ -2913,7 +3200,8 @@
         containers.forEach((c) => {
           c.style.display = 'flex';
           c.className =
-            'bg-slate-800/60 border border-slate-700/80 rounded-xl p-2 flex flex-col space-y-2 h-full';
+            'card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300';
+          c.style.borderWidth = '1px';
         });
       }
 
@@ -2929,9 +3217,31 @@
           closeModal();
         }
       });
+
       window.onload = function () {
+        loadTheme();
         loadAllData();
       };
+
+      // Dengarkan perubahan tema sistem
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+              document.body.classList.remove('light-mode');
+              document.getElementById('themeIcon').className =
+                'fa-solid fa-moon';
+            } else {
+              document.body.classList.add('light-mode');
+              document.getElementById('themeIcon').className =
+                'fa-solid fa-sun';
+            }
+            Object.keys(CC).forEach((tab) => {
+              if (CC[tab].s) Rt(tab);
+            });
+          }
+        });
     </script>
   </body>
 </html>
