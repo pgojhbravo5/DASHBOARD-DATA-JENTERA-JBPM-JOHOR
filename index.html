@@ -1499,17 +1499,20 @@
             >
             <div class="ms-dropdown" id="jenisFilterDropdown">
               <button
+                onclick="toggleJenisFilter()"
                 class="ms-select-btn text-[11px]"
                 style="padding: 0.25rem 0.5rem"
               >
                 <span id="jenisFilterText"
                   ><i class="fa-solid fa-layer-group mr-1"></i> Semua
                   Jenis</span
-                ><span
+                >
+                <span
                   class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="jenisFilterCount"
                   >3</span
-                ><span class="text-[8px]">▼</span>
+                >
+                <span class="text-[8px]">▼</span>
               </button>
               <div class="ms-options" id="jenisFilterOptions">
                 <label class="ms-option"
@@ -1565,16 +1568,18 @@
             >
             <div class="ms-dropdown" id="statusFilterDropdown">
               <button
+                onclick="toggleStatusFilter()"
                 class="ms-select-btn text-[11px]"
                 style="padding: 0.25rem 0.5rem"
               >
-                <span id="statusFilterText">Semua</span
-                ><span
+                <span id="statusFilterText">Semua</span>
+                <span
                   class="text-[10px] bg-red-600 text-white px-1.5 py-0.2 rounded font-bold"
                   id="statusFilterCount"
                   style="display: none"
                   >0</span
-                ><span class="text-[8px]">▼</span>
+                >
+                <span class="text-[8px]">▼</span>
               </button>
               <div class="ms-options" id="statusFilterOptions">
                 <label class="ms-option"
@@ -1800,29 +1805,11 @@
           minute: '2-digit',
           second: '2-digit',
         });
-        const el = document.getElementById('printDateTime');
-        if (el) el.textContent = `Dicetak pada: ${dateStr}, ${timeStr}`;
-      }
-      // 🖨️ PRINT FUNCTION - GUNA WINDOW BARU
-      function updatePrintDateTime() {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString('ms-MY', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        });
-        const timeStr = now.toLocaleTimeString('ms-MY', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        });
         return `Dicetak pada: ${dateStr}, ${timeStr}`;
       }
 
       function printDashboard() {
         const printDateTime = updatePrintDateTime();
-
-        // Dapatkan tab aktif
         const activeTab = T;
         const tabContent = document.getElementById(`tab-${activeTab}`);
 
@@ -1831,26 +1818,9 @@
           return;
         }
 
-        // Buka window baru untuk print
         const printWindow = window.open('', '_blank', 'width=1200,height=800');
-
-        // Dapatkan semua stylesheet
-        const styles = document.querySelectorAll(
-          'style, link[rel="stylesheet"]'
-        );
-        let styleHTML = '';
-        styles.forEach((s) => {
-          if (s.tagName === 'STYLE') {
-            styleHTML += `<style>${s.textContent}</style>`;
-          } else if (s.tagName === 'LINK') {
-            styleHTML += `<link rel="stylesheet" href="${s.href}">`;
-          }
-        });
-
-        // Klon kandungan tab aktif
         const contentClone = tabContent.cloneNode(true);
 
-        // HTML untuk window print
         printWindow.document.write(`
   <!DOCTYPE html>
   <html lang="ms">
@@ -1863,7 +1833,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"><\/script>
     <style>
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      
       body { 
         background: white !important; 
         color: #000 !important; 
@@ -1871,7 +1840,6 @@
         padding: 20px !important;
         margin: 0 !important;
       }
-      
       .print-header {
         text-align: center !important;
         margin-bottom: 20px !important;
@@ -1889,7 +1857,6 @@
         color: #333 !important;
         margin-top: 5px !important;
       }
-      
       .print-footer {
         text-align: center !important;
         font-size: 8pt !important;
@@ -1898,7 +1865,6 @@
         padding-top: 5px !important;
         margin-top: 20px !important;
       }
-      
       table { 
         border: 1px solid #000 !important; 
         border-collapse: collapse !important;
@@ -1916,24 +1882,20 @@
         color: #000 !important;
         padding: 4px !important;
       }
-      
       .plate-number {
         background: #fff !important;
         color: #000 !important;
         border: 1px solid #000 !important;
       }
-      
       .badge-baik { color: #16a34a !important; }
       .badge-minor { color: #ca8a04 !important; }
       .badge-rosak { color: #dc2626 !important; }
       .badge-pulang { color: #2563eb !important; }
-      
       canvas { 
-  max-width: 100% !important;
-  filter: brightness(0.7) contrast(1.2) !important;
-}      
+        max-width: 100% !important;
+        filter: brightness(0.7) contrast(1.4) !important;
+      }      
       .ms-dropdown, .copy-btn, button { display: none !important; }
-      
       @page { margin: 1cm; size: A4 landscape; }
     </style>
   </head>
@@ -1949,41 +1911,30 @@
 `);
         printWindow.document.close();
 
-        // Tunggu semua resources loaded
         printWindow.onload = function () {
           const printContent =
             printWindow.document.getElementById('printContent');
           printContent.appendChild(contentClone);
 
-          // Render semula semua carta dalam window print
           setTimeout(() => {
-            // Cari semua canvas dalam window print
             const canvases = printWindow.document.querySelectorAll('canvas');
             canvases.forEach((canvas) => {
-              // Cari ID asal
               const canvasId = canvas.id;
               if (canvasId && CC[activeTab]) {
-                // Cari chart asal
                 const originalCanvas = document.getElementById(canvasId);
                 if (originalCanvas) {
-                  // Salin dimensi
                   canvas.width = originalCanvas.width;
                   canvas.height = originalCanvas.height;
                   canvas.style.width = originalCanvas.style.width;
                   canvas.style.height = originalCanvas.style.height;
-
-                  // Render imej dari canvas asal ke canvas baru
                   const ctx = canvas.getContext('2d');
                   ctx.drawImage(originalCanvas, 0, 0);
                 }
               }
             });
 
-            // Print selepas render
             setTimeout(() => {
               printWindow.print();
-              // Tutup window selepas print (optional)
-              // printWindow.close();
             }, 500);
           }, 1000);
         };
@@ -2063,6 +2014,7 @@
           .replace(/\s+/g, ' ')
           .trim();
       }
+
       function findMatchingBalai(lokasi, listBalai) {
         if (!lokasi) return null;
         const coreLokasi = getStationCoreName(lokasi);
@@ -2084,6 +2036,7 @@
         }
         return null;
       }
+
       function findMatchingBalaiInAllZones(lokasi) {
         if (!lokasi) return null;
         const coreLokasi = getStationCoreName(lokasi);
@@ -2106,6 +2059,7 @@
         }
         return null;
       }
+
       function showNotification(msg, type = 'info') {
         const toast = document.getElementById('toastNotification');
         const icons = {
@@ -2123,6 +2077,7 @@
           toast.classList.add('translate-x-full');
         }, 3000);
       }
+
       function PP(text) {
         const rows = [];
         let row = [],
@@ -2156,9 +2111,11 @@
         if (row.length > 1 || row[0] !== '') rows.push(row);
         return rows;
       }
+
       function HH(h) {
         return h.replace(/\s+/g, ' ').trim();
       }
+
       function OO(headers, rows) {
         const ch = headers.map(HH);
         return rows.map((r) => {
@@ -2169,6 +2126,7 @@
           return o;
         });
       }
+
       function G(item, field) {
         if (!item) return '';
         if (item[field] !== undefined) return item[field];
@@ -2198,6 +2156,7 @@
           console.error(`Error fetching ${tab}:`, err);
         }
       }
+
       async function loadAllData() {
         document.getElementById('loadingOverlay').classList.remove('hidden');
         const refreshBtn = document.getElementById('refreshBtn');
@@ -2214,6 +2173,7 @@
         showNotification('Data berjaya dikemaskini', 'success');
         resetCountdown();
       }
+
       function updateTimestamp() {
         document.getElementById('lastUpdate').textContent =
           'Dikemaskini: ' +
@@ -2223,6 +2183,7 @@
             second: '2-digit',
           });
       }
+
       function resetCountdown() {
         remainingSeconds = REFRESH_INTERVAL_SEC;
         if (intervalTimer) clearInterval(intervalTimer);
@@ -2238,6 +2199,7 @@
           if (remainingSeconds <= 0) loadAllData();
         }, 1000);
       }
+
       function switchTab(tab) {
         T = tab;
         document.querySelectorAll('.tab-btn').forEach((b) => {
@@ -2256,6 +2218,7 @@
         if (tab === 'dashboard') renderMainDashboard();
         else setTimeout(() => Rt(tab), 50);
       }
+
       function getStatusCategory(statusStr) {
         if (!statusStr) return 'U';
         const t = statusStr.toUpperCase();
@@ -2265,6 +2228,7 @@
         if (t.includes('DIPULANGKAN')) return 'D';
         return 'U';
       }
+
       function UU(tab) {
         const list = D[tab] || [];
         let b = 0,
@@ -2286,6 +2250,7 @@
         if (!container) return;
         container.innerHTML = `<div class="card-bg border-custom p-2.5 rounded-xl text-center transition-colors duration-300" style="border-width:1px;"><div class="text-lg font-extrabold" style="color:var(--text-primary);">${total}</div><div class="text-[9px] uppercase font-semibold text-secondary-custom">Jumlah Jentera</div></div><div class="card-bg border border-emerald-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-emerald-400 pulse-glow-b">${b}</div><div class="text-[9px] text-emerald-500/80 uppercase font-semibold">Baik & Beroperasi</div></div><div class="card-bg border border-yellow-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-yellow-400 pulse-glow-rm">${rm}</div><div class="text-[9px] text-yellow-500/80 uppercase font-semibold">Rosak Minor</div></div><div class="card-bg border border-red-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-red-400 pulse-glow-r">${r}</div><div class="text-[9px] text-red-500/80 uppercase font-semibold">Rosak</div></div><div class="card-bg border border-blue-500/30 p-2.5 rounded-xl text-center transition-colors duration-300"><div class="text-lg font-extrabold text-blue-400 pulse-glow-d">${d}</div><div class="text-[9px] text-blue-500/80 uppercase font-semibold">Dipulangkan</div></div><div class="card-bg border-custom p-2.5 rounded-xl text-center transition-colors duration-300" style="border-width:1px;"><div class="text-lg font-extrabold text-purple-400">${rate}%</div><div class="text-[9px] text-purple-400/80 uppercase font-semibold">Ketersediaan</div></div>`;
       }
+
       function toggleChartType(tab) {
         chartTypeConfig[tab] = chartTypeConfig[tab] === 'pie' ? 'bar' : 'pie';
         const btn = document.getElementById(`chartTypeBtn-${tab}`);
@@ -2306,7 +2271,7 @@
         const axisTextColor = isLight ? '#475569' : '#f8fafc';
         const gridColor = isLight ? '#e2e8f0' : '#334155';
 
-        // 1️⃣ Status Chart
+        // 1 Status Chart
         const sc = {};
         list.forEach((i) => {
           const s = (G(i, 'STATUS JENTERA') || 'LAIN-LAIN')
@@ -2371,7 +2336,7 @@
               plugins: {
                 legend: {
                   position: 'bottom',
-                  align: 'center', // ✅ CENTRE LEGEND
+                  align: 'center',
                   labels: {
                     color: legendTextColor,
                     font: { size: 9 },
@@ -2444,7 +2409,7 @@
           });
         }
 
-        // 2️⃣ Model Chart
+        // 2 Model Chart
         const mc = {};
         list.forEach((i) => {
           const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
@@ -2501,7 +2466,7 @@
                 legend: {
                   display: isPie,
                   position: 'bottom',
-                  align: 'center', // ✅ CENTRE LEGEND
+                  align: 'center',
                   labels: {
                     color: legendTextColor,
                     font: { size: 9 },
@@ -2606,7 +2571,7 @@
           });
         }
 
-        // 3️⃣ Zon Bar Chart
+        // 3 Zon Bar Chart
         const zcRaw = {};
         list.forEach((i) => {
           const z = (G(i, 'ZON') || 'LAIN').trim().toUpperCase();
@@ -2726,6 +2691,7 @@
           )
           .join('');
       }
+
       function populateModelOptions(tab) {
         const list = D[tab] || [];
         const models = new Set();
@@ -2746,6 +2712,7 @@
           )
           .join('');
       }
+
       function populateZonOptions(tab) {
         const list = D[tab] || [];
         const zones = new Set();
@@ -2766,19 +2733,23 @@
           )
           .join('');
       }
+
       function toggleMsDropdown(tab) {
         document.getElementById(`msOptions-${tab}`)?.classList.toggle('show');
       }
+
       function toggleMsModelDropdown(tab) {
         document
           .getElementById(`msOptionsModel-${tab}`)
           ?.classList.toggle('show');
       }
+
       function toggleMsZonDropdown(tab) {
         document
           .getElementById(`msOptionsZon-${tab}`)
           ?.classList.toggle('show');
       }
+
       function updateSubTabMultiSelect(tab) {
         const opts = document.getElementById(`msOptions-${tab}`);
         const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
@@ -2802,6 +2773,7 @@
         }
         Rt(tab);
       }
+
       function updateSubTabModelMultiSelect(tab) {
         const opts = document.getElementById(`msOptionsModel-${tab}`);
         const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
@@ -2825,6 +2797,7 @@
         }
         Rt(tab);
       }
+
       function updateSubTabZonMultiSelect(tab) {
         const opts = document.getElementById(`msOptionsZon-${tab}`);
         const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
@@ -2858,16 +2831,26 @@
         const selectedModels = subTabSelectedModel[tab] || [];
         const selectedZones = subTabSelectedZon[tab] || [];
         const filtered = list.filter((item) => {
+          // 🔍 CARIAN - DITAMBAH FIELD BARU
           if (searchVal) {
             const callsign = (G(item, 'CALLSIGN') || '').toLowerCase(),
               plate = (G(item, 'PLATE') || '').toLowerCase(),
               lokasi = (G(item, 'LOKASI SEMASA') || '').toLowerCase(),
-              model = (G(item, 'MODEL JENTERA') || '').toLowerCase();
+              model = (G(item, 'MODEL JENTERA') || '').toLowerCase(),
+              asal = (G(item, 'PENEMPATAN ASAL') || '').toLowerCase(), // ✅ BARU
+              zon = (G(item, 'ZON') || '').toLowerCase(), // ✅ BARU
+              status = (G(item, 'STATUS JENTERA') || '').toLowerCase(), // ✅ BARU
+              kerosakan = (G(item, 'STATUS KEROSAKKAN') || '').toLowerCase(); // ✅ BARU
+
             if (
               !callsign.includes(searchVal) &&
               !plate.includes(searchVal) &&
               !lokasi.includes(searchVal) &&
-              !model.includes(searchVal)
+              !model.includes(searchVal) &&
+              !asal.includes(searchVal) && // ✅ BARU
+              !zon.includes(searchVal) && // ✅ BARU
+              !status.includes(searchVal) && // ✅ BARU
+              !kerosakan.includes(searchVal) // ✅ BARU
             )
               return false;
           }
@@ -2950,6 +2933,7 @@
           showNotification('Ralat menyalin data', 'error');
         }
       }
+
       function copyAllTableData(tab) {
         const list = D[tab] || [];
         if (!list.length) {
@@ -2977,6 +2961,7 @@
             showNotification('Gagal menyalin data', 'error');
           });
       }
+
       function formatAssetInfo(item) {
         const callsign = (G(item, 'CALLSIGN') || '-').toUpperCase(),
           plate = (G(item, 'PLATE') || '-').toUpperCase(),
@@ -2996,6 +2981,7 @@
             : 'JENTERA';
         return `[${typeLabel}] ${callsign} | ${plate} | ${model}\nPenempatan: ${asal}\nLokasi: ${lokasi}\nZon: ${zon}\nStatus: ${status}\nKerosakan: ${kerosakan}`;
       }
+
       function eksportKeExcel(tab) {
         const list = D[tab] || [];
         if (!list.length) {
@@ -3022,6 +3008,7 @@
         link.click();
         showNotification('Fail CSV berjaya dimuat turun', 'success');
       }
+
       function getAllAssets() {
         const all = [];
         D.cfrt.forEach((i) =>
@@ -3050,9 +3037,13 @@
         );
         return all;
       }
+
+      // ===== FUNGSI DASHBOARD UTAMA (FIT VIEW) =====
+
       function toggleJenisFilter() {
         document.getElementById('jenisFilterOptions').classList.toggle('show');
       }
+
       function applyJenisFilter() {
         const cbs = document.querySelectorAll(
           '#jenisFilterOptions input[type="checkbox"]'
@@ -3061,17 +3052,15 @@
         cbs.forEach((cb) => {
           if (cb.checked) F.push(cb.value);
         });
-        document.getElementById('jenisFilterCount').textContent = F.length;
-        const labelMap = { cfrt: 'FRT', emrs: 'EMRS', water: 'WATER TANKER' };
-        document.getElementById('jenisFilterText').innerHTML =
-          F.length === 3
-            ? '<i class="fa-solid fa-layer-group mr-1"></i> Semua Jenis'
-            : F.map((f) => labelMap[f] || f.toUpperCase()).join(', ');
+        const ct = document.getElementById('jenisFilterCount');
+        ct.textContent = F.length;
         renderMainDashboard();
       }
+
       function toggleStatusFilter() {
         document.getElementById('statusFilterOptions').classList.toggle('show');
       }
+
       function applyStatusFilter() {
         const cbs = document.querySelectorAll(
           '#statusFilterOptions input[type="checkbox"]'
@@ -3246,6 +3235,7 @@
           })
           .join('')}</div></div>`;
       }
+
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -3371,6 +3361,7 @@
           JSON.stringify(item)
         )}', this)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg border border-slate-600 transition flex items-center gap-2 text-xs shadow-lg"><i class="fa-regular fa-copy"></i> Salin Maklumat Jentera</button></div></div></div>`;
       }
+
       function generateEMRSModalHTML(item) {
         const callsign = G(item, 'CALLSIGN') || '-',
           plate = G(item, 'PLATE') || '-',
@@ -3391,6 +3382,7 @@
           JSON.stringify(item)
         )}', this)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg border border-slate-600 transition flex items-center gap-2 text-xs shadow-lg"><i class="fa-regular fa-copy"></i> Salin Maklumat Jentera</button></div></div></div>`;
       }
+
       function generateWaterModalHTML(item) {
         const callsign = G(item, 'CALLSIGN') || '-',
           plate = G(item, 'PLATE') || '-',
@@ -3452,6 +3444,7 @@
           console.error('Error showing modal:', e);
         }
       }
+
       function closeModal(e) {
         if (
           !e ||
@@ -3461,6 +3454,7 @@
           document.getElementById('modalOverlay').classList.remove('show');
         }
       }
+
       function toggleFullscreenDashboard() {
         document.body.classList.toggle('fullscreen-mode');
         if (document.body.classList.contains('fullscreen-mode')) {
@@ -3473,6 +3467,7 @@
           }
         }
       }
+
       function toggleSlideshow() {
         slideshowActive = !slideshowActive;
         const nav = document.getElementById('slideshowNav');
@@ -3485,6 +3480,7 @@
           renderMainDashboard();
         }
       }
+
       function showSlideZone(idx) {
         currentSlideZone = (idx + zoneOrder.length) % zoneOrder.length;
         document.getElementById('slideshowCounter').textContent = `${
@@ -3500,12 +3496,15 @@
           }
         });
       }
+
       function prevZone() {
         showSlideZone(currentSlideZone - 1);
       }
+
       function nextZone() {
         showSlideZone(currentSlideZone + 1);
       }
+
       function toggleAutoSlideshow() {
         slideshowAuto = !slideshowAuto;
         const btn = document.getElementById('slideshowAutoBtn'),
@@ -3522,6 +3521,7 @@
           if (slideshowInterval) clearInterval(slideshowInterval);
         }
       }
+
       function stopSlideshow() {
         slideshowActive = false;
         slideshowAuto = false;
@@ -3543,15 +3543,18 @@
             .forEach((el) => el.classList.remove('show'));
         }
       });
+
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
           closeModal();
         }
       });
+
       window.onload = function () {
         loadTheme();
         loadAllData();
       };
+
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', (e) => {
