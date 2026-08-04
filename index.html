@@ -20,7 +20,6 @@
     />
 
     <style>
-      /* ========== CSS VARIABLES UNTUK DARK/LIGHT MODE ========== */
       :root {
         --bg-main: #0f172a;
         --bg-card: #1e293b;
@@ -42,7 +41,6 @@
         --card-hover-bg: #334155;
       }
 
-      /* ========== LIGHT MODE ========== */
       body.light-mode {
         --bg-main: #f1f5f9;
         --bg-card: #ffffff;
@@ -509,7 +507,6 @@
         border-radius: 2px;
       }
 
-      /* ========== HEADER & NAV STYLES ========== */
       .header-bg {
         background-color: var(--bg-header);
         border-color: var(--border-color);
@@ -540,26 +537,47 @@
         border-color: var(--border-color);
       }
 
+      /* ========== PAGE SETUP UNTUK PRINT ========== */
+      @page {
+        margin: 1.5cm 1cm 2cm 1cm;
+        size: A4 landscape;
+      }
+
       /* ========== PRINT STYLES ========== */
       @media print {
-        body,
-        body.light-mode,
-        body.dark-mode {
+        html,
+        body {
           background: white !important;
           background-image: none !important;
           color: #000 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          height: auto !important;
+          overflow: visible !important;
+        }
+
+        body::before {
+          display: none !important;
+        }
+
+        body,
+        body.light-mode,
+        body.dark-mode {
           --text-primary: #000 !important;
           --text-secondary: #333 !important;
           --bg-main: #fff !important;
           --bg-card: #fff !important;
           --bg-header: #fff !important;
           --border-color: #ccc !important;
-        }
-        body::before {
-          display: none !important;
+          --bg-input: #fff !important;
+          --bg-table-header: #e5e7eb !important;
+          --bg-card-alt: #fff !important;
         }
 
-        /* Sembunyikan elemen tidak perlu */
+        /* SEMBUNYIKAN SEMUA ELEMEN TIDAK PERLU */
+        header,
+        nav,
         .tab-nav-header,
         .sub-header-controls,
         footer,
@@ -570,80 +588,200 @@
         .ms-dropdown,
         #dashboardFilters,
         #slideshowNav,
-        #refreshBtn,
-        #printBtn,
-        #themeToggleBtn,
-        #fullscreenBtn,
-        #zoomInBtn,
-        button:not(.keep-in-print) {
+        button:not(.keep-in-print),
+        .tab-btn,
+        [class*='sticky'] {
           display: none !important;
+          height: 0 !important;
+          min-height: 0 !important;
+          max-height: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden !important;
+          position: static !important;
+          visibility: hidden !important;
         }
 
-        /* Pastikan semua teks kelihatan */
-        * {
+        /* PRINT HEADER */
+        .print-header {
+          display: block !important;
+          visibility: visible !important;
+          text-align: center !important;
+          margin-top: 0 !important;
+          margin-bottom: 15px !important;
+          padding-top: 0 !important;
+          padding-bottom: 8px !important;
+          border-bottom: 2px solid #000 !important;
+          height: auto !important;
+        }
+        .print-header .print-title {
+          font-size: 16pt !important;
+          font-weight: bold !important;
           color: #000 !important;
-          text-shadow: none !important;
-          box-shadow: none !important;
+          text-transform: uppercase !important;
+        }
+        .print-header .print-subtitle {
+          font-size: 10pt !important;
+          color: #333 !important;
+          margin-top: 5px !important;
         }
 
-        /* Jadual */
+        /* MAIN CONTENT */
+        body {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        main {
+          display: block !important;
+          visibility: visible !important;
+          margin: 0 !important;
+          padding: 0 15px !important;
+          width: 100% !important;
+          height: auto !important;
+          overflow: visible !important;
+        }
+
+        /* PAPARKAN SEMUA TAB CONTENT */
+        .tab-content {
+          display: block !important;
+          visibility: visible !important;
+          page-break-inside: avoid;
+          height: auto !important;
+          overflow: visible !important;
+        }
+        .tab-content.hidden {
+          display: block !important;
+          visibility: visible !important;
+        }
+
+        /* CARTA - PENTING UNTUK PRINT */
+        canvas {
+          display: block !important;
+          visibility: visible !important;
+          max-width: 100% !important;
+          height: auto !important;
+          page-break-inside: avoid;
+        }
+
+        /* Container carta */
+        [class*='h-48'],
+        [class*='h-'] {
+          height: auto !important;
+          min-height: 200px !important;
+          overflow: visible !important;
+        }
+
+        /* JADUAL */
         table {
           border: 1px solid #000 !important;
+          border-collapse: collapse !important;
+          width: 100% !important;
+          font-size: 8pt !important;
+          visibility: visible !important;
         }
         th {
           background: #e5e7eb !important;
           color: #000 !important;
+          font-weight: bold !important;
+          border: 1px solid #000 !important;
+          padding: 4px !important;
         }
-        td,
-        th {
+        td {
           border: 1px solid #ccc !important;
           color: #000 !important;
+          padding: 4px !important;
+        }
+        tbody,
+        tr,
+        td,
+        th {
+          visibility: visible !important;
         }
 
-        /* Kad */
+        /* KAD */
         .jentera-card,
-        .bg-slate-800,
-        .bg-slate-900,
-        .bg-slate-950 {
+        [class*='bg-slate-800'],
+        [class*='bg-slate-900'],
+        [class*='bg-slate-950'],
+        [class*='card-bg'] {
           background: #fff !important;
           border: 1px solid #ccc !important;
+          box-shadow: none !important;
+          visibility: visible !important;
         }
 
-        /* Badge */
+        /* BADGE */
         .badge-status {
           border: 1px solid #000 !important;
         }
-
-        /* Carta */
-        canvas {
-          max-width: 100% !important;
-          height: auto !important;
+        .badge-baik {
+          color: #16a34a !important;
+        }
+        .badge-minor {
+          color: #ca8a04 !important;
+        }
+        .badge-rosak {
+          color: #dc2626 !important;
+        }
+        .badge-pulang {
+          color: #2563eb !important;
         }
 
-        /* Plate number */
+        /* PLATE NUMBER */
         .plate-number {
           background: #fff !important;
           color: #000 !important;
           border: 1px solid #000 !important;
         }
 
-        /* Page break */
-        .tab-content {
-          page-break-inside: avoid;
+        /* HENTIKAN ANIMASI */
+        .siren-red,
+        .siren-blue,
+        .siren-amber,
+        .pulse-glow-b,
+        .pulse-glow-rm,
+        .pulse-glow-r,
+        .pulse-glow-d,
+        .animate-ping,
+        .animate-pulse,
+        .wheel-spin {
+          animation: none !important;
+          box-shadow: none !important;
         }
 
-        @page {
-          margin: 1cm;
-          size: A4 landscape;
+        /* RESET FONT & SHADOW */
+        * {
+          text-shadow: none !important;
+          box-shadow: none !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
         }
-      }
 
-      /* Theme toggle button */
-      #themeToggleBtn {
-        transition: all 0.2s ease;
-      }
-      #themeToggleBtn:hover {
-        transform: scale(1.1);
+        body {
+          font-size: 10pt !important;
+          padding-top: 0 !important;
+        }
+
+        /* GRID & FLEX UNTUK PRINT */
+        .grid {
+          display: grid !important;
+          visibility: visible !important;
+        }
+        .flex {
+          display: flex !important;
+          visibility: visible !important;
+        }
+        .hidden {
+          display: block !important;
+          visibility: visible !important;
+        }
+
+        /* OVERFLOW */
+        .overflow-x-auto {
+          overflow-x: visible !important;
+        }
       }
     </style>
   </head>
@@ -680,7 +818,6 @@
       </div>
     </div>
 
-    <!-- HEADER -->
     <header
       class="header-bg border-b px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-40 transition-colors duration-300"
     >
@@ -725,7 +862,6 @@
             <i class="fa-solid fa-arrows-rotate refresh-icon"></i
             ><span class="hidden sm:inline">Kemaskini</span>
           </button>
-          <!-- 🌓 BUTANG THEME TOGGLE -->
           <button
             onclick="toggleTheme()"
             id="themeToggleBtn"
@@ -734,7 +870,6 @@
           >
             <i class="fa-solid fa-moon" id="themeIcon"></i>
           </button>
-          <!-- 🖨️ BUTANG PRINT -->
           <button
             onclick="printDashboard()"
             id="printBtn"
@@ -743,7 +878,6 @@
           >
             <i class="fa-solid fa-print"></i>
           </button>
-          <!-- ⛶ BUTANG FULLSCREEN -->
           <button
             onclick="toggleFullscreenDashboard()"
             id="fullscreenBtn"
@@ -755,6 +889,11 @@
         </div>
       </div>
     </header>
+
+    <div class="print-header" style="display: none">
+      <div class="print-title">DASHBOARD JENTERA BOMBA NEGERI JOHOR</div>
+      <div class="print-subtitle" id="printDateTime"></div>
+    </div>
 
     <nav
       class="nav-bg backdrop-blur border-b px-4 flex gap-1 overflow-x-auto tab-nav-header sticky top-[57px] z-30 transition-colors duration-300"
@@ -786,7 +925,6 @@
     </nav>
 
     <main class="flex-1 p-2.5 sm:p-4 space-y-4 max-w-[1700px] w-full mx-auto">
-      <!-- TAB: FRT -->
       <section id="tab-cfrt" class="tab-content">
         <div
           id="statsRow-cfrt"
@@ -973,7 +1111,6 @@
         </div>
       </section>
 
-      <!-- TAB: EMRS -->
       <section id="tab-emrs" class="tab-content hidden">
         <div
           id="statsRow-emrs"
@@ -1162,7 +1299,6 @@
         </div>
       </section>
 
-      <!-- TAB: WATER TANKER -->
       <section id="tab-water" class="tab-content hidden">
         <div
           id="statsRow-water"
@@ -1351,7 +1487,6 @@
         </div>
       </section>
 
-      <!-- TAB: MAIN DASHBOARD GRID (FIT VIEW) -->
       <section id="tab-dashboard" class="tab-content hidden space-y-3">
         <div
           class="card-bg border-custom rounded-xl p-2.5 flex flex-wrap items-center justify-between gap-2 transition-colors duration-300"
@@ -1581,7 +1716,6 @@
     </div>
 
     <script>
-      // Google Sheets CSV Endpoints
       const U = {
         cfrt: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=0&single=true&output=csv',
         emrs: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQt0JkN2yWW_0FeY5GKpmIvs1uI6si89JcqNmSTO3f--rM8FhQZe1Q97YQd8tiAsmaMQdTXO5TQWedy/pub?gid=795399708&single=true&output=csv',
@@ -1612,7 +1746,6 @@
       let legendHiddenStatus = { cfrt: [], emrs: [], water: [] };
       let legendHiddenStatusModel = { cfrt: [], emrs: [], water: [] };
 
-      // 🌓 THEME TOGGLE
       function toggleTheme() {
         document.body.classList.toggle('light-mode');
         const isLight = document.body.classList.contains('light-mode');
@@ -1624,7 +1757,6 @@
           icon.className = 'fa-solid fa-moon';
           localStorage.setItem('theme', 'dark');
         }
-        // Update semua carta
         Object.keys(CC).forEach((tab) => {
           if (
             T === tab ||
@@ -1637,7 +1769,6 @@
         });
       }
 
-      // Load theme dari localStorage
       function loadTheme() {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
@@ -1647,7 +1778,6 @@
           document.body.classList.remove('light-mode');
           document.getElementById('themeIcon').className = 'fa-solid fa-moon';
         } else {
-          // Ikut sistem OS
           if (
             window.matchMedia &&
             window.matchMedia('(prefers-color-scheme: light)').matches
@@ -1658,9 +1788,205 @@
         }
       }
 
-      // 🖨️ PRINT FUNCTION
+      function updatePrintDateTime() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('ms-MY', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        });
+        const timeStr = now.toLocaleTimeString('ms-MY', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        const el = document.getElementById('printDateTime');
+        if (el) el.textContent = `Dicetak pada: ${dateStr}, ${timeStr}`;
+      }
+      // 🖨️ PRINT FUNCTION - GUNA WINDOW BARU
+      function updatePrintDateTime() {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('ms-MY', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        });
+        const timeStr = now.toLocaleTimeString('ms-MY', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        return `Dicetak pada: ${dateStr}, ${timeStr}`;
+      }
+
       function printDashboard() {
-        window.print();
+        const printDateTime = updatePrintDateTime();
+
+        // Dapatkan tab aktif
+        const activeTab = T;
+        const tabContent = document.getElementById(`tab-${activeTab}`);
+
+        if (!tabContent) {
+          showNotification('Tiada kandungan untuk dicetak', 'warning');
+          return;
+        }
+
+        // Buka window baru untuk print
+        const printWindow = window.open('', '_blank', 'width=1200,height=800');
+
+        // Dapatkan semua stylesheet
+        const styles = document.querySelectorAll(
+          'style, link[rel="stylesheet"]'
+        );
+        let styleHTML = '';
+        styles.forEach((s) => {
+          if (s.tagName === 'STYLE') {
+            styleHTML += `<style>${s.textContent}</style>`;
+          } else if (s.tagName === 'LINK') {
+            styleHTML += `<link rel="stylesheet" href="${s.href}">`;
+          }
+        });
+
+        // Klon kandungan tab aktif
+        const contentClone = tabContent.cloneNode(true);
+
+        // HTML untuk window print
+        printWindow.document.write(`
+  <!DOCTYPE html>
+  <html lang="ms">
+  <head>
+    <meta charset="UTF-8" />
+    <title>DASHBOARD JENTERA BOMBA NEGERI JOHOR</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"><\/script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"><\/script>
+    <style>
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      
+      body { 
+        background: white !important; 
+        color: #000 !important; 
+        font-family: 'Inter', sans-serif;
+        padding: 20px !important;
+        margin: 0 !important;
+      }
+      
+      .print-header {
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        border-bottom: 2px solid #000 !important;
+        padding-bottom: 10px !important;
+      }
+      .print-header .print-title {
+        font-size: 18pt !important;
+        font-weight: bold !important;
+        color: #000 !important;
+        text-transform: uppercase !important;
+      }
+      .print-header .print-subtitle {
+        font-size: 10pt !important;
+        color: #333 !important;
+        margin-top: 5px !important;
+      }
+      
+      .print-footer {
+        text-align: center !important;
+        font-size: 8pt !important;
+        color: #999 !important;
+        border-top: 1px solid #ccc !important;
+        padding-top: 5px !important;
+        margin-top: 20px !important;
+      }
+      
+      table { 
+        border: 1px solid #000 !important; 
+        border-collapse: collapse !important;
+        width: 100% !important;
+        font-size: 8pt !important;
+      }
+      th { 
+        background: #e5e7eb !important; 
+        color: #000 !important; 
+        border: 1px solid #000 !important;
+        padding: 4px !important;
+      }
+      td { 
+        border: 1px solid #ccc !important; 
+        color: #000 !important;
+        padding: 4px !important;
+      }
+      
+      .plate-number {
+        background: #fff !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+      }
+      
+      .badge-baik { color: #16a34a !important; }
+      .badge-minor { color: #ca8a04 !important; }
+      .badge-rosak { color: #dc2626 !important; }
+      .badge-pulang { color: #2563eb !important; }
+      
+      canvas { 
+  max-width: 100% !important;
+  filter: brightness(0.7) contrast(1.2) !important;
+}      
+      .ms-dropdown, .copy-btn, button { display: none !important; }
+      
+      @page { margin: 1cm; size: A4 landscape; }
+    </style>
+  </head>
+  <body>
+    <div class="print-header">
+      <div class="print-title">DASHBOARD JENTERA BOMBA NEGERI JOHOR</div>
+      <div class="print-subtitle">${printDateTime}</div>
+    </div>
+    <div id="printContent"></div>
+    <div class="print-footer">&copy; 2026 PGO JOHOR | Hak Cipta Terpelihara</div>
+  </body>
+  </html>
+`);
+        printWindow.document.close();
+
+        // Tunggu semua resources loaded
+        printWindow.onload = function () {
+          const printContent =
+            printWindow.document.getElementById('printContent');
+          printContent.appendChild(contentClone);
+
+          // Render semula semua carta dalam window print
+          setTimeout(() => {
+            // Cari semua canvas dalam window print
+            const canvases = printWindow.document.querySelectorAll('canvas');
+            canvases.forEach((canvas) => {
+              // Cari ID asal
+              const canvasId = canvas.id;
+              if (canvasId && CC[activeTab]) {
+                // Cari chart asal
+                const originalCanvas = document.getElementById(canvasId);
+                if (originalCanvas) {
+                  // Salin dimensi
+                  canvas.width = originalCanvas.width;
+                  canvas.height = originalCanvas.height;
+                  canvas.style.width = originalCanvas.style.width;
+                  canvas.style.height = originalCanvas.style.height;
+
+                  // Render imej dari canvas asal ke canvas baru
+                  const ctx = canvas.getContext('2d');
+                  ctx.drawImage(originalCanvas, 0, 0);
+                }
+              }
+            });
+
+            // Print selepas render
+            setTimeout(() => {
+              printWindow.print();
+              // Tutup window selepas print (optional)
+              // printWindow.close();
+            }, 500);
+          }, 1000);
+        };
       }
 
       const ZON_ORDER = [
@@ -2045,9 +2371,12 @@
               plugins: {
                 legend: {
                   position: 'bottom',
+                  align: 'center', // ✅ CENTRE LEGEND
                   labels: {
                     color: legendTextColor,
                     font: { size: 9 },
+                    padding: 12,
+                    textAlign: 'center',
                     generateLabels: function (chart) {
                       const data = chart.data;
                       if (data.labels.length && data.datasets.length) {
@@ -2095,7 +2424,7 @@
                   },
                 },
                 datalabels: {
-                  color: isLight ? '#1e293b' : '#ffffff', //
+                  color: isLight ? '#1e293b' : '#ffffff',
                   font: { weight: 'bold', size: 10 },
                   formatter: (value, context) => {
                     if (legendHiddenStatus[tab][context.dataIndex]) return '';
@@ -2172,9 +2501,12 @@
                 legend: {
                   display: isPie,
                   position: 'bottom',
+                  align: 'center', // ✅ CENTRE LEGEND
                   labels: {
                     color: legendTextColor,
                     font: { size: 9 },
+                    padding: 12,
+                    textAlign: 'center',
                     generateLabels: function (chart) {
                       const data = chart.data;
                       if (data.labels.length && data.datasets.length) {
@@ -2914,7 +3246,6 @@
           })
           .join('')}</div></div>`;
       }
-
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -3217,13 +3548,10 @@
           closeModal();
         }
       });
-
       window.onload = function () {
         loadTheme();
         loadAllData();
       };
-
-      // Dengarkan perubahan tema sistem
       window
         .matchMedia('(prefers-color-scheme: dark)')
         .addEventListener('change', (e) => {
