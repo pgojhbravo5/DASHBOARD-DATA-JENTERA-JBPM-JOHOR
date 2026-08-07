@@ -3078,6 +3078,7 @@
         }
         renderMainDashboard();
       }
+
       function renderMainDashboard() {
         const all = getAllAssets();
         document.getElementById('countCfrt').textContent = D.cfrt.length;
@@ -3236,6 +3237,11 @@
           .join('')}</div></div>`;
       }
 
+      // ============================================================
+      // FUNGSI RENDER BALAI CARD GROUP – DIUBAH:
+      // - Ikon ditukar kepada fa-building (bangunan)
+      // - Nama balai diberi warna kuning terang + border hitam (text-shadow)
+      // ============================================================
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -3322,7 +3328,7 @@
           const selStatuses = SF || [];
           cardsHtml = renderEmptyStatusCards(selStatuses);
         }
-        return `<div class="bg-slate-900/60 border border-custom rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold px-0.5" style="color:var(--text-secondary);"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building-shield text-slate-500 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
+        return `<div class="bg-slate-900/60 border border-custom rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold px-0.5" style="color:#fbbf24; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 8px #fbbf24, 0 0 16px #fbbf24;"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building text-yellow-400 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
       }
 
       function generateFRTModalHTML(item) {
