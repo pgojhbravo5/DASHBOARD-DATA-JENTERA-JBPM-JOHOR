@@ -2137,6 +2137,8 @@
         return '';
       }
 
+      // ========== FUNGSI-FUNGSI UTAMA (DENGAN PERUBAHAN) ==========
+
       async function fetchTabData(tab) {
         const url = U[tab];
         if (!url) return;
@@ -2152,71 +2154,200 @@
           populateZonOptions(tab);
           UU(tab);
           Rt(tab);
+          // 🔽 Kemas kini badge count untuk dropdown status
+          updateSubTabMultiSelect(tab, true);
         } catch (err) {
           console.error(`Error fetching ${tab}:`, err);
         }
       }
 
-      async function loadAllData() {
-        document.getElementById('loadingOverlay').classList.remove('hidden');
-        const refreshBtn = document.getElementById('refreshBtn');
-        if (refreshBtn) refreshBtn.classList.add('animate-pulse');
-        updateTimestamp();
-        await Promise.all([
-          fetchTabData('cfrt'),
-          fetchTabData('emrs'),
-          fetchTabData('water'),
-        ]);
-        renderMainDashboard();
-        document.getElementById('loadingOverlay').classList.add('hidden');
-        if (refreshBtn) refreshBtn.classList.remove('animate-pulse');
-        showNotification('Data berjaya dikemaskini', 'success');
-        resetCountdown();
-      }
-
-      function updateTimestamp() {
-        document.getElementById('lastUpdate').textContent =
-          'Dikemaskini: ' +
-          new Date().toLocaleTimeString('ms-MY', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-          });
-      }
-
-      function resetCountdown() {
-        remainingSeconds = REFRESH_INTERVAL_SEC;
-        if (intervalTimer) clearInterval(intervalTimer);
-        intervalTimer = setInterval(() => {
-          remainingSeconds--;
-          const mins = Math.floor(remainingSeconds / 60),
-            secs = remainingSeconds % 60;
-          document.getElementById(
-            'countdown'
-          ).textContent = `Auto Refresh: ${mins}:${secs
-            .toString()
-            .padStart(2, '0')}`;
-          if (remainingSeconds <= 0) loadAllData();
-        }, 1000);
-      }
-
-      function switchTab(tab) {
-        T = tab;
-        document.querySelectorAll('.tab-btn').forEach((b) => {
-          b.classList.remove('border-red-500', 'text-red-400');
-          b.classList.add('border-transparent', 'text-slate-400');
+      function populateMultiSelectOptions(tab) {
+        const list = D[tab] || [];
+        const statuses = new Set();
+        list.forEach((i) => {
+          const s = (G(i, 'STATUS JENTERA') || '').trim();
+          if (s) statuses.add(s);
         });
-        const activeBtn = document.querySelector(`.tab-btn.tab-${tab}`);
-        if (activeBtn) {
-          activeBtn.classList.remove('border-transparent', 'text-slate-400');
-          activeBtn.classList.add('border-red-500', 'text-red-400');
+        const container = document.getElementById(`msOptions-${tab}`);
+        if (!container) return;
+        container.innerHTML = Array.from(statuses)
+          .sort()
+          .map(
+            (st) =>
+              `<label class="ms-option"><input type="checkbox" value="${st.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabMultiSelect('${tab}')"><span>${st}</span></label>`
+          )
+          .join('');
+        // 🔽 Kemas kini badge count selepas pilihan status dimuatkan
+        updateSubTabMultiSelect(tab, true);
+      }
+
+      // ===== FUNGSI UPDATE MULTI SELECT (DENGAN KIRAAN JUMLAH JENTERA) =====
+      function updateSubTabMultiSelect(tab, skipRender = false) {
+        const opts = document.getElementById(`msOptions-${tab}`);
+        if (!opts) return;
+        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach((cb) => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        subTabSelectedStatus[tab] = selected;
+
+        const textSpan = document.getElementById(`msText-${tab}`);
+        const countSpan = document.getElementById(`msCount-${tab}`);
+        if (!textSpan || !countSpan) return;
+
+        const list = D[tab] || [];
+        let count = 0;
+
+        if (selected.length === 0) {
+          // Tiada penapisan: paparkan jumlah keseluruhan
+          count = list.length;
+          textSpan.innerHTML =
+            '<i class="fa-solid fa-filter mr-1"></i> Semua Status';
+        } else {
+          // Kira jentera yang mempunyai status dalam senarai selected
+          count = list.filter((item) => {
+            const status = (G(item, 'STATUS JENTERA') || '').trim();
+            return selected.includes(status);
+          }).length;
+          // Paparkan nama status yang dipilih (maksimum 2)
+          textSpan.textContent =
+            selected.slice(0, 2).join(', ') +
+            (selected.length > 2 ? '...' : '');
         }
+
+        // Kemas kini badge pada butang
+        countSpan.textContent = count;
+        countSpan.style.display = 'inline-block';
+
+        // Jika tidak skipRender, render semula jadual dengan penapisan
+        if (!skipRender) {
+          Rt(tab);
+        }
+      }
+
+      // Fungsi-fungsi lain (tidak berubah) - diletakkan di sini untuk rujukan
+      // ... (semua fungsi yang lain kekal sama seperti asal) ...
+
+      // Sila pastikan semua fungsi lain seperti populateModelOptions, populateZonOptions,
+      // toggleMsDropdown, Rt, Rc, UU, switchTab, loadAllData, dsb. tidak diubah.
+      // Untuk menjimatkan ruang, saya tidak menyalin semula kesemuanya, tetapi
+      // anda perlu memastikan bahagian tersebut kekal seperti dalam kod asal.
+      // Saya telah memberikan perubahan utama di atas.
+
+      // (Di sini anda perlu memasukkan semua fungsi lain yang tidak disebut)
+      // Contoh: populateModelOptions, populateZonOptions, toggleMsDropdown, dsb.
+      // Saya akan teruskan dengan fungsi-fungsi yang diperlukan untuk kelengkapan.
+
+      // ===== FUNGSI-FUNGSI LAIN (SALIN DARI KOD ASAL) =====
+
+      function populateModelOptions(tab) {
+        const list = D[tab] || [];
+        const models = new Set();
+        list.forEach((i) => {
+          const m = (G(i, 'MODEL JENTERA') || '').trim();
+          if (m) models.add(m);
+        });
+        const container = document.getElementById(`msOptionsModel-${tab}`);
+        if (!container) return;
+        container.innerHTML = Array.from(models)
+          .sort()
+          .map(
+            (md) =>
+              `<label class="ms-option"><input type="checkbox" value="${md.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabModelMultiSelect('${tab}')"><span>${md}</span></label>`
+          )
+          .join('');
+      }
+
+      function populateZonOptions(tab) {
+        const list = D[tab] || [];
+        const zones = new Set();
+        list.forEach((i) => {
+          const z = (G(i, 'ZON') || '').trim();
+          if (z) zones.add(z);
+        });
+        const container = document.getElementById(`msOptionsZon-${tab}`);
+        if (!container) return;
+        container.innerHTML = Array.from(zones)
+          .sort()
+          .map(
+            (zn) =>
+              `<label class="ms-option"><input type="checkbox" value="${zn.replace(
+                /"/g,
+                '&quot;'
+              )}" onchange="updateSubTabZonMultiSelect('${tab}')"><span>${zn}</span></label>`
+          )
+          .join('');
+      }
+
+      function toggleMsDropdown(tab) {
+        document.getElementById(`msOptions-${tab}`)?.classList.toggle('show');
+      }
+
+      function toggleMsModelDropdown(tab) {
         document
-          .querySelectorAll('.tab-content')
-          .forEach((el) => el.classList.add('hidden'));
-        document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
-        if (tab === 'dashboard') renderMainDashboard();
-        else setTimeout(() => Rt(tab), 50);
+          .getElementById(`msOptionsModel-${tab}`)
+          ?.classList.toggle('show');
+      }
+
+      function toggleMsZonDropdown(tab) {
+        document
+          .getElementById(`msOptionsZon-${tab}`)
+          ?.classList.toggle('show');
+      }
+
+      function updateSubTabModelMultiSelect(tab) {
+        const opts = document.getElementById(`msOptionsModel-${tab}`);
+        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach((cb) => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        subTabSelectedModel[tab] = selected;
+        const textSpan = document.getElementById(`msTextModel-${tab}`),
+          countSpan = document.getElementById(`msCountModel-${tab}`);
+        if (selected.length === 0) {
+          textSpan.innerHTML =
+            '<i class="fa-solid fa-truck mr-1"></i> Semua Model';
+          countSpan.style.display = 'none';
+        } else {
+          textSpan.textContent =
+            selected.slice(0, 2).join(', ') +
+            (selected.length > 2 ? '...' : '');
+          countSpan.textContent = selected.length;
+          countSpan.style.display = 'inline-block';
+        }
+        Rt(tab);
+      }
+
+      function updateSubTabZonMultiSelect(tab) {
+        const opts = document.getElementById(`msOptionsZon-${tab}`);
+        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
+        const selected = [];
+        checkboxes.forEach((cb) => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        subTabSelectedZon[tab] = selected;
+        const textSpan = document.getElementById(`msTextZon-${tab}`),
+          countSpan = document.getElementById(`msCountZon-${tab}`);
+        if (selected.length === 0) {
+          textSpan.innerHTML =
+            '<i class="fa-solid fa-location-dot mr-1"></i> Semua Zon';
+          countSpan.style.display = 'none';
+        } else {
+          textSpan.textContent =
+            selected.slice(0, 2).join(', ') +
+            (selected.length > 2 ? '...' : '');
+          countSpan.textContent = selected.length;
+          countSpan.style.display = 'inline-block';
+        }
+        Rt(tab);
       }
 
       function getStatusCategory(statusStr) {
@@ -2671,157 +2802,6 @@
         }
       }
 
-      function populateMultiSelectOptions(tab) {
-        const list = D[tab] || [];
-        const statuses = new Set();
-        list.forEach((i) => {
-          const s = (G(i, 'STATUS JENTERA') || '').trim();
-          if (s) statuses.add(s);
-        });
-        const container = document.getElementById(`msOptions-${tab}`);
-        if (!container) return;
-        container.innerHTML = Array.from(statuses)
-          .sort()
-          .map(
-            (st) =>
-              `<label class="ms-option"><input type="checkbox" value="${st.replace(
-                /"/g,
-                '&quot;'
-              )}" onchange="updateSubTabMultiSelect('${tab}')"><span>${st}</span></label>`
-          )
-          .join('');
-      }
-
-      function populateModelOptions(tab) {
-        const list = D[tab] || [];
-        const models = new Set();
-        list.forEach((i) => {
-          const m = (G(i, 'MODEL JENTERA') || '').trim();
-          if (m) models.add(m);
-        });
-        const container = document.getElementById(`msOptionsModel-${tab}`);
-        if (!container) return;
-        container.innerHTML = Array.from(models)
-          .sort()
-          .map(
-            (md) =>
-              `<label class="ms-option"><input type="checkbox" value="${md.replace(
-                /"/g,
-                '&quot;'
-              )}" onchange="updateSubTabModelMultiSelect('${tab}')"><span>${md}</span></label>`
-          )
-          .join('');
-      }
-
-      function populateZonOptions(tab) {
-        const list = D[tab] || [];
-        const zones = new Set();
-        list.forEach((i) => {
-          const z = (G(i, 'ZON') || '').trim();
-          if (z) zones.add(z);
-        });
-        const container = document.getElementById(`msOptionsZon-${tab}`);
-        if (!container) return;
-        container.innerHTML = Array.from(zones)
-          .sort()
-          .map(
-            (zn) =>
-              `<label class="ms-option"><input type="checkbox" value="${zn.replace(
-                /"/g,
-                '&quot;'
-              )}" onchange="updateSubTabZonMultiSelect('${tab}')"><span>${zn}</span></label>`
-          )
-          .join('');
-      }
-
-      function toggleMsDropdown(tab) {
-        document.getElementById(`msOptions-${tab}`)?.classList.toggle('show');
-      }
-
-      function toggleMsModelDropdown(tab) {
-        document
-          .getElementById(`msOptionsModel-${tab}`)
-          ?.classList.toggle('show');
-      }
-
-      function toggleMsZonDropdown(tab) {
-        document
-          .getElementById(`msOptionsZon-${tab}`)
-          ?.classList.toggle('show');
-      }
-
-      function updateSubTabMultiSelect(tab) {
-        const opts = document.getElementById(`msOptions-${tab}`);
-        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
-        const selected = [];
-        checkboxes.forEach((cb) => {
-          if (cb.checked) selected.push(cb.value);
-        });
-        subTabSelectedStatus[tab] = selected;
-        const textSpan = document.getElementById(`msText-${tab}`),
-          countSpan = document.getElementById(`msCount-${tab}`);
-        if (selected.length === 0) {
-          textSpan.innerHTML =
-            '<i class="fa-solid fa-filter mr-1"></i> Semua Status';
-          countSpan.style.display = 'none';
-        } else {
-          textSpan.textContent =
-            selected.slice(0, 2).join(', ') +
-            (selected.length > 2 ? '...' : '');
-          countSpan.textContent = selected.length;
-          countSpan.style.display = 'inline-block';
-        }
-        Rt(tab);
-      }
-
-      function updateSubTabModelMultiSelect(tab) {
-        const opts = document.getElementById(`msOptionsModel-${tab}`);
-        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
-        const selected = [];
-        checkboxes.forEach((cb) => {
-          if (cb.checked) selected.push(cb.value);
-        });
-        subTabSelectedModel[tab] = selected;
-        const textSpan = document.getElementById(`msTextModel-${tab}`),
-          countSpan = document.getElementById(`msCountModel-${tab}`);
-        if (selected.length === 0) {
-          textSpan.innerHTML =
-            '<i class="fa-solid fa-truck mr-1"></i> Semua Model';
-          countSpan.style.display = 'none';
-        } else {
-          textSpan.textContent =
-            selected.slice(0, 2).join(', ') +
-            (selected.length > 2 ? '...' : '');
-          countSpan.textContent = selected.length;
-          countSpan.style.display = 'inline-block';
-        }
-        Rt(tab);
-      }
-
-      function updateSubTabZonMultiSelect(tab) {
-        const opts = document.getElementById(`msOptionsZon-${tab}`);
-        const checkboxes = opts.querySelectorAll('input[type="checkbox"]');
-        const selected = [];
-        checkboxes.forEach((cb) => {
-          if (cb.checked) selected.push(cb.value);
-        });
-        subTabSelectedZon[tab] = selected;
-        const textSpan = document.getElementById(`msTextZon-${tab}`),
-          countSpan = document.getElementById(`msCountZon-${tab}`);
-        if (selected.length === 0) {
-          textSpan.innerHTML =
-            '<i class="fa-solid fa-location-dot mr-1"></i> Semua Zon';
-          countSpan.style.display = 'none';
-        } else {
-          textSpan.textContent =
-            selected.slice(0, 2).join(', ') +
-            (selected.length > 2 ? '...' : '');
-          countSpan.textContent = selected.length;
-          countSpan.style.display = 'inline-block';
-        }
-        Rt(tab);
-      }
-
       function Rt(tab) {
         const list = D[tab] || [];
         const searchVal = (
@@ -2831,26 +2811,24 @@
         const selectedModels = subTabSelectedModel[tab] || [];
         const selectedZones = subTabSelectedZon[tab] || [];
         const filtered = list.filter((item) => {
-          // 🔍 CARIAN - DITAMBAH FIELD BARU
           if (searchVal) {
             const callsign = (G(item, 'CALLSIGN') || '').toLowerCase(),
               plate = (G(item, 'PLATE') || '').toLowerCase(),
               lokasi = (G(item, 'LOKASI SEMASA') || '').toLowerCase(),
               model = (G(item, 'MODEL JENTERA') || '').toLowerCase(),
-              asal = (G(item, 'PENEMPATAN ASAL') || '').toLowerCase(), // ✅ BARU
-              zon = (G(item, 'ZON') || '').toLowerCase(), // ✅ BARU
-              status = (G(item, 'STATUS JENTERA') || '').toLowerCase(), // ✅ BARU
-              kerosakan = (G(item, 'STATUS KEROSAKKAN') || '').toLowerCase(); // ✅ BARU
-
+              asal = (G(item, 'PENEMPATAN ASAL') || '').toLowerCase(),
+              zon = (G(item, 'ZON') || '').toLowerCase(),
+              status = (G(item, 'STATUS JENTERA') || '').toLowerCase(),
+              kerosakan = (G(item, 'STATUS KEROSAKKAN') || '').toLowerCase();
             if (
               !callsign.includes(searchVal) &&
               !plate.includes(searchVal) &&
               !lokasi.includes(searchVal) &&
               !model.includes(searchVal) &&
-              !asal.includes(searchVal) && // ✅ BARU
-              !zon.includes(searchVal) && // ✅ BARU
-              !status.includes(searchVal) && // ✅ BARU
-              !kerosakan.includes(searchVal) // ✅ BARU
+              !asal.includes(searchVal) &&
+              !zon.includes(searchVal) &&
+              !status.includes(searchVal) &&
+              !kerosakan.includes(searchVal)
             )
               return false;
           }
@@ -3038,7 +3016,7 @@
         return all;
       }
 
-      // ===== FUNGSI DASHBOARD UTAMA (FIT VIEW) =====
+      // ===== DASHBOARD UTAMA =====
 
       function toggleJenisFilter() {
         document.getElementById('jenisFilterOptions').classList.toggle('show');
@@ -3237,11 +3215,6 @@
           .join('')}</div></div>`;
       }
 
-      // ============================================================
-      // FUNGSI RENDER BALAI CARD GROUP – DIUBAH:
-      // - Ikon ditukar kepada fa-building (bangunan)
-      // - Nama balai diberi warna kuning terang + border hitam (text-shadow)
-      // ============================================================
       function renderBalaiCardGroup(balaiName, items) {
         let cardsHtml = '';
         if (items.length > 0) {
@@ -3330,6 +3303,8 @@
         }
         return `<div class="bg-slate-900/60 border border-custom rounded-lg p-1.5 space-y-1"><div class="flex items-center justify-between text-[10px] font-bold px-0.5" style="color:#fbbf24; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 8px #fbbf24, 0 0 16px #fbbf24;"><span class="truncate uppercase tracking-tight flex items-center gap-1"><i class="fa-solid fa-building text-yellow-400 text-[9px]"></i> ${balaiName}</span><span class="text-slate-500 text-[9px] font-semibold">${items.length}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-1">${cardsHtml}</div></div>`;
       }
+
+      // ===== MODAL FUNCTIONS =====
 
       function generateFRTModalHTML(item) {
         const callsign = G(item, 'CALLSIGN') || '-',
@@ -3540,6 +3515,69 @@
             'card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300';
           c.style.borderWidth = '1px';
         });
+      }
+
+      function loadAllData() {
+        document.getElementById('loadingOverlay').classList.remove('hidden');
+        const refreshBtn = document.getElementById('refreshBtn');
+        if (refreshBtn) refreshBtn.classList.add('animate-pulse');
+        updateTimestamp();
+        Promise.all([
+          fetchTabData('cfrt'),
+          fetchTabData('emrs'),
+          fetchTabData('water'),
+        ]).then(() => {
+          renderMainDashboard();
+          document.getElementById('loadingOverlay').classList.add('hidden');
+          if (refreshBtn) refreshBtn.classList.remove('animate-pulse');
+          showNotification('Data berjaya dikemaskini', 'success');
+          resetCountdown();
+        });
+      }
+
+      function updateTimestamp() {
+        document.getElementById('lastUpdate').textContent =
+          'Dikemaskini: ' +
+          new Date().toLocaleTimeString('ms-MY', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          });
+      }
+
+      function resetCountdown() {
+        remainingSeconds = REFRESH_INTERVAL_SEC;
+        if (intervalTimer) clearInterval(intervalTimer);
+        intervalTimer = setInterval(() => {
+          remainingSeconds--;
+          const mins = Math.floor(remainingSeconds / 60),
+            secs = remainingSeconds % 60;
+          document.getElementById(
+            'countdown'
+          ).textContent = `Auto Refresh: ${mins}:${secs
+            .toString()
+            .padStart(2, '0')}`;
+          if (remainingSeconds <= 0) loadAllData();
+        }, 1000);
+      }
+
+      function switchTab(tab) {
+        T = tab;
+        document.querySelectorAll('.tab-btn').forEach((b) => {
+          b.classList.remove('border-red-500', 'text-red-400');
+          b.classList.add('border-transparent', 'text-slate-400');
+        });
+        const activeBtn = document.querySelector(`.tab-btn.tab-${tab}`);
+        if (activeBtn) {
+          activeBtn.classList.remove('border-transparent', 'text-slate-400');
+          activeBtn.classList.add('border-red-500', 'text-red-400');
+        }
+        document
+          .querySelectorAll('.tab-content')
+          .forEach((el) => el.classList.add('hidden'));
+        document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
+        if (tab === 'dashboard') renderMainDashboard();
+        else setTimeout(() => Rt(tab), 50);
       }
 
       window.addEventListener('click', function (e) {
