@@ -93,6 +93,33 @@
         background: rgba(241, 245, 249, 0.7);
       }
 
+      /* Zon auto-scroll – setiap kotak zon akan menatal sendiri */
+      #zoneContainer > div {
+        overflow-y: auto;
+        scroll-behavior: smooth;
+        max-height: 600px; /* hadkan ketinggian agar skrol kelihatan */
+        transition: max-height 0.3s ease;
+      }
+      /* Kad dalam grid seperti biasa */
+      #zoneContainer {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 0.75rem;
+        align-items: start;
+      }
+      #zoneContainer > div {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.25rem;
+        background: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+      }
+      #zoneContainer > div > div {
+        display: contents; /* kad-kad terus menjadi item grid di dalam pembalut */
+      }
+
       @keyframes sirenRed {
         0%,
         100% {
@@ -178,179 +205,6 @@
 
       .jentera-card {
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .jentera-card:hover {
-        transform: translateY(-2px) scale(1.02);
-        border-color: #64748b;
-        box-shadow: 0 6px 20px var(--shadow-color),
-          0 0 12px rgba(239, 68, 68, 0.2);
-        z-index: 10;
-      }
-
-      @keyframes bellShake {
-        0%,
-        100% {
-          transform: rotate(0deg);
-        }
-        10%,
-        30%,
-        50%,
-        70%,
-        90% {
-          transform: rotate(-5deg);
-        }
-        20%,
-        40%,
-        60%,
-        80% {
-          transform: rotate(5deg);
-        }
-      }
-      .bell-animate {
-        animation: bellShake 2s ease-in-out infinite;
-      }
-
-      ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-      }
-      ::-webkit-scrollbar-track {
-        background: var(--bg-main);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
-      }
-
-      .ms-dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      .ms-select-btn {
-        background-color: var(--bg-input);
-        border: 1px solid var(--border-color);
-        color: var(--text-primary);
-        padding: 0.35rem 0.65rem;
-        border-radius: 0.375rem;
-        font-size: 0.75rem;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-        min-width: 130px;
-        transition: all 0.2s;
-      }
-      .ms-select-btn:hover {
-        border-color: #64748b;
-      }
-      .ms-options {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        margin-top: 0.25rem;
-        background-color: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 0.375rem;
-        z-index: 50;
-        min-width: 190px;
-        max-height: 220px;
-        overflow-y: auto;
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        padding: 0.375rem;
-      }
-      .ms-options.show {
-        display: block;
-      }
-      .ms-option {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.35rem 0.5rem;
-        border-radius: 0.25rem;
-        cursor: pointer;
-        font-size: 0.75rem;
-        color: var(--text-secondary);
-        transition: background 0.15s;
-        user-select: none;
-      }
-      .ms-option:hover {
-        background-color: var(--card-hover-bg);
-        color: var(--text-primary);
-      }
-      .ms-option input[type='checkbox'] {
-        accent-color: #ef4444;
-        width: 0.875rem;
-        height: 0.875rem;
-        cursor: pointer;
-      }
-      .ms-option input[type='checkbox']:not(:checked) ~ span {
-        text-decoration: line-through;
-        opacity: 0.5;
-      }
-      .ms-option input[type='checkbox']:checked ~ span {
-        text-decoration: none;
-        opacity: 1;
-      }
-
-      .badge-status {
-        padding: 0.15rem 0.4rem;
-        border-radius: 0.25rem;
-        font-size: 0.65rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.025em;
-        display: inline-block;
-      }
-      .badge-baik {
-        background-color: rgba(34, 197, 94, 0.2);
-        color: #4ade80;
-        border: 1px solid rgba(34, 197, 94, 0.4);
-      }
-      .badge-minor {
-        background-color: rgba(234, 179, 8, 0.2);
-        color: #fde047;
-        border: 1px solid rgba(234, 179, 8, 0.4);
-      }
-      .badge-rosak {
-        background-color: rgba(239, 68, 68, 0.2);
-        color: #fca5a5;
-        border: 1px solid rgba(239, 68, 68, 0.4);
-      }
-      .badge-pulang {
-        background-color: rgba(59, 130, 246, 0.2);
-        color: #93c5fd;
-        border: 1px solid rgba(59, 130, 246, 0.4);
-      }
-      .badge-unknown {
-        background-color: rgba(148, 163, 184, 0.2);
-        color: #cbd5e1;
-        border: 1px solid rgba(148, 163, 184, 0.4);
-      }
-
-      .plate-number {
-        background-color: #000000;
-        color: #ffffff;
-        border: 1px solid #9ca3af;
-        border-radius: 0.2rem;
-        padding: 0.05rem 0.3rem;
-        font-family: 'Orbitron', monospace;
-        font-weight: 800;
-        letter-spacing: 0.5px;
-        box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2),
-          0 1px 3px rgba(0, 0, 0, 0.5);
-        display: inline-block;
-        font-size: 0.68rem;
-        text-shadow: 0 0 1px #fff;
-        line-height: 1.1;
-      }
-
-      .jentera-card {
         background-color: var(--bg-card-alt);
         border: 1px solid var(--border-color);
         border-radius: 0.375rem;
@@ -362,6 +216,13 @@
         position: relative;
         overflow: hidden;
         min-width: 0;
+      }
+      .jentera-card:hover {
+        transform: translateY(-2px) scale(1.02);
+        border-color: #64748b;
+        box-shadow: 0 6px 20px var(--shadow-color),
+          0 0 12px rgba(239, 68, 68, 0.2);
+        z-index: 10;
       }
       .jentera-card.status-glow-b {
         border-left: 3px solid #22c55e;
@@ -422,12 +283,86 @@
         color: #fff !important;
       }
 
-      body.fullscreen-mode .tab-nav-header,
-      body.fullscreen-mode .sub-header-controls {
-        display: none !important;
+      .badge-status {
+        padding: 0.15rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+        display: inline-block;
       }
-      body.fullscreen-mode #zoneContainer {
-        gap: 0.5rem;
+      .badge-baik {
+        background-color: rgba(34, 197, 94, 0.2);
+        color: #4ade80;
+        border: 1px solid rgba(34, 197, 94, 0.4);
+      }
+      .badge-minor {
+        background-color: rgba(234, 179, 8, 0.2);
+        color: #fde047;
+        border: 1px solid rgba(234, 179, 8, 0.4);
+      }
+      .badge-rosak {
+        background-color: rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.4);
+      }
+      .badge-pulang {
+        background-color: rgba(59, 130, 246, 0.2);
+        color: #93c5fd;
+        border: 1px solid rgba(59, 130, 246, 0.4);
+      }
+      .badge-unknown {
+        background-color: rgba(148, 163, 184, 0.2);
+        color: #cbd5e1;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      .plate-number {
+        background-color: #000000;
+        color: #ffffff;
+        border: 1px solid #9ca3af;
+        border-radius: 0.2rem;
+        padding: 0.05rem 0.3rem;
+        font-family: 'Orbitron', monospace;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2),
+          0 1px 3px rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        font-size: 0.68rem;
+        text-shadow: 0 0 1px #fff;
+        line-height: 1.1;
+      }
+
+      .header-bg {
+        background-color: var(--bg-header);
+        border-color: var(--border-color);
+      }
+      .nav-bg {
+        background-color: var(--bg-header);
+        border-color: var(--border-color);
+      }
+      .card-bg {
+        background-color: var(--bg-card);
+        border-color: var(--border-color);
+      }
+      .table-header-bg {
+        background-color: var(--bg-table-header);
+      }
+      .input-bg {
+        background-color: var(--bg-input);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+      }
+      .text-secondary-custom {
+        color: var(--text-secondary);
+      }
+      .text-muted-custom {
+        color: var(--text-muted);
+      }
+      .border-custom {
+        border-color: var(--border-color);
       }
 
       .modal-overlay {
@@ -507,34 +442,120 @@
         border-radius: 2px;
       }
 
-      .header-bg {
-        background-color: var(--bg-header);
-        border-color: var(--border-color);
+      .ms-dropdown {
+        position: relative;
+        display: inline-block;
       }
-      .nav-bg {
-        background-color: var(--bg-header);
-        border-color: var(--border-color);
-      }
-      .card-bg {
-        background-color: var(--bg-card);
-        border-color: var(--border-color);
-      }
-      .table-header-bg {
-        background-color: var(--bg-table-header);
-      }
-      .input-bg {
+      .ms-select-btn {
         background-color: var(--bg-input);
-        border-color: var(--border-color);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        padding: 0.35rem 0.65rem;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        min-width: 130px;
+        transition: all 0.2s;
+      }
+      .ms-select-btn:hover {
+        border-color: #64748b;
+      }
+      .ms-options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 0.25rem;
+        background-color: var(--bg-card);
+        border: 1px solid var(--border-color);
+        border-radius: 0.375rem;
+        z-index: 50;
+        min-width: 190px;
+        max-height: 220px;
+        overflow-y: auto;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        padding: 0.375rem;
+      }
+      .ms-options.show {
+        display: block;
+      }
+      .ms-option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        transition: background 0.15s;
+        user-select: none;
+      }
+      .ms-option:hover {
+        background-color: var(--card-hover-bg);
         color: var(--text-primary);
       }
-      .text-secondary-custom {
-        color: var(--text-secondary);
+      .ms-option input[type='checkbox'] {
+        accent-color: #ef4444;
+        width: 0.875rem;
+        height: 0.875rem;
+        cursor: pointer;
       }
-      .text-muted-custom {
-        color: var(--text-muted);
+      .ms-option input[type='checkbox']:not(:checked) ~ span {
+        text-decoration: line-through;
+        opacity: 0.5;
       }
-      .border-custom {
-        border-color: var(--border-color);
+      .ms-option input[type='checkbox']:checked ~ span {
+        text-decoration: none;
+        opacity: 1;
+      }
+
+      @keyframes bellShake {
+        0%,
+        100% {
+          transform: rotate(0deg);
+        }
+        10%,
+        30%,
+        50%,
+        70%,
+        90% {
+          transform: rotate(-5deg);
+        }
+        20%,
+        40%,
+        60%,
+        80% {
+          transform: rotate(5deg);
+        }
+      }
+      .bell-animate {
+        animation: bellShake 2s ease-in-out infinite;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-main);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      body.fullscreen-mode .tab-nav-header,
+      body.fullscreen-mode .sub-header-controls {
+        display: none !important;
       }
 
       @page {
@@ -581,7 +602,6 @@
         .copy-btn,
         .ms-dropdown,
         #dashboardFilters,
-        #slideshowNav,
         button:not(.keep-in-print),
         .tab-btn,
         [class*='sticky'] {
@@ -1645,12 +1665,6 @@
           </div>
           <div class="flex items-center gap-2">
             <button
-              onclick="toggleSlideshow()"
-              class="px-2.5 py-1 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-lg shadow-md transition flex items-center gap-1"
-            >
-              <i class="fa-solid fa-play"></i> Slideshow
-            </button>
-            <button
               onclick="toggleFullscreenDashboard()"
               id="zoomInBtn"
               class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1"
@@ -1658,40 +1672,6 @@
               <i class="fa-solid fa-expand"></i> Skrin Penuh Fit
             </button>
           </div>
-        </div>
-        <div
-          id="slideshowNav"
-          class="hidden bg-slate-800 border border-slate-700 rounded-xl p-2 flex items-center justify-center gap-3 flex-wrap"
-        >
-          <button
-            onclick="prevZone()"
-            class="px-2.5 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold"
-          >
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <span id="slideshowCounter" class="text-xs font-bold text-slate-200"
-            >ZON 1 / 5</span
-          >
-          <button
-            onclick="nextZone()"
-            class="px-3 py-1 bg-slate-700 hover:bg-slate-600 text-white rounded text-xs font-bold"
-          >
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-          <button
-            onclick="toggleAutoSlideshow()"
-            id="slideshowAutoBtn"
-            class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-xs font-bold flex items-center gap-1"
-          >
-            <i class="fa-solid fa-circle-play"></i
-            ><span id="autoPlayLabel">Auto Play</span>
-          </button>
-          <button
-            onclick="stopSlideshow()"
-            class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-bold flex items-center gap-1"
-          >
-            <i class="fa-solid fa-square-stop"></i> Stop
-          </button>
         </div>
         <div
           id="dashStats"
@@ -1772,10 +1752,6 @@
         emrs: { s: null, z: null, m: null },
         water: { s: null, z: null, m: null },
       };
-      let slideshowActive = false,
-        slideshowAuto = false,
-        slideshowInterval = null,
-        currentSlideZone = 0;
       let legendHiddenStatus = { cfrt: [], emrs: [], water: [] };
       let legendHiddenStatusModel = { cfrt: [], emrs: [], water: [] };
       let legendHiddenStatusZon = { cfrt: [], emrs: [], water: [] };
@@ -2387,9 +2363,7 @@
       }
 
       // ============================================================
-      // RENDER CHARTS (Rc) — dengan penambahbaikan:
-      // - Legend status pie: paparkan SEMUA status (tanpa penapisan)
-      // - Warna legend zon: bar biru, garis hijau/kuning/merah
+      // RENDER CHARTS (Rc)
       // ============================================================
       function Rc(tab, currentList) {
         const list = currentList || D[tab] || [];
@@ -2463,7 +2437,6 @@
                     generateLabels: function (chart) {
                       const data = chart.data;
                       if (data.labels.length && data.datasets.length) {
-                        // Paparkan SEMUA status tanpa penapisan
                         return data.labels.map((label, i) => {
                           const isHidden =
                             legendHiddenStatus[tab] &&
@@ -2543,7 +2516,7 @@
           });
         }
 
-        // ---------- 2. Model Chart (pie/bar) - label % saiz 8, tiada bold ----------
+        // ---------- 2. Model Chart (pie/bar) ----------
         const mc = {};
         list.forEach((i) => {
           const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
@@ -2763,7 +2736,7 @@
                   label: 'JUMLAH JENTERA',
                   data: sortedTotal,
                   type: 'bar',
-                  backgroundColor: 'rgba(59, 130, 246, 0.6)', // biru terang
+                  backgroundColor: 'rgba(59, 130, 246, 0.6)',
                   borderColor: '#3b82f6',
                   borderWidth: 1,
                   borderRadius: 4,
@@ -3198,6 +3171,84 @@
         renderMainDashboard();
       }
 
+      // ---------- AUTO SCROLL untuk semua zon ----------
+      let autoScrollIntervals = []; // simpan { interval, element } untuk setiap zon
+
+      function startAllZoneAutoScroll() {
+        // Hentikan semua yang sedia ada
+        stopAllZoneAutoScroll();
+
+        const zoneContainers = document.querySelectorAll(
+          '#zoneContainer > div'
+        );
+        if (!zoneContainers.length) return;
+
+        // Kelajuan asal 1 piksel setiap langkah (1x)
+        const speed = 1;
+
+        zoneContainers.forEach((zone) => {
+          // Pastikan elemen boleh di-scroll
+          if (zone.scrollHeight <= zone.clientHeight) {
+            // Jika kandungan tidak melebihi ketinggian, tiada keperluan scroll
+            return;
+          }
+
+          // Mulakan interval untuk zon ini
+          const interval = setInterval(() => {
+            // Jika tetikus berada di atas zon, kita tidak tatal (dikawal oleh event)
+            // Tetapi kita sudah ada mekanisme pause melalui event mouseenter/mouseleave
+            // Kita semak flag per-zon: kita boleh gunakan atribut data
+            if (zone.dataset.scrollPaused === 'true') return;
+            if (zone.scrollTop + zone.clientHeight >= zone.scrollHeight - 2) {
+              zone.scrollTop = 0;
+            } else {
+              zone.scrollTop += speed;
+            }
+          }, 50); // 20 fps
+
+          // Simpan rujukan
+          autoScrollIntervals.push({ interval, element: zone });
+
+          // Pasang event untuk pause/resume
+          const pauseHandler = () => {
+            zone.dataset.scrollPaused = 'true';
+          };
+          const resumeHandler = () => {
+            zone.dataset.scrollPaused = 'false';
+          };
+
+          // Simpan handler untuk pembersihan nanti
+          zone._pauseHandler = pauseHandler;
+          zone._resumeHandler = resumeHandler;
+
+          zone.addEventListener('mouseenter', pauseHandler);
+          zone.addEventListener('mouseleave', resumeHandler);
+          // Sokongan sentuh
+          zone.addEventListener('touchstart', pauseHandler);
+          zone.addEventListener('touchend', resumeHandler);
+        });
+      }
+
+      function stopAllZoneAutoScroll() {
+        autoScrollIntervals.forEach((item) => {
+          clearInterval(item.interval);
+          const el = item.element;
+          if (el) {
+            el.removeEventListener('mouseenter', el._pauseHandler);
+            el.removeEventListener('mouseleave', el._resumeHandler);
+            el.removeEventListener('touchstart', el._pauseHandler);
+            el.removeEventListener('touchend', el._resumeHandler);
+            delete el._pauseHandler;
+            delete el._resumeHandler;
+            delete el.dataset.scrollPaused;
+          }
+        });
+        autoScrollIntervals = [];
+      }
+
+      // ============================================================
+      // RENDER MAIN DASHBOARD - dengan auto-scroll
+      // ============================================================
       function renderMainDashboard() {
         const all = getAllAssets();
         document.getElementById('countCfrt').textContent = D.cfrt.length;
@@ -3262,7 +3313,7 @@
           Object.values(dataZon).forEach(
             (arr) => (totalItemsInZone += arr.length)
           );
-          html += `<div class="card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300" style="border-width:1px;"><div class="flex items-center justify-between pb-1 border-b border-custom"><h3 class="text-xs font-extrabold flex items-center gap-1.5" style="color:var(--text-primary);"><span class="w-2 h-2 rounded-full bg-red-500 siren-red shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-1.5 flex-1">`;
+          html += `<div class="card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300" style="border-width:1px; max-height: 550px;"><div class="flex items-center justify-between pb-1 border-b border-custom"><h3 class="text-xs font-extrabold flex items-center gap-1.5" style="color:var(--text-primary);"><span class="w-2 h-2 rounded-full bg-red-500 siren-red shrink-0"></span>${zoneName}</h3><span class="bg-red-600/20 text-red-400 border border-red-500/30 text-[10px] px-2 py-0.2 rounded-full font-bold">${totalItemsInZone}</span></div><div class="space-y-1.5 flex-1 overflow-y-auto" style="max-height: 500px;">`;
           if (zoneName === 'BENGKEL KJT BOMBA') {
             const sortedBalai = Object.keys(dataZon).sort();
             if (sortedBalai.length === 0)
@@ -3303,6 +3354,9 @@
           html += `</div></div>`;
         });
         document.getElementById('zoneContainer').innerHTML = html;
+
+        // Mulakan auto-scroll untuk semua zon
+        startAllZoneAutoScroll();
       }
 
       function renderEmptyStatusCards(selectedStatuses) {
@@ -3524,7 +3578,7 @@
               <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-700/50"><span class="text-[10px] text-slate-400 uppercase font-semibold block mb-2">Status Kerosakan / Catatan</span><div class="bg-slate-900/80 rounded-lg p-3 border border-slate-700/30 max-h-40 overflow-y-auto"><p class="text-xs text-slate-200 leading-relaxed whitespace-pre-wrap break-words">${kerosakan}</p></div></div>
               <div class="flex justify-end pt-1"><button onclick="copySingleAssetInfo('${encodeURIComponent(
                 JSON.stringify(item)
-              )}', this)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg border border-slate-600 transition flex items-center gap-2 text-xs shadow-lg"><i class="fa-regular fa-copy"></i> Salin Maklumat Jentera</button></div>
+              )}', this)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg border border-slate-600 transition flex-items-center gap-2 text-xs shadow-lg"><i class="fa-regular fa-copy"></i> Salin Maklumat Jentera</button></div>
             </div>
           </div>`;
       }
@@ -3665,7 +3719,7 @@
       }
 
       // ============================================================
-      // FULLSCREEN / SLIDESHOW
+      // FULLSCREEN
       // ============================================================
       function toggleFullscreenDashboard() {
         document.body.classList.toggle('fullscreen-mode');
@@ -3678,74 +3732,6 @@
             document.exitFullscreen().catch(() => {});
           }
         }
-      }
-
-      function toggleSlideshow() {
-        slideshowActive = !slideshowActive;
-        const nav = document.getElementById('slideshowNav');
-        if (slideshowActive) {
-          nav.classList.remove('hidden');
-          showSlideZone(0);
-        } else {
-          nav.classList.add('hidden');
-          stopSlideshow();
-          renderMainDashboard();
-        }
-      }
-
-      function showSlideZone(idx) {
-        currentSlideZone = (idx + zoneOrder.length) % zoneOrder.length;
-        document.getElementById('slideshowCounter').textContent = `${
-          zoneOrder[currentSlideZone]
-        } (${currentSlideZone + 1}/${zoneOrder.length})`;
-        const containers = document.querySelectorAll('#zoneContainer > div');
-        containers.forEach((c, i) => {
-          if (i === currentSlideZone) {
-            c.style.display = 'block';
-            c.className = 'col-span-full max-w-2xl mx-auto w-full';
-          } else {
-            c.style.display = 'none';
-          }
-        });
-      }
-
-      function prevZone() {
-        showSlideZone(currentSlideZone - 1);
-      }
-
-      function nextZone() {
-        showSlideZone(currentSlideZone + 1);
-      }
-
-      function toggleAutoSlideshow() {
-        slideshowAuto = !slideshowAuto;
-        const btn = document.getElementById('slideshowAutoBtn'),
-          label = document.getElementById('autoPlayLabel');
-        if (slideshowAuto) {
-          btn.classList.replace('bg-purple-600', 'bg-amber-600');
-          btn.classList.replace('hover:bg-purple-700', 'hover:bg-amber-700');
-          label.textContent = 'Pause';
-          slideshowInterval = setInterval(() => nextZone(), 5000);
-        } else {
-          btn.classList.replace('bg-amber-600', 'bg-purple-600');
-          btn.classList.replace('hover:bg-amber-700', 'hover:bg-purple-700');
-          label.textContent = 'Auto Play';
-          if (slideshowInterval) clearInterval(slideshowInterval);
-        }
-      }
-
-      function stopSlideshow() {
-        slideshowActive = false;
-        slideshowAuto = false;
-        if (slideshowInterval) clearInterval(slideshowInterval);
-        document.getElementById('slideshowNav').classList.add('hidden');
-        const containers = document.querySelectorAll('#zoneContainer > div');
-        containers.forEach((c) => {
-          c.style.display = 'flex';
-          c.className =
-            'card-bg border-custom rounded-xl p-2 flex flex-col space-y-2 h-full transition-colors duration-300';
-          c.style.borderWidth = '1px';
-        });
       }
 
       // ============================================================
@@ -3810,8 +3796,15 @@
           .querySelectorAll('.tab-content')
           .forEach((el) => el.classList.add('hidden'));
         document.getElementById(`tab-${tab}`)?.classList.remove('hidden');
-        if (tab === 'dashboard') renderMainDashboard();
-        else setTimeout(() => Rt(tab), 50);
+        if (tab === 'dashboard') {
+          // render dan mulakan auto-scroll
+          renderMainDashboard();
+        } else {
+          // hentikan auto-scroll jika meninggalkan dashboard
+          stopAllZoneAutoScroll();
+          // render tab lain
+          setTimeout(() => Rt(tab), 50);
+        }
       }
 
       // ============================================================
