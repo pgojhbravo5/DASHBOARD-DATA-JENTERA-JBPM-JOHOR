@@ -1002,11 +1002,23 @@
               <input
                 type="text"
                 id="searchInput-cfrt"
-                oninput="Rt('cfrt')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
+                class="w-full input-bg border rounded-lg pl-8 pr-8 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
+              <button
+                onclick="clearSearch('cfrt')"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1 rounded transition"
+                title="Padam carian"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             </div>
+            <button
+              onclick="doSearch('cfrt')"
+              class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow-md transition flex items-center gap-1.5"
+            >
+              <i class="fa-solid fa-search"></i> Cari
+            </button>
             <div class="ms-dropdown" id="msDropdown-cfrt">
               <button class="ms-select-btn" onclick="toggleMsDropdown('cfrt')">
                 <span id="msText-cfrt"
@@ -1191,11 +1203,23 @@
               <input
                 type="text"
                 id="searchInput-emrs"
-                oninput="Rt('emrs')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
+                class="w-full input-bg border rounded-lg pl-8 pr-8 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
+              <button
+                onclick="clearSearch('emrs')"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1 rounded transition"
+                title="Padam carian"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             </div>
+            <button
+              onclick="doSearch('emrs')"
+              class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-md transition flex items-center gap-1.5"
+            >
+              <i class="fa-solid fa-search"></i> Cari
+            </button>
             <div class="ms-dropdown" id="msDropdown-emrs">
               <button class="ms-select-btn" onclick="toggleMsDropdown('emrs')">
                 <span id="msText-emrs"
@@ -1382,11 +1406,23 @@
               <input
                 type="text"
                 id="searchInput-water"
-                oninput="Rt('water')"
                 placeholder="Cari Callsign, Plat, Lokasi..."
-                class="w-full input-bg border rounded-lg pl-8 pr-3 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
+                class="w-full input-bg border rounded-lg pl-8 pr-8 py-1.5 outline-none focus:border-slate-500 text-xs transition-colors duration-300"
               />
+              <button
+                onclick="clearSearch('water')"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs p-1 rounded transition"
+                title="Padam carian"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             </div>
+            <button
+              onclick="doSearch('water')"
+              class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold rounded-lg shadow-md transition flex items-center gap-1.5"
+            >
+              <i class="fa-solid fa-search"></i> Cari
+            </button>
             <div class="ms-dropdown" id="msDropdown-water">
               <button class="ms-select-btn" onclick="toggleMsDropdown('water')">
                 <span id="msText-water"
@@ -2283,7 +2319,7 @@
       }
 
       // ============================================================
-      // STATS ROW (KETERSEDIAAN) - DENGAN PERUBAHAN
+      // STATS ROW
       // ============================================================
       function UU(tab) {
         const list = D[tab] || [];
@@ -2301,7 +2337,6 @@
           else u++;
         });
         const total = list.length;
-        // Kira semula % ketersediaan: (Baik + Rosak Minor) / (Baik + Rosak Minor + Rosak) * 100
         const denominator = b + rm + r;
         const rate =
           denominator > 0 ? (((b + rm) / denominator) * 100).toFixed(1) : '0';
@@ -2352,7 +2387,9 @@
       }
 
       // ============================================================
-      // RENDER CHARTS (Rc) - DENGAN PERUBAHAN: PIE LABEL = %, ZONE COMBO BAR + LINE
+      // RENDER CHARTS (Rc) — dengan penambahbaikan:
+      // - Legend status pie: paparkan SEMUA status (tanpa penapisan)
+      // - Warna legend zon: bar biru, garis hijau/kuning/merah
       // ============================================================
       function Rc(tab, currentList) {
         const list = currentList || D[tab] || [];
@@ -2362,7 +2399,7 @@
         const axisTextColor = isLight ? '#475569' : '#f8fafc';
         const gridColor = isLight ? '#e2e8f0' : '#334155';
 
-        // ---------- 1. Status Doughnut (label pada kepingan = %) ----------
+        // ---------- 1. Status Doughnut (label = %, saiz 8, tiada bold) ----------
         const sc = {};
         list.forEach((i) => {
           const s = (G(i, 'STATUS JENTERA') || 'LAIN-LAIN')
@@ -2397,6 +2434,7 @@
           ) {
             legendHiddenStatus[tab] = new Array(labels.length).fill(false);
           }
+
           CC[tab].s = new Chart(cs.getContext('2d'), {
             type: 'doughnut',
             data: {
@@ -2419,14 +2457,17 @@
                   align: 'center',
                   labels: {
                     color: legendTextColor,
-                    font: { size: 9 },
-                    padding: 12,
+                    font: { size: 8 },
+                    padding: 8,
                     textAlign: 'center',
                     generateLabels: function (chart) {
                       const data = chart.data;
                       if (data.labels.length && data.datasets.length) {
+                        // Paparkan SEMUA status tanpa penapisan
                         return data.labels.map((label, i) => {
-                          const isHidden = legendHiddenStatus[tab][i] || false;
+                          const isHidden =
+                            legendHiddenStatus[tab] &&
+                            legendHiddenStatus[tab][i];
                           return {
                             text: isHidden ? '~~' + label + '~~' : label,
                             fillStyle: data.datasets[0].backgroundColor[i],
@@ -2444,6 +2485,7 @@
                   onClick: function (e, legendItem, legend) {
                     const index = legendItem.index;
                     const chart = legend.chart;
+                    if (!legendHiddenStatus[tab]) legendHiddenStatus[tab] = [];
                     legendHiddenStatus[tab][index] =
                       !legendHiddenStatus[tab][index];
                     const meta = chart.getDatasetMeta(0);
@@ -2470,7 +2512,7 @@
                 },
                 datalabels: {
                   color: isLight ? '#1e293b' : '#ffffff',
-                  font: { weight: 'bold', size: 10 },
+                  font: { weight: 'normal', size: 8 },
                   formatter: (value, context) => {
                     const total = context.dataset.data.reduce(
                       (a, b) => a + b,
@@ -2486,6 +2528,9 @@
                       value > 0 && !legendHiddenStatus[tab][context.dataIndex]
                     );
                   },
+                  offset: 2,
+                  anchor: 'center',
+                  align: 'center',
                 },
               },
               animation: {
@@ -2498,7 +2543,7 @@
           });
         }
 
-        // ---------- 2. Model Chart (pie = %, bar = nilai unit) ----------
+        // ---------- 2. Model Chart (pie/bar) - label % saiz 8, tiada bold ----------
         const mc = {};
         list.forEach((i) => {
           const m = (G(i, 'MODEL JENTERA') || 'LAIN-LAIN').trim().toUpperCase();
@@ -2549,7 +2594,7 @@
               responsive: true,
               maintainAspectRatio: false,
               layout: {
-                padding: { top: isPie ? 5 : 22, bottom: 0, left: 0, right: 0 },
+                padding: { top: isPie ? 2 : 20, bottom: 0, left: 0, right: 0 },
               },
               plugins: {
                 legend: {
@@ -2558,8 +2603,8 @@
                   align: 'center',
                   labels: {
                     color: legendTextColor,
-                    font: { size: 9 },
-                    padding: 12,
+                    font: { size: 8 },
+                    padding: 8,
                     textAlign: 'center',
                     generateLabels: function (chart) {
                       const data = chart.data;
@@ -2618,7 +2663,7 @@
                   color: isLight ? '#1e293b' : '#ffffff',
                   anchor: isPie ? 'center' : 'end',
                   align: isPie ? 'center' : 'top',
-                  font: { weight: 'bold', size: 9 },
+                  font: { weight: 'normal', size: 8 },
                   formatter: (value, context) => {
                     if (isPie) {
                       const total = context.dataset.data.reduce(
@@ -2643,6 +2688,7 @@
                       return context.dataset.data[context.dataIndex] > 0;
                     }
                   },
+                  offset: 2,
                 },
               },
               scales: isPie
@@ -2659,7 +2705,7 @@
                         color: axisTextColor,
                         maxRotation: 25,
                         minRotation: 0,
-                        font: { size: 8 },
+                        font: { size: 7 },
                       },
                     },
                   },
@@ -2669,7 +2715,7 @@
           });
         }
 
-        // ---------- 3. ZONE COMBO CHART (BAR + LINE) - LINE TANPA NILAI ----------
+        // ---------- 3. ZONE COMBO CHART (BAR + LINE) - UPPERCASE, WARNA TERANG ----------
         const zoneData = {};
         list.forEach((item) => {
           const zon = (G(item, 'ZON') || 'LAIN').trim().toUpperCase();
@@ -2689,7 +2735,7 @@
         ZON_ORDER.forEach((zone) => {
           const upper = zone.toUpperCase();
           if (zoneData[upper]) {
-            sortedZoneLabels.push(zone);
+            sortedZoneLabels.push(upper);
             sortedTotal.push(zoneData[upper].total);
             sortedB.push(zoneData[upper].B);
             sortedRM.push(zoneData[upper].RM);
@@ -2698,7 +2744,7 @@
           }
         });
         Object.keys(zoneData).forEach((key) => {
-          sortedZoneLabels.push(key);
+          sortedZoneLabels.push(key.toUpperCase());
           sortedTotal.push(zoneData[key].total);
           sortedB.push(zoneData[key].B);
           sortedRM.push(zoneData[key].RM);
@@ -2714,11 +2760,11 @@
               labels: sortedZoneLabels,
               datasets: [
                 {
-                  label: 'Jumlah Jentera',
+                  label: 'JUMLAH JENTERA',
                   data: sortedTotal,
                   type: 'bar',
-                  backgroundColor: 'rgba(148, 163, 184, 0.6)',
-                  borderColor: '#64748b',
+                  backgroundColor: 'rgba(59, 130, 246, 0.6)', // biru terang
+                  borderColor: '#3b82f6',
                   borderWidth: 1,
                   borderRadius: 4,
                   order: 2,
@@ -2727,7 +2773,7 @@
                   categoryPercentage: 0.7,
                 },
                 {
-                  label: 'Baik & Beroperasi',
+                  label: 'BAIK & BEROPERASI',
                   data: sortedB,
                   type: 'line',
                   borderColor: '#22c55e',
@@ -2744,7 +2790,7 @@
                   yAxisID: 'y',
                 },
                 {
-                  label: 'Rosak Minor',
+                  label: 'ROSAK MINOR',
                   data: sortedRM,
                   type: 'line',
                   borderColor: '#eab308',
@@ -2761,7 +2807,7 @@
                   yAxisID: 'y',
                 },
                 {
-                  label: 'Rosak',
+                  label: 'ROSAK',
                   data: sortedR,
                   type: 'line',
                   borderColor: '#ef4444',
@@ -2795,6 +2841,20 @@
                     boxWidth: 14,
                     boxHeight: 10,
                     usePointStyle: false,
+                    generateLabels: function (chart) {
+                      const data = chart.data;
+                      if (data.datasets.length) {
+                        return data.datasets.map((ds, i) => ({
+                          text: (ds.label || '').toUpperCase(),
+                          fillStyle: ds.borderColor || ds.backgroundColor,
+                          strokeStyle: ds.borderColor || ds.backgroundColor,
+                          lineWidth: 2,
+                          hidden: false,
+                          index: i,
+                        }));
+                      }
+                      return [];
+                    },
                   },
                 },
                 tooltip: {
@@ -2806,7 +2866,7 @@
                         totalZone > 0
                           ? ((val / totalZone) * 100).toFixed(1)
                           : 0;
-                      return ` ${context.dataset.label}: ${val} (${pct}%)`;
+                      return ` ${context.dataset.label.toUpperCase()}: ${val} (${pct}%)`;
                     },
                   },
                 },
@@ -2833,6 +2893,12 @@
                     maxRotation: 25,
                     minRotation: 0,
                     font: { size: 8, weight: '500' },
+                    callback: function (value, index, ticks) {
+                      const label = this.getLabelForValue(value);
+                      return typeof label === 'string'
+                        ? label.toUpperCase()
+                        : label;
+                    },
                   },
                   grid: { display: false },
                 },
@@ -2854,6 +2920,9 @@
         }
       }
 
+      // ============================================================
+      // RENDER TABLE (Rt)
+      // ============================================================
       function Rt(tab) {
         const list = D[tab] || [];
         const searchVal = (
@@ -2939,6 +3008,21 @@
         document.getElementById(
           `rowCount-${tab}`
         ).textContent = `Menunjukkan ${filtered.length} daripada ${list.length} jentera`;
+      }
+
+      // ============================================================
+      // SEARCH: doSearch() & clearSearch()
+      // ============================================================
+      function doSearch(tab) {
+        Rt(tab);
+      }
+
+      function clearSearch(tab) {
+        const input = document.getElementById(`searchInput-${tab}`);
+        if (input) {
+          input.value = '';
+          Rt(tab);
+        }
       }
 
       // ============================================================
